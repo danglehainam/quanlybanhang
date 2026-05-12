@@ -59,4 +59,16 @@ Bridge the application to the external world (Firestore).
 3. **Refactor**: Remove dead code and temporary files after completion.
 
 ---
+## 🤖 AI BEHAVIOR & MODULARITY RULES
+To prevent "lazy" monolithic code generation, YOU (the AI) MUST strictly obey these behavioral constraints:
+
+1. **[MANDATORY] CHECK BEFORE CREATE**: Before writing ANY new UI widget (Button, TextField, Dialog, Card), you MUST use tools (`list_dir` or `grep_search`) to check `lib/presentation/widgets/`. If a shared component exists, REUSE it. Do NOT duplicate functionality.
+2. **[CRITICAL] COMPONENT EXTRACTION**: Never dump a massive widget tree into a single Screen file. Break down the UI into logical, single-responsibility components (e.g., `HeaderSection`, `ItemListWidget`, `ActionButtons`). 
+3. **[FORBIDDEN] NO HELPER METHODS FOR UI**: Do NOT use helper methods that return Widgets (e.g., `Widget _buildList() { return ... }`). You MUST extract them into separate `StatelessWidget` or `StatefulWidget` classes. This prevents unnecessary rebuilds and keeps files clean.
+4. **[WORKFLOW] STEP-BY-STEP GENERATION**: When asked to create a complex Screen or Feature, DO NOT generate everything in one massive response. 
+   - First, propose the component breakdown.
+   - Then, create the individual component files in the `widgets/` folder.
+   - Finally, assemble them in the main Screen file.
+
+---
 **Note for AI**: Always maintain Model-Entity consistency through mapper functions. If a database field changes, update in order: `database.md` -> `Model` -> `Entity` -> `UI`.
