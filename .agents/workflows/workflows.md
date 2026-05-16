@@ -1,232 +1,239 @@
 ---
-description: Quy trình Phát triển & Bảo trì Chuẩn (Clean Architecture & UI Design) cho Dự án QuanLyBanHang (/cleancode)
+description: Standard Development & Maintenance Workflow (Clean Architecture & UI Design) for QuanLyBanHang Project (/cleancode)
 ---
 
-> **BẮT BUỘC**: Khi phát triển bất kỳ tính năng nào trong dự án QuanLyBanHang, AI PHẢI tuân thủ nghiêm ngặt toàn bộ nội dung file này. Không được sáng tạo, không được dùng giải pháp thay thế.
+> **MANDATORY**: AI MUST strictly follow this entire file when developing any feature. No creativity, no alternatives.
 
 ### // turbo-all
 
 ---
 
-# PHẦN A: QUY TẮC TOÀN CỤC
+# PART A: GLOBAL RULES
 
-Các quy tắc dưới đây có hiệu lực ở **MỌI bước**, **MỌI file**, **MỌI tầng** trong dự án.
+The following rules apply to **EVERY step**, **EVERY file**, **EVERY layer** in the project.
 
-## A1. Công nghệ Bắt buộc (Tech Stack)
-| Mục đích | Thư viện | Ghi chú |
+## A1. Required Tech Stack
+| Purpose | Library | Note |
 | :--- | :--- | :--- |
-| Quản lý trạng thái | `flutter_bloc` + `freezed` | Cấm dùng `equatable`, `provider`, `riverpod` |
-| Điều hướng | `go_router` | Cấu hình tại `lib/core/routes/app_router.dart` |
-| Dependency Injection | `get_it` | Đăng ký tại `lib/core/di/dependency_injection.dart` |
-| CSDL cục bộ | `drift` | Lưu trữ SQLite local |
-| Đa ngôn ngữ | `intl` (file `.arb`) | Lưu tại `lib/l10n/` |
-| Lưu cấu hình người dùng | `shared_preferences` | Dùng cho SettingsBloc |
-| Xử lý lỗi hàm | `dartz` hoặc `fpdart` | Kiểu trả về `Either<Failure, T>` |
+| State management | `flutter_bloc` + `freezed` | No `equatable`, `provider`, `riverpod` |
+| Navigation | `go_router` | Config at `lib/core/routes/app_router.dart` |
+| Dependency Injection | `get_it` | Register at `lib/core/di/dependency_injection.dart` |
+| Local database | `drift` | SQLite local storage |
+| Localization | `intl` (`.arb` files) | Stored at `lib/l10n/` |
+| User settings | `shared_preferences` | Used by SettingsBloc |
+| Error handling | `dartz` or `fpdart` | Return type `Either<Failure, T>` |
 
-- ❌ **CẤM**: Tự ý thêm thư viện mới vào `pubspec.yaml` mà không xin phép người dùng trước.
+- ❌ **FORBIDDEN**: Adding new packages to `pubspec.yaml` without user permission.
 
-## A2. Quy tắc Đặt tên (Naming)
-- Tên file và thư mục: `snake_case` (VD: `pos_screen.dart`, `product_model.dart`).
-- Tên class: `PascalCase` (VD: `PosScreen`, `ProductModel`).
-- Tên biến và hàm: `camelCase` (VD: `finalAmount`, `getProducts()`).
-- Tên file BLoC: `[tên]_bloc.dart`, `[tên]_event.dart`, `[tên]_state.dart`.
+## A2. Naming Rules
+- Files and folders: `snake_case` (e.g. `product_model.dart`).
+- Classes: `PascalCase` (e.g. `PosScreen`, `ProductModel`).
+- Variables and functions: `camelCase` (e.g. `finalAmount`, `getProducts()`).
+- BLoC files: `[name]_bloc.dart`, `[name]_event.dart`, `[name]_state.dart`.
 
-## A3. Quy tắc Tiền tệ (Money)
-- ❌ **CẤM TUYỆT ĐỐI** dùng `double` cho tiền tệ (tránh lỗi số thực dấu phẩy động).
-- ✅ **BẮT BUỘC** dùng `int` (đơn vị: VND). VD: `15000` thay vì `15000.0`.
+## A3. Money Rules
+- ❌ **ABSOLUTELY FORBIDDEN** to use `double` for currency (floating-point precision errors).
+- ✅ **MUST** use `int` (unit: VND). e.g. `15000` not `15000.0`.
 
-## A4. Quy tắc Ngày giờ (DateTime)
-- ✅ Lưu vào CSDL dưới dạng UTC (`DateTime.toUtc()`).
-- ✅ Chỉ chuyển sang giờ địa phương (`toLocal()`) tại tầng Presentation, ngay trước khi hiển thị.
+## A4. DateTime Rules
+- ✅ Store in database as UTC (`DateTime.toUtc()`).
+- ✅ Only convert to local time (`toLocal()`) at Presentation layer, right before display.
 
-## A5. Quy tắc Đa ngôn ngữ (Localization)
-- ❌ **CẤM** viết cứng chuỗi hiển thị trong UI (VD: `Text('Đăng nhập')`).
-- ✅ Luôn thêm chuỗi vào file `.arb` trước, rồi dùng `AppLocalizations.of(context)!.tenKey`.
+## A5. Localization Rules
+- ❌ **FORBIDDEN** to hardcode display strings in UI (e.g. `Text('Login')`).
+- ✅ Always add strings to `.arb` files first, then use `AppLocalizations.of(context)!.keyName`.
 
-## A6. Quy tắc Màu sắc (Color)
-- ❌ **CẤM** viết cứng mã màu hex hoặc dùng `Colors.blue` mặc định của Flutter.
-- ✅ Luôn dùng class `AppColors` từ `lib/core/constants/app_colors.dart`.
+## A6. Color Rules
+- ❌ **FORBIDDEN** to hardcode hex colors or use Flutter's default `Colors.blue`.
+- ✅ Always use `AppColors` from `lib/core/constants/app_colors.dart`.
 
-## A7. Quy tắc Hàm tiện ích (Utility)
-- ✅ Mọi logic tái sử dụng (định dạng tiền, ngày tháng, xử lý chuỗi...) PHẢI tách ra `lib/core/utils/`.
-- ❌ **CẤM** để hàm tiện ích lẫn trong file BLoC hoặc file UI.
+## A7. Utility Rules
+- ✅ All reusable logic (formatting, dates, strings...) MUST go in `lib/core/utils/`.
+- ❌ **FORBIDDEN** to put utility functions inside BLoC or UI files.
 
-## A8. Quy tắc Sinh mã (Code Generation)
-- ✅ Bất cứ khi nào sửa file `Freezed` (State/Event) hoặc bảng `Drift`, **BẮT BUỘC** chạy: `dart run build_runner build -d`.
-- ✅ Các file `.freezed.dart` và `.g.dart` là file tự sinh. **CẤM** sửa tay các file này.
+## A8. Code Generation Rules
+- ✅ Whenever modifying `Freezed` (State/Event) or `Drift` table files, **MUST** run: `dart run build_runner build -d`.
+- ✅ `.freezed.dart` and `.g.dart` are auto-generated files. **FORBIDDEN** to edit them manually.
 
-## A9. Quy tắc Giao diện Đa nền tảng (Responsive - Hybrid Pattern)
-- ✅ Dùng `SettingsBloc` để lưu `ViewMode` (auto, mobile, desktop) và đồng bộ bằng `shared_preferences`.
-- ✅ Dùng `ResponsiveWrapper` tại `lib/core/utils/responsive_wrapper.dart` để tự động phân luồng: macOS/Windows → Desktop, còn lại → Mobile. Ưu tiên tôn trọng lựa chọn thủ công của người dùng.
-- ✅ Với màn hình phức tạp (POS, Trang chủ): **BẮT BUỘC** tách thành `[screen]_mobile_view.dart` và `[screen]_desktop_view.dart`, bọc bằng `ResponsiveWrapper`.
-- ✅ Với màn hình đơn giản (Đăng nhập, Thêm sản phẩm): Dùng 1 file duy nhất với `Container(maxWidth: 500)`.
-- ❌ **CẤM** nhân bản logic nghiệp vụ. Cả 2 giao diện Mobile và Desktop PHẢI dùng chung 1 BLoC duy nhất.
+## A9. Responsive UI Rules (Hybrid Pattern)
+- ✅ Use `SettingsBloc` to store `ViewMode` (auto, mobile, desktop), synced via `shared_preferences`.
+- ✅ Use `ResponsiveWrapper` at `lib/core/utils/responsive_wrapper.dart`: macOS/Windows → Desktop, others → Mobile. Respect manual override.
+- ✅ Complex screens: **MUST** split into `[screen]_mobile_view.dart` and `[screen]_desktop_view.dart`, wrapped by `ResponsiveWrapper`.
+- ✅ Simple screens: Use single file with `Container(maxWidth: 500)`.
+- ❌ **FORBIDDEN** to duplicate business logic. Both Mobile and Desktop views MUST share the same BLoC.
 
-## A10. Quy tắc Tác dụng phụ trong BLoC (Side Effect)
-BLoC là bộ não thuần túy, chỉ được phép `emit` State. BLoC **KHÔNG ĐƯỢC PHÉP** điều khiển giao diện.
-- ❌ **CẤM** gọi `Navigator` (push, pop, go) trong BLoC.
-- ❌ **CẤM** gọi `showDialog`, `showBottomSheet`, `showSnackBar`, `ScaffoldMessenger` trong BLoC.
-- ❌ **CẤM** truyền `BuildContext` vào BLoC.
-- ✅ BLoC chỉ `emit` State. Tầng UI dùng `BlocListener` để lắng nghe State thay đổi rồi tự quyết định hiển thị SnackBar, chuyển trang, hay mở Dialog.
+## A10. Side Effect Rules
+- ❌ **FORBIDDEN** to call `Navigator`, `showDialog`, or `ScaffoldMessenger` inside BLoC.
+- ✅ BLoC only emits state. UI handles side effects via `BlocListener`.
 
-## A11. Quy tắc Hằng số (Constants)
-Mọi giá trị được sử dụng lặp lại ở nhiều nơi **BẮT BUỘC** phải khai báo thành hằng số tại `lib/core/constants/`.
+## A11. Constants Rules
+- ✅ Route names: managed in `lib/core/constants/app_routes.dart`.
+- ✅ SharedPreferences keys: managed in `lib/core/constants/pref_keys.dart`.
+- ✅ Colors, Spacing, Durations: managed in `lib/core/constants/`.
+- ❌ **FORBIDDEN** to hardcode route names, pref keys, or magic numbers in BLoC/UI.
 
-| File | Mục đích |
-| :--- | :--- |
-| `app_colors.dart` | Màu sắc toàn app (`AppColors.primary`, `AppColors.error`) |
-| `app_spacing.dart` | Khoảng cách chuẩn (`AppSpacing.xs = 4`, `sm = 8`, `md = 16`, `lg = 24`, `xl = 32`) |
-| `app_durations.dart` | Thời gian animation (`AppDurations.fast = 200ms`, `normal = 300ms`) |
+## A12. Async UX Rules
+- ✅ Loading state → show `AppLoadingWidget`.
+- ✅ Empty data → show `EmptyDataWidget`.
+- ✅ Error state → show `AppErrorWidget` with **mandatory** `onRetry` callback.
+- ❌ **FORBIDDEN** to show blank screens for any async state.
 
-- ❌ **CẤM** viết cứng tên Route dưới dạng chuỗi. Phải dùng hằng số `AppRoutes` trong `lib/core/routes/app_router.dart`.
-- ❌ **CẤM** viết cứng Key của SharedPreferences rải rác. Phải khai báo `static const` trong class sử dụng nó.
-- ✅ Các giá trị padding/spacing nên dùng `AppSpacing` để đảm bảo đồng nhất giao diện.
+## A13. Validation Rules (2-Layer)
+- **Layer 1 — UI/Form**: Validate format (empty, length, email format). Done via `TextFormField.validator`.
+- **Layer 2 — UseCase**: Validate business rules (duplicate name, insufficient balance). Return `Left(Failure)`.
+- ❌ **FORBIDDEN** to put business validation in UI. ❌ **FORBIDDEN** to put format validation in UseCase.
 
-## A12. Quy tắc Giao diện cho Trạng thái Bất đồng bộ (Async State UX)
-Mọi màn hình có tải dữ liệu **BẮT BUỘC** xử lý đầy đủ các trạng thái sau bằng Widget dùng chung. **CẤM** mỗi màn hình tự vẽ kiểu riêng.
+## A14. Permission Rules
+- ✅ `AuthBloc` MUST cache user's permission codes (from `role_permissions` table) after login. No DB query per render.
+- ✅ Wrap permission-required widgets with `PermissionGuard(permission: 'code', child: widget)` at `lib/presentation/widgets/permission_guard.dart`.
+- ✅ Logic: `is_owner == 1` → always show. `permissions.contains(code)` → show. Else → `SizedBox.shrink()`.
+- ❌ **FORBIDDEN** to query database for permission checks on every widget render.
 
-| Trạng thái | Widget bắt buộc | Vị trí |
+---
+
+# PART B: DEVELOPMENT WORKFLOW (Step by Step)
+
+---
+
+## Step 0: Preparation & Design (Database First)
+**What**: Read or update `docs/database.md`.
+**Purpose**: Understand schema (field names, data types, relationships) before writing any code.
+
+---
+
+## Step 1: Domain Layer (Core Business)
+**What**: Always start from the "heart" of the application (innermost layer).
+
+| Component | File Path | Description |
 | :--- | :--- | :--- |
-| `loading` | `AppLoadingWidget` (vòng xoay hoặc Shimmer) | `lib/presentation/widgets/app_loading_widget.dart` |
-| `loaded` (rỗng) | `EmptyDataWidget` (icon + thông báo + nút hành động) | `lib/presentation/widgets/empty_data_widget.dart` |
-| `error` | `AppErrorWidget` (thông báo lỗi + **nút Thử lại**) | `lib/presentation/widgets/app_error_widget.dart` |
+| Entity | `lib/domain/entities/[name]_entity.dart` | Pure Dart class |
+| Repository Interface | `lib/domain/repositories/[name]_repository.dart` | Abstract contract |
+| UseCase | `lib/domain/usecases/[verb]_[name]_usecase.dart` | One class = One action |
+| Failure | `lib/core/error/failures.dart` | Business error definitions |
 
-- ✅ `AppErrorWidget` **BẮT BUỘC** nhận callback `onRetry` để gửi lại Event cho BLoC.
-- ✅ Dùng `state.when(...)` để xử lý đủ tất cả trạng thái, bao gồm cả trường hợp danh sách trả về rỗng (`loaded` nhưng 0 items → hiển thị `EmptyDataWidget`).
-- ❌ **CẤM** để màn hình trắng trơn khi đang tải dữ liệu.
-- ❌ **CẤM** hiển thị lỗi mà không có nút Thử lại (trừ khi lỗi không thể retry).
+**Rules for this step:**
+- ✅ Entity MUST be a pure Dart class with `const` constructor and `final` properties.
+- ✅ UseCase name MUST start with an action verb (e.g. `GetCategoriesUseCase`, `CreateCategoryUseCase`).
+- ✅ UseCase MUST use `call()` method so it can be invoked like a function.
+- ✅ Repository Interface MUST declare return type as `Either<Failure, T>`.
+- ❌ **FORBIDDEN** for Entity to import any file from Data or Presentation layer.
+- ❌ **FORBIDDEN** to write `try-catch` in UseCase.
 
-## A13. Quy tắc Xác thực dữ liệu (Validation)
-Áp dụng mô hình **Validation 2 tầng**:
+---
 
-| Tầng | Loại kiểm tra | Cách thực hiện |
+## Step 2: Data Layer (Data Access)
+**What**: Connect the application to local database (Drift/SQLite).
+
+| Component | File Path | Description |
 | :--- | :--- | :--- |
-| **UI (Form)** | Định dạng & bắt buộc (trống, email sai, độ dài) | `TextFormField.validator`. Phản hồi tức thì |
-| **UseCase (Domain)** | Quy tắc nghiệp vụ (giá > 0, tên trùng, tồn kho âm) | Trả về `Left(ValidationFailure('...'))` |
+| Drift Table | `lib/data/datasources/local/tables/[name]_table.dart` | Drift table definition |
+| AppDatabase | `lib/data/datasources/local/app_database.dart` | Central file connecting all tables |
+| Model | `lib/data/models/[name]_model.dart` | Data mapping object |
+| DataSource | `lib/data/datasources/local/[name]_local_datasource.dart` | Direct Drift API calls |
+| Repository Impl | `lib/data/repositories/[name]_repository_impl.dart` | Implements Domain contract |
 
-- ✅ Hàm validate dùng chung **BẮT BUỘC** đặt tại `lib/core/utils/validators.dart`.
-- ✅ Form **BẮT BUỘC** dùng `GlobalKey<FormState>` và gọi `formKey.currentState!.validate()` trước khi gửi Event cho BLoC.
-- ❌ **CẤM** viết logic validate trong BLoC. BLoC chỉ chuyển tiếp dữ liệu cho UseCase.
-- ❌ **CẤM** viết hàm validate inline lặp lại trong nhiều Form. Phải tách ra `validators.dart`.
-
----
-
-# PHẦN B: QUY TRÌNH LÀM VIỆC (Từng bước)
-
----
-
-## Bước 0: Chuẩn bị & Thiết kế (Database First)
-**Làm gì**: Đọc hoặc cập nhật tài liệu `docs/database.md`.
-**Mục đích**: Hiểu rõ Schema (tên trường, kiểu dữ liệu, quan hệ cha-con) trước khi viết bất kỳ dòng code nào.
+**Rules for this step:**
+- ✅ Drift Table MUST be placed at `lib/data/datasources/local/tables/`.
+- ✅ AppDatabase MUST be at `lib/data/datasources/local/app_database.dart`. Add new tables to `@DriftDatabase(tables: [...])`.
+- ✅ Model MUST have all 4 mappers using `factory` constructor: `fromJson`, `toJson`, `fromEntity`, `toEntity`.
+- ✅ `try-catch` is ONLY allowed in Repository Impl. Catches Exception, converts to `Failure`.
+- ❌ **FORBIDDEN** for Model to extend Entity.
+- ❌ **FORBIDDEN** to use `extension` methods for data mapping. Use `factory` constructors only.
+- ❌ **FORBIDDEN** to write `try-catch` in BLoC or UseCase.
 
 ---
 
-## Bước 1: Tầng Domain (Nghiệp vụ cốt lõi)
-**Làm gì**: Luôn bắt đầu từ "Trái tim" của ứng dụng (tầng trong cùng).
+## Step 3: Presentation Layer (UI & State)
+**What**: Build user interface and manage display state.
 
-| Thành phần | Vị trí file |
+### 3.1 Routing
+- ✅ Use `go_router`. Central config at `lib/core/routes/app_router.dart`.
+- ✅ Navigate with `context.go()` or `context.push()`.
+- ✅ Close Dialog/BottomSheet with `Navigator.pop(context)`.
+- ✅ Protect screens requiring login via `redirect` + `AuthBloc`.
+- ✅ When adding new screens, register routes in `app_router.dart` following existing patterns.
+
+### 3.2 BLoC (State Management)
+
+| Component | File Path |
 | :--- | :--- |
-| Entity | `lib/domain/entities/[tên]_entity.dart` |
-| Repository Interface | `lib/domain/repositories/[tên]_repository.dart` |
-| UseCase | `lib/domain/usecases/[động_từ]_[tên]_usecase.dart` |
-| Failure | `lib/core/error/failures.dart` |
+| Shared BLoC (e.g. `AuthBloc`, `SettingsBloc`) | `lib/presentation/bloc/[name]/` |
+| Screen-specific BLoC | `lib/presentation/screens/[screen_name]/bloc/` |
 
-**Quy tắc riêng:**
-- ✅ Entity phải là class thuần Dart với `const` constructor và thuộc tính `final`. Không kế thừa, không phụ thuộc.
-- ✅ UseCase **BẮT BUỘC** dùng method `call()` để có thể gọi tắt như hàm. Tên class bắt đầu bằng động từ (VD: `GetCategoriesUseCase`).
-- ✅ Repository Interface **BẮT BUỘC** khai báo kiểu trả về `Either<Failure, T>`.
-- ❌ **CẤM** Entity import bất kỳ file nào từ tầng Data hoặc Presentation.
-- ❌ **CẤM** viết `try-catch` trong UseCase.
+Each BLoC folder always has exactly 3 files:
+- `[name]_bloc.dart` — Event → State processing logic.
+- `[name]_event.dart` — Event declarations (using `freezed`).
+- `[name]_state.dart` — State declarations (using `freezed`).
 
----
+**Rules:**
+- ✅ MUST use `freezed` for State and Event. Class declaration MUST include `abstract` keyword.
+- ✅ MUST have all 4 standard states: `initial`, `loading`, `loaded/success`, `error/failure`.
+- ✅ For Streams (e.g. Drift watch query): Always use `emit.forEach`, **FORBIDDEN** to use `Stream.listen`.
+- ❌ **FORBIDDEN** to call `emit` inside un-awaited callbacks or after handler completes.
+- ❌ **FORBIDDEN** to write `try-catch` in BLoC (errors are handled at Repository layer).
 
-## Bước 2: Tầng Data (Truy xuất dữ liệu)
-**Làm gì**: Kết nối ứng dụng với CSDL cục bộ (Drift/SQLite).
+### 3.3 Widgets & Layout
 
-| Thành phần | Vị trí file |
+| Component | File Path |
 | :--- | :--- |
-| Drift Table | `lib/data/datasources/local/tables/[tên]_table.dart` |
-| AppDatabase | `lib/data/datasources/local/app_database.dart` |
-| Model | `lib/data/models/[tên]_model.dart` |
-| DataSource | `lib/data/datasources/local/[tên]_local_datasource.dart` |
-| Repository Impl | `lib/data/repositories/[tên]_repository_impl.dart` |
+| Main screen | `lib/presentation/screens/[screen_name]/[name]_screen.dart` |
+| Screen-specific widgets | `lib/presentation/screens/[screen_name]/widgets/` |
+| Shared app-wide widgets | `lib/presentation/widgets/` |
+| Mobile view (if split) | `lib/presentation/screens/[screen_name]/views/[name]_mobile_view.dart` |
+| Desktop view (if split) | `lib/presentation/screens/[screen_name]/views/[name]_desktop_view.dart` |
 
-**Quy tắc riêng:**
-- ✅ Khi thêm bảng mới, thêm tên bảng vào danh sách `tables` trong annotation `@DriftDatabase` ở `app_database.dart`.
-- ✅ Model **BẮT BUỘC** có đầy đủ 4 mapper dùng `factory` constructor: `fromJson`, `toJson`, `toEntity`, `fromEntity`.
-- ✅ `try-catch` **CHỈ ĐƯỢC PHÉP** viết ở Repository Impl. Bắt Exception → trả về `Left(Failure)`.
-- ❌ **CẤM** Model kế thừa (`extends`) từ Entity.
-- ❌ **CẤM** dùng `extension` method để ánh xạ dữ liệu. Chỉ dùng `factory` constructor.
+**Rules:**
+- ✅ Prefer splitting screens into small single-responsibility child widgets (e.g. `HeaderSection`, `ItemListWidget`).
+- ✅ MUST check `lib/presentation/widgets/` before creating new widgets. Reuse if existing (e.g. `AppTextField`, `AppSnackBar`, `EmptyDataWidget`).
+- ❌ **FORBIDDEN** to write widget-returning functions (e.g. `Widget _buildList() { ... }`). Must extract into separate `StatelessWidget` or `StatefulWidget`.
 
 ---
 
-## Bước 3: Tầng Presentation (Giao diện & Logic giao diện)
-**Làm gì**: Xây dựng giao diện người dùng và quản lý trạng thái hiển thị.
+## Step 4: Dependency Injection (Wiring)
+**What**: Register components in `lib/core/di/dependency_injection.dart`.
+**Registration order MUST be**: `DataSource → Repository → UseCase → Bloc`.
 
-### 3.1 Điều hướng (Routing)
-- ✅ Dùng `go_router`. Cấu hình tập trung tại `lib/core/routes/app_router.dart`.
-- ✅ Chuyển màn hình: `context.go()` hoặc `context.push()`. Đóng Dialog/BottomSheet: `Navigator.pop(context)`.
-- ✅ Bảo vệ màn hình yêu cầu đăng nhập bằng `redirect` + `AuthBloc`.
-
-### 3.2 BLoC (Quản lý trạng thái)
-
-| Loại BLoC | Vị trí |
-| :--- | :--- |
-| Dùng chung nhiều màn hình (`AuthBloc`, `SettingsBloc`) | `lib/presentation/bloc/[tên]/` |
-| Riêng của 1 màn hình | `lib/presentation/screens/[tên_màn_hình]/bloc/` |
-
-- ✅ **BẮT BUỘC** dùng `freezed` cho State và Event. Khai báo class **BẮT BUỘC** thêm từ khóa `abstract` (VD: `abstract class CategoryState with _$CategoryState`).
-- ✅ **BẮT BUỘC** có đủ 4 trạng thái chuẩn: `initial`, `loading`, `loaded/success`, `error/failure`.
-- ✅ Với Stream (Drift watch query): Luôn dùng `emit.forEach`. **CẤM** dùng `Stream.listen`.
-- ❌ **CẤM** gọi `emit` bên trong callback chưa được `await` hoặc sau khi handler kết thúc.
-
-### 3.3 Widget & Bố cục
-
-| Thành phần | Vị trí |
-| :--- | :--- |
-| Màn hình chính | `lib/presentation/screens/[tên]/[tên]_screen.dart` |
-| Widget riêng của màn hình | `lib/presentation/screens/[tên]/widgets/` |
-| Widget dùng chung toàn app | `lib/presentation/widgets/` |
-| Giao diện Mobile (nếu tách) | `lib/presentation/screens/[tên]/views/[tên]_mobile_view.dart` |
-| Giao diện Desktop (nếu tách) | `lib/presentation/screens/[tên]/views/[tên]_desktop_view.dart` |
-
-- ✅ Ưu tiên tách nhỏ màn hình thành Widget con đơn trách nhiệm.
-- ✅ **BẮT BUỘC** kiểm tra `lib/presentation/widgets/` trước khi tạo widget mới. Tái sử dụng nếu đã có.
-- ❌ **CẤM** viết hàm trả về Widget (VD: `Widget _buildList() { ... }`). Phải tách thành Widget class riêng biệt.
+- ✅ DataSource and Repository use `registerLazySingleton` (created once).
+- ✅ Bloc uses `registerFactory` (created fresh each time).
 
 ---
 
-## Bước 4: Dependency Injection (Kết nối)
-**Làm gì**: Đăng ký các thành phần trong `lib/core/di/dependency_injection.dart`.
-**Thứ tự đăng ký BẮT BUỘC**: `DataSource → Repository → UseCase → Bloc`.
+## Step 5: Verify & Finalize
+**What**: Ensure clean, error-free code.
 
-- ✅ DataSource, Repository và UseCase dùng `registerLazySingleton` (tạo 1 lần duy nhất).
-- ✅ Bloc dùng `registerFactory` (tạo mới mỗi lần gọi).
-
----
-
-## Bước 5: Kiểm tra & Hoàn tất
-1. ✅ Chạy `dart run build_runner build -d` nếu có sửa file Freezed hoặc Drift.
-2. ✅ Chạy `flutter analyze` để kiểm tra code sạch, không có import thừa.
-3. ✅ Viết Unit Test cho UseCase và Repository tại thư mục `test/`.
-4. ✅ Xóa file rác và code chết sau khi hoàn thành.
+1. ✅ Run `dart run build_runner build -d` if any Freezed or Drift files were modified.
+2. ✅ Run `flutter analyze` to check clean code, no unused imports.
+3. ✅ Write Unit Tests for UseCase and Repository in `test/` directory.
+4. ✅ Remove junk files and dead code after completion.
 
 ---
 
-# PHẦN C: HÀNH VI AI (BẮT BUỘC)
+# PART C: AI BEHAVIOR (MANDATORY)
 
-## C1. Khi TẠO MỚI chức năng
-1. **[BẮT BUỘC] KIỂM TRA TRƯỚC KHI TẠO**: Trước khi viết bất kỳ widget mới nào, PHẢI dùng `list_dir` hoặc `grep_search` để kiểm tra `lib/presentation/widgets/`. Nếu đã có widget tương tự thì TÁI SỬ DỤNG.
-2. **[BẮT BUỘC] SINH CODE TỪNG BƯỚC**: Khi tạo màn hình phức tạp, KHÔNG ĐƯỢC sinh tất cả trong 1 lần. Phải đề xuất danh sách widget con → tạo từng file → lắp ghép vào màn hình chính.
+To prevent AI from generating "lazy" or "wrong" code, AI **MUST** follow:
 
-## C2. Khi SỬA/CẬP NHẬT chức năng cũ
-Khi có thay đổi về cấu trúc dữ liệu, **BẮT BUỘC** cập nhật theo đúng thứ tự:
-`database.md → Drift Table → Migration → Model → Entity → BLoC → UI → build_runner → flutter analyze`
+## C1. When CREATING new features
+1. **[MUST] CHECK BEFORE CREATING**: Before writing any new widget, MUST use `list_dir` or `grep_search` to check `lib/presentation/widgets/`. If similar widget exists, REUSE it.
+2. **[MUST] GENERATE CODE STEP BY STEP**: When asked to create a complex screen, DO NOT generate everything at once. Must:
+   - Propose list of child widgets first.
+   - Create each widget file in `widgets/` folder.
+   - Finally assemble into the main screen file.
 
-**Quy tắc Migration (Di cư dữ liệu):**
-- ✅ Sau khi sửa Drift Table, **BẮT BUỘC** tăng `schemaVersion` lên 1 đơn vị trong `app_database.dart`.
-- ✅ **BẮT BUỘC** viết hàm `onUpgrade` trong `MigrationStrategy` để hướng dẫn Drift cập nhật bảng cũ (VD: `addColumn`, `createTable`).
-- ❌ **CẤM** xóa các bước migration cũ trong code (vì khách hàng lâu ngày không cập nhật app vẫn cần chạy lại từ version cũ).
-- ❌ **CẤM** bỏ qua bất kỳ bước nào trong chuỗi trên.
-- ❌ **CẤM** sửa UI trước khi sửa Entity/Model.
+## C2. When MODIFYING existing features
+When data structure changes (add/modify/delete fields), **MUST** update in this exact order:
+1. `docs/database.md` — Update database design document.
+2. `Drift Table` — Modify table definition at `lib/data/datasources/local/tables/`.
+3. `Migration` — Write migration in `app_database.dart`.
+4. `Model` — Update mappers at `lib/data/models/`.
+5. `Entity` — Update properties at `lib/domain/entities/`.
+6. `BLoC` — Update State/Event if needed.
+7. `UI` — Update display interface.
+8. Run `dart run build_runner build -d` to regenerate code.
+9. Run `flutter analyze` to ensure no errors.
 
+**Migration Rules:**
+- ✅ After modifying Drift Table, **MUST** increment `schemaVersion` by 1 in `app_database.dart`.
+- ✅ **MUST** write `onUpgrade` handler in `MigrationStrategy` (e.g. `addColumn`, `createTable`).
+- ❌ **FORBIDDEN** to delete old migration steps (users who haven't updated still need them).
+- ❌ **FORBIDDEN** to skip any step in the chain above.
+- ❌ **FORBIDDEN** to modify UI before modifying Entity/Model (causes type errors).
