@@ -30,14 +30,14 @@ Bridge the application to the external world (Firestore).
 
 ## Step 3: Presentation Layer (UI & UI Logic)
 1. **Routing**: 
-    - Bắt buộc sử dụng `go_router` cho việc điều hướng. 
-    - Cấu hình Route trung tâm đặt tại `lib/core/routes/app_router.dart`.
-    - Điều hướng giữa các màn hình bằng `context.go()` hoặc `context.push()`. Đối với các Dialog/BottomSheet, vẫn sử dụng `Navigator.pop(context)` như bình thường.
-    - Bảo vệ các màn hình yêu cầu đăng nhập bằng thuộc tính `redirect` kết hợp với `AuthBloc` (Auth Guard).
+    - Mandatory use of `go_router` for navigation. 
+    - Central Route configuration located at `lib/core/routes/app_router.dart`.
+    - Navigate between screens using `context.go()` or `context.push()`. For Dialogs/BottomSheets, still use `Navigator.pop(context)` as usual.
+    - Protect screens that require login using the `redirect` property combined with `AuthBloc` (Auth Guard).
 2. **BLoC**: Manage state logic at `lib/presentation/bloc/`. 
     - Clearly separate `Event`, `State`, and `Bloc`.
-    - **CRITICAL**: Bắt buộc sử dụng thư viện `freezed` cho `State` để sinh tự động các hàm `==`, `copyWith` và Pattern Matching (`when`, `maybeWhen`). Không sử dụng `equatable`.
-    - **CRITICAL**: Bắt buộc phải có các State chuẩn: `initial`, `loading`, `success/loaded`, `failure/error`.
+    - **CRITICAL**: Mandatory use of the `freezed` library for `State` to automatically generate `==`, `copyWith` functions, and Pattern Matching (`when`, `maybeWhen`). Do not use `equatable`.
+    - **CRITICAL**: Mandatory to have standard States: `initial`, `loading`, `success/loaded`, `failure/error`.
     - **CRITICAL**: For Streams (Firestore), ALWAYS use `emit.forEach` instead of `Stream.listen`. 
     - **CRITICAL**: Never call `emit` inside an unawaited callback or after the handler completes.
 3. **Widgets & Composition**: Build the UI at `lib/presentation/screens/`.
@@ -47,7 +47,7 @@ Bridge the application to the external world (Firestore).
         - Screen-specific widgets: `lib/presentation/screens/[screen_name]/widgets/`.
         - Shared widgets: `lib/presentation/widgets/`.
     - **COLOR & TEXT RULE**: Mandatory use of the `AppColors` class from `lib/core/constants/app_colors.dart`.
-    - **FORBIDDEN**: Do NOT hardcode hex color codes or use default Flutter `Colors.[name]` constants in UI code. Hạn chế hardcode String trực tiếp vào UI nếu có thể.
+    - **FORBIDDEN**: Do NOT hardcode hex color codes or use default Flutter `Colors.[name]` constants in UI code. Avoid hardcoding Strings directly into the UI if possible.
 
 ## Step 4: Dependency Injection (Wiring)
 - Register components sequentially in `lib/core/di/dependency_injection.dart`:
