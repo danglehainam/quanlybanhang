@@ -69,7 +69,6 @@ Lưu chi tiết từng sản phẩm được bán trong một đơn hàng. Dùng
 | `price_at_purchase`| INTEGER| NOT NULL | Giá bán TẠI THỜI ĐIỂM ĐÓ (VND) * |
 | `subtotal` | INTEGER | NOT NULL | Thành tiền (quantity * price) (VND) |
 
-*(Lưu ý `product_name` và `price_at_purchase`: Đây là kỹ thuật "chụp ảnh" (Snapshot) hóa đơn. Tên và giá sản phẩm ở bảng gốc có thể bị sửa hoặc xóa trong tương lai, nhưng hóa đơn đã in ra trong quá khứ thì phải bất di bất dịch).*
 
 ---
 
