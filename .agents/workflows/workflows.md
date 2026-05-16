@@ -20,11 +20,11 @@ Always start from the "Heart" of the application (innermost layer).
 4. **Failure**: Define business-specific errors at `lib/core/error/failures.dart`.
 
 ## Step 2: Data Layer (Structure & Data Access)
-Bridge the application to the external world (Firestore).
+Bridge the application to the local database.
 1. **Model**: Create the file at `lib/data/models/[name]_model.dart`.
     - **GOLDEN RULE**: Absolutely DO NOT `extends` from the Entity.
-    - Must include all mappers: `fromFirestore`, `toFirestore`, `toEntity`, and `fromEntity`.
-2. **DataSource**: Implement direct Firestore calls at `lib/data/datasources/remote/`. 
+    - Must include all mappers: `fromJson`, `toJson`, `toEntity`, and `fromEntity`.
+2. **DataSource**: Implement direct local database calls using Drift at `lib/data/datasources/local/`. 
 3. **Repository Implementation**: Implement the Domain interface at `lib/data/repositories/`. 
     - **Responsibility**: Call the DataSource, catch errors and map them to `Failure`, and transform Data <=> Entity using mappers before returning data.
 
@@ -38,7 +38,7 @@ Bridge the application to the external world (Firestore).
     - Clearly separate `Event`, `State`, and `Bloc`.
     - **CRITICAL**: Mandatory use of the `freezed` library for `State` to automatically generate `==`, `copyWith` functions, and Pattern Matching (`when`, `maybeWhen`). Do not use `equatable`.
     - **CRITICAL**: Mandatory to have standard States: `initial`, `loading`, `success/loaded`, `failure/error`.
-    - **CRITICAL**: For Streams (Firestore), ALWAYS use `emit.forEach` instead of `Stream.listen`. 
+    - **CRITICAL**: For Streams (e.g., Drift watch queries), ALWAYS use `emit.forEach` instead of `Stream.listen`. 
     - **CRITICAL**: Never call `emit` inside an unawaited callback or after the handler completes.
 3. **Widgets & Composition**: Build the UI at `lib/presentation/screens/`.
     - **Priority**: Decompose screens into smaller components (Widgets) for maintainability and reuse.
@@ -46,8 +46,8 @@ Bridge the application to the external world (Firestore).
     - **Directory Structure**: 
         - Screen-specific widgets: `lib/presentation/screens/[screen_name]/widgets/`.
         - Shared widgets: `lib/presentation/widgets/`.
-    - **COLOR & TEXT RULE**: Mandatory use of the `AppColors` class from `lib/core/constants/app_colors.dart`.
-    - **FORBIDDEN**: Do NOT hardcode hex color codes or use default Flutter `Colors.[name]` constants in UI code. Avoid hardcoding Strings directly into the UI if possible.
+    - **COLOR RULE**: Mandatory use of the `AppColors` class from `lib/core/constants/app_colors.dart`.
+    - **FORBIDDEN**: Do NOT hardcode hex color codes or use default Flutter `Colors.[name]` constants in UI code.
 
 ## Step 4: Dependency Injection (Wiring)
 - Register components sequentially in `lib/core/di/dependency_injection.dart`:
@@ -57,6 +57,35 @@ Bridge the application to the external world (Firestore).
 1. **Unit Test**: Prioritize writing tests for UseCases and Repositories in the `test/` directory.
 2. **Analysis**: Run `flutter analyze` to ensure clean code and no unused imports.
 3. **Refactor**: Remove dead code and temporary files after completion.
+
+---
+## 🤖 MANDATORY TECH STACK & ARCHITECTURE PATTERNS
+To prevent AI hallucination and ensure 100% codebase consistency, YOU MUST strictly use the following packages and patterns. DO NOT suggest or use alternatives.
+
+### 1. Core Tech Stack
+- **State Management**: `flutter_bloc` + `freezed`
+- **Routing**: `go_router`
+- **Dependency Injection**: `get_it` (Registered sequentially in `lib/core/di/dependency_injection.dart`)
+- **Local Database**: `drift` (For all local SQLite storage)
+
+### 2. Coding Patterns
+- **Data Mappers**: ALWAYS use `factory` constructors for mapping data (e.g., `factory ProductModel.fromEntity(ProductEntity entity)` or `factory ProductModel.fromJson(Map<String, dynamic> json)`). DO NOT use Dart `extension` methods for mapping.
+- **BLoC Placement**: 
+  - If a BLoC is shared globally across multiple screens (e.g., `AuthBloc`), place it in `lib/presentation/bloc/`.
+  - If a BLoC is feature-specific and belongs to a single screen, it MUST be placed inside the screen's directory: `lib/presentation/screens/[screen_name]/bloc/`.
+
+### 3. Localization (Multi-language)
+We use Flutter's native, type-safe localization (`intl` package with `.arb` files).
+- **Directory Structure**: Store all translation files in `lib/l10n/` (e.g., `app_en.arb` for English, `app_vi.arb` for Vietnamese).
+- **Usage Rule**: Always use the auto-generated `AppLocalizations` class in the UI. Example: `Text(AppLocalizations.of(context)!.loginText)`.
+- **FORBIDDEN**: NEVER hardcode readable text strings in UI widgets (e.g., `Text('Login')`). Always add the string to the `.arb` files first.
+
+### 4. Coding Culture & Strict Conventions
+- **Utility Functions**: ALWAYS extract reusable logic (e.g., date formatting, currency formatting, string manipulation) into separate helper classes/functions inside `lib/core/utils/` (e.g., `CurrencyUtils`, `DateUtils`). NEVER leave generic helper functions inside UI or BLoC files.
+- **Money Rules [CRITICAL]**: NEVER use `double` for currency/money fields (to avoid floating-point math errors). ALWAYS use `int` (representing the absolute value in VND).
+- **Result Type Rule**: Repositories MUST ALWAYS return an `Either<Failure, T>` (using functional programming like `dartz` or `fpdart`). NEVER allow Repositories to throw Exceptions directly to the UI.
+- **DateTime Rules**: ALWAYS store dates in the local database as UTC (`DateTime.toUtc()`). ONLY convert to local time (`toLocal()`) at the Presentation layer just before displaying to the user.
+- **UseCase Convention**: One UseCase class = One Single Action. Names MUST start with an action verb (e.g., `GetProductsUseCase`, `CreateOrderUseCase`).
 
 ---
 ## 🤖 AI BEHAVIOR & MODULARITY RULES
