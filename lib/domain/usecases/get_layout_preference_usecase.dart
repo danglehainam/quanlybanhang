@@ -5,7 +5,7 @@ class GetLayoutPreferenceUseCase {
 
   GetLayoutPreferenceUseCase(this._repository);
 
-  bool? execute() {
+  bool? call() {
     return _repository.getIsMobileView();
   }
 }

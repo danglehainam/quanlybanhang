@@ -55,12 +55,13 @@ extension SettingsEventPatterns on SettingsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadSettings value)?  loadSettings,TResult Function( ToggleLayoutView value)?  toggleLayoutView,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadSettings value)?  loadSettings,TResult Function( ToggleLayoutView value)?  toggleLayoutView,TResult Function( ChangeLanguage value)?  changeLanguage,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LoadSettings() when loadSettings != null:
 return loadSettings(_that);case ToggleLayoutView() when toggleLayoutView != null:
-return toggleLayoutView(_that);case _:
+return toggleLayoutView(_that);case ChangeLanguage() when changeLanguage != null:
+return changeLanguage(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return toggleLayoutView(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadSettings value)  loadSettings,required TResult Function( ToggleLayoutView value)  toggleLayoutView,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadSettings value)  loadSettings,required TResult Function( ToggleLayoutView value)  toggleLayoutView,required TResult Function( ChangeLanguage value)  changeLanguage,}){
 final _that = this;
 switch (_that) {
 case LoadSettings():
 return loadSettings(_that);case ToggleLayoutView():
-return toggleLayoutView(_that);case _:
+return toggleLayoutView(_that);case ChangeLanguage():
+return changeLanguage(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return toggleLayoutView(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadSettings value)?  loadSettings,TResult? Function( ToggleLayoutView value)?  toggleLayoutView,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadSettings value)?  loadSettings,TResult? Function( ToggleLayoutView value)?  toggleLayoutView,TResult? Function( ChangeLanguage value)?  changeLanguage,}){
 final _that = this;
 switch (_that) {
 case LoadSettings() when loadSettings != null:
 return loadSettings(_that);case ToggleLayoutView() when toggleLayoutView != null:
-return toggleLayoutView(_that);case _:
+return toggleLayoutView(_that);case ChangeLanguage() when changeLanguage != null:
+return changeLanguage(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return toggleLayoutView(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( double screenWidth)?  loadSettings,TResult Function()?  toggleLayoutView,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( double screenWidth)?  loadSettings,TResult Function()?  toggleLayoutView,TResult Function( String languageCode)?  changeLanguage,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadSettings() when loadSettings != null:
 return loadSettings(_that.screenWidth);case ToggleLayoutView() when toggleLayoutView != null:
-return toggleLayoutView();case _:
+return toggleLayoutView();case ChangeLanguage() when changeLanguage != null:
+return changeLanguage(_that.languageCode);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return toggleLayoutView();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( double screenWidth)  loadSettings,required TResult Function()  toggleLayoutView,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( double screenWidth)  loadSettings,required TResult Function()  toggleLayoutView,required TResult Function( String languageCode)  changeLanguage,}) {final _that = this;
 switch (_that) {
 case LoadSettings():
 return loadSettings(_that.screenWidth);case ToggleLayoutView():
-return toggleLayoutView();case _:
+return toggleLayoutView();case ChangeLanguage():
+return changeLanguage(_that.languageCode);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return toggleLayoutView();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( double screenWidth)?  loadSettings,TResult? Function()?  toggleLayoutView,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( double screenWidth)?  loadSettings,TResult? Function()?  toggleLayoutView,TResult? Function( String languageCode)?  changeLanguage,}) {final _that = this;
 switch (_that) {
 case LoadSettings() when loadSettings != null:
 return loadSettings(_that.screenWidth);case ToggleLayoutView() when toggleLayoutView != null:
-return toggleLayoutView();case _:
+return toggleLayoutView();case ChangeLanguage() when changeLanguage != null:
+return changeLanguage(_that.languageCode);case _:
   return null;
 
 }
@@ -274,5 +280,71 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class ChangeLanguage implements SettingsEvent {
+  const ChangeLanguage(this.languageCode);
+  
+
+ final  String languageCode;
+
+/// Create a copy of SettingsEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ChangeLanguageCopyWith<ChangeLanguage> get copyWith => _$ChangeLanguageCopyWithImpl<ChangeLanguage>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChangeLanguage&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,languageCode);
+
+@override
+String toString() {
+  return 'SettingsEvent.changeLanguage(languageCode: $languageCode)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ChangeLanguageCopyWith<$Res> implements $SettingsEventCopyWith<$Res> {
+  factory $ChangeLanguageCopyWith(ChangeLanguage value, $Res Function(ChangeLanguage) _then) = _$ChangeLanguageCopyWithImpl;
+@useResult
+$Res call({
+ String languageCode
+});
+
+
+
+
+}
+/// @nodoc
+class _$ChangeLanguageCopyWithImpl<$Res>
+    implements $ChangeLanguageCopyWith<$Res> {
+  _$ChangeLanguageCopyWithImpl(this._self, this._then);
+
+  final ChangeLanguage _self;
+  final $Res Function(ChangeLanguage) _then;
+
+/// Create a copy of SettingsEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? languageCode = null,}) {
+  return _then(ChangeLanguage(
+null == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
 
 // dart format on

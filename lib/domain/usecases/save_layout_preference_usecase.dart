@@ -1,3 +1,6 @@
+import 'package:fpdart/fpdart.dart';
+
+import '../../core/error/failures.dart';
 import '../repositories/settings_repository.dart';
 
 class SaveLayoutPreferenceUseCase {
@@ -5,7 +8,7 @@ class SaveLayoutPreferenceUseCase {
 
   SaveLayoutPreferenceUseCase(this._repository);
 
-  Future<void> execute(bool isMobileView) async {
-    await _repository.setMobileView(isMobileView);
+  Future<Either<Failure, void>> call(bool isMobileView) async {
+    return await _repository.setMobileView(isMobileView);
   }
 }

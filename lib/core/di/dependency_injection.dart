@@ -12,6 +12,8 @@ import '../../data/repositories/settings_repository_impl.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/usecases/get_layout_preference_usecase.dart';
 import '../../domain/usecases/save_layout_preference_usecase.dart';
+import '../../domain/usecases/get_language_usecase.dart';
+import '../../domain/usecases/save_language_usecase.dart';
 import '../../presentation/bloc/settings/settings_bloc.dart';
 import '../../presentation/bloc/auth/auth_bloc.dart';
 
@@ -55,6 +57,12 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<SaveLayoutPreferenceUseCase>(
     () => SaveLayoutPreferenceUseCase(getIt<SettingsRepository>()),
   );
+  getIt.registerLazySingleton<GetLanguageUseCase>(
+    () => GetLanguageUseCase(getIt<SettingsRepository>()),
+  );
+  getIt.registerLazySingleton<SaveLanguageUseCase>(
+    () => SaveLanguageUseCase(getIt<SettingsRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthBloc>(
@@ -69,6 +77,8 @@ Future<void> setupDependencies() async {
     () => SettingsBloc(
       getLayoutPreferenceUseCase: getIt<GetLayoutPreferenceUseCase>(),
       saveLayoutPreferenceUseCase: getIt<SaveLayoutPreferenceUseCase>(),
+      getLanguageUseCase: getIt<GetLanguageUseCase>(),
+      saveLanguageUseCase: getIt<SaveLanguageUseCase>(),
     ),
   );
 }

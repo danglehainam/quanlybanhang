@@ -49,8 +49,13 @@ class _MainLayoutState extends State<MainLayout> {
               // Header is always visible
               AppHeader(
                 isMobileView: isMobileView,
+                languageCode: state.languageCode,
                 onToggleView: () {
                   context.read<SettingsBloc>().add(const SettingsEvent.toggleLayoutView());
+                },
+                onChangeLanguage: () {
+                  final newLang = state.languageCode == 'vi' ? 'en' : 'vi';
+                  context.read<SettingsBloc>().add(SettingsEvent.changeLanguage(newLang));
                 },
                 onMenuPressed: isMobileView ? _openMenu : null,
               ),

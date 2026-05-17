@@ -8,6 +8,7 @@ import 'presentation/bloc/auth/auth_bloc.dart';
 import 'presentation/bloc/auth/auth_event.dart';
 
 import 'presentation/bloc/settings/settings_bloc.dart';
+import 'presentation/bloc/settings/settings_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,18 +33,22 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final appRouter = AppRouter(context.read<AuthBloc>());
-          return MaterialApp.router(
-            title: 'Quản Lý Bán Hàng',
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            locale: const Locale('vi'),
-            theme: ThemeData(
-              colorSchemeSeed: Colors.blue,
-              useMaterial3: true,
-              brightness: Brightness.light,
-            ),
-            routerConfig: appRouter.router,
+          return BlocBuilder<SettingsBloc, SettingsState>(
+            builder: (context, settingsState) {
+              return MaterialApp.router(
+                title: 'Quản Lý Bán Hàng',
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                locale: Locale(settingsState.languageCode),
+                theme: ThemeData(
+                  colorSchemeSeed: Colors.blue,
+                  useMaterial3: true,
+                  brightness: Brightness.light,
+                ),
+                routerConfig: appRouter.router,
+              );
+            },
           );
         },
       ),

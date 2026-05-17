@@ -6,5 +6,6 @@ part 'settings_state.freezed.dart';
 abstract class SettingsState with _$SettingsState {
   const factory SettingsState({
     @Default(false) bool isMobileView,
+    @Default('vi') String languageCode,
   }) = _SettingsState;
 }

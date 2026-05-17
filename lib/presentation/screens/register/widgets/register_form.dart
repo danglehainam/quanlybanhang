@@ -8,6 +8,7 @@ import '../../../bloc/auth/auth_event.dart';
 import '../../../bloc/auth/auth_state.dart';
 import '../../../widgets/app_password_field.dart';
 import '../../../widgets/app_text_field.dart';
+import '../../../widgets/app_primary_button.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -123,43 +124,23 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           const SizedBox(height: 24),
-          _RegisterButton(onPressed: _onRegisterPressed),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              final isLoading = state.maybeWhen(
+                loading: () => true,
+                orElse: () => false,
+              );
+              return AppPrimaryButton(
+                label: l10n.register,
+                isLoading: isLoading,
+                onPressed: _onRegisterPressed,
+              );
+            },
+          ),
           const SizedBox(height: 16),
           _LoginLink(),
         ],
       ),
-    );
-  }
-}
-
-class _RegisterButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const _RegisterButton({required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        final isLoading = state.maybeWhen(
-          loading: () => true,
-          orElse: () => false,
-        );
-        return FilledButton(
-          onPressed: isLoading ? null : onPressed,
-          style: FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-          ),
-          child: isLoading
-              ? const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : Text(l10n.register, style: const TextStyle(fontSize: 16)),
-        );
-      },
     );
   }
 }

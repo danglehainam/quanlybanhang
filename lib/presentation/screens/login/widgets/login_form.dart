@@ -9,6 +9,7 @@ import '../../../bloc/auth/auth_event.dart';
 import '../../../bloc/auth/auth_state.dart';
 import '../../../widgets/app_password_field.dart';
 import '../../../widgets/app_text_field.dart';
+import '../../../widgets/app_primary_button.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -86,7 +87,19 @@ class _LoginFormState extends State<LoginForm> {
             },
           ),
           const SizedBox(height: 16),
-          _LoginButton(onPressed: _onLoginPressed),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              final isLoading = state.maybeWhen(
+                loading: () => true,
+                orElse: () => false,
+              );
+              return AppPrimaryButton(
+                label: l10n.login,
+                isLoading: isLoading,
+                onPressed: _onLoginPressed,
+              );
+            },
+          ),
           const SizedBox(height: 16),
           _RegisterLink(),
         ],
@@ -118,38 +131,6 @@ class _RememberMeCheckbox extends StatelessWidget {
           child: Text(l10n.rememberMe),
         ),
       ],
-    );
-  }
-}
-
-class _LoginButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const _LoginButton({required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        final isLoading = state.maybeWhen(
-          loading: () => true,
-          orElse: () => false,
-        );
-        return FilledButton(
-          onPressed: isLoading ? null : onPressed,
-          style: FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-          ),
-          child: isLoading
-              ? const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : Text(l10n.login, style: const TextStyle(fontSize: 16)),
-        );
-      },
     );
   }
 }

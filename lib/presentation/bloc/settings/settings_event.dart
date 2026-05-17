@@ -6,4 +6,5 @@ part 'settings_event.freezed.dart';
 abstract class SettingsEvent with _$SettingsEvent {
   const factory SettingsEvent.loadSettings(double screenWidth) = LoadSettings;
   const factory SettingsEvent.toggleLayoutView() = ToggleLayoutView;
+  const factory SettingsEvent.changeLanguage(String languageCode) = ChangeLanguage;
 }

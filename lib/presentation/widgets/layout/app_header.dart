@@ -9,13 +9,17 @@ import '../../bloc/auth/auth_state.dart';
 
 class AppHeader extends StatelessWidget {
   final bool isMobileView;
+  final String languageCode;
   final VoidCallback onToggleView;
+  final VoidCallback onChangeLanguage;
   final VoidCallback? onMenuPressed;
 
   const AppHeader({
     super.key,
     required this.isMobileView,
+    required this.languageCode,
     required this.onToggleView,
+    required this.onChangeLanguage,
     this.onMenuPressed,
   });
 
@@ -49,11 +53,34 @@ class AppHeader extends StatelessWidget {
           // View Toggle
           Row(
             children: [
-              Text(isMobileView ? l10n.switchDesktop : l10n.switchMobile),
-              Switch(
-                value: isMobileView,
-                onChanged: (_) => onToggleView(),
-                activeColor: AppColors.primary,
+              ToggleButtons(
+                isSelected: [isMobileView, !isMobileView], // [Mobile, Desktop]
+                onPressed: (index) {
+                  if ((index == 0 && !isMobileView) || (index == 1 && isMobileView)) {
+                    onToggleView();
+                  }
+                },
+                borderRadius: BorderRadius.circular(8),
+                selectedColor: Colors.white,
+                fillColor: AppColors.primary,
+                color: AppColors.textSecondary,
+                constraints: const BoxConstraints(minHeight: 36, minWidth: 40),
+                children: const [
+                  Tooltip(message: 'Mobile View', child: Icon(Icons.phone_android, size: 20)),
+                  Tooltip(message: 'Desktop View', child: Icon(Icons.desktop_windows, size: 20)),
+                ],
+              ),
+              const SizedBox(width: 8),
+              const VerticalDivider(width: 1, indent: 20, endIndent: 20),
+              const SizedBox(width: 8),
+              // Language Toggle
+              TextButton.icon(
+                onPressed: onChangeLanguage,
+                icon: const Icon(Icons.language, color: AppColors.textSecondary),
+                label: Text(
+                  languageCode.toUpperCase(),
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary),
+                ),
               ),
             ],
           ),
