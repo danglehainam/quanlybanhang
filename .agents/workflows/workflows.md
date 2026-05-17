@@ -12,15 +12,16 @@ description: Standard Development & Maintenance Workflow (Clean Architecture & U
 
 The following rules apply to **EVERY step**, **EVERY file**, **EVERY layer** in the project.
 
-## A1. Required Tech Stack
-- **State**: `flutter_bloc` + `freezed` (❌ No `equatable`, `provider`, `riverpod`)
-- **Nav**: `go_router` (Config at `lib/core/routes/app_router.dart`)
-- **DI**: `get_it` (Register at `lib/core/di/dependency_injection.dart`)
-- **DB**: `drift` (SQLite local storage)
-- **l10n**: `intl` (`.arb` files stored at `lib/l10n/`)
-- **Settings**: `shared_preferences` (Used by SettingsBloc)
-- **Error**: `dartz` or `fpdart` (Return type `Either<Failure, T>`)
-- ❌ **FORBIDDEN**: Adding new packages to `pubspec.yaml` without user permission.
+## A1. Stack
+- State: flutter_bloc + freezed
+- Nav: go_router (`core/routes/app_router.dart`)
+- DI: get_it (`core/di/dependency_injection.dart`)
+- DB: drift (SQLite)
+- l10n: intl (`lib/l10n/`)
+- Settings: shared_preferences
+- Error: Either<Failure, T> via dartz/fpdart
+- ❌ No provider, riverpod, equatable
+- ❌ No new packages without permission
 
 ## A2. Naming Rules
 - Files and folders: `snake_case` (e.g. `product_model.dart`).
@@ -105,7 +106,6 @@ The following rules apply to **EVERY step**, **EVERY file**, **EVERY layer** in 
 ---
 
 ## Step 1: Domain Layer (Core Business)
-**What**: Always start from the "heart" of the application (innermost layer).
 
 | Component | File Path | Description |
 | :--- | :--- | :--- |
@@ -129,11 +129,11 @@ The following rules apply to **EVERY step**, **EVERY file**, **EVERY layer** in 
 
 | Component | File Path | Description |
 | :--- | :--- | :--- |
-| Drift Table | `lib/data/datasources/local/tables/[name]_table.dart` | Drift table definition |
-| AppDatabase | `lib/data/datasources/local/app_database.dart` | Central file connecting all tables |
+| Drift Table | `lib/data/datasources/local/tables/[name]_table.dart` | Drift table definition
+| AppDatabase | `lib/data/datasources/local/app_database.dart` | Central file connecting all tables
 | Model | `lib/data/models/[name]_model.dart` | Data mapping object |
-| DataSource | `lib/data/datasources/local/[name]_local_datasource.dart` | Direct Drift API calls |
-| Repository Impl | `lib/data/repositories/[name]_repository_impl.dart` | Implements Domain contract |
+| DataSource | `lib/data/datasources/local/[name]_local_datasource.dart` | Direct Drift API calls
+| Repository Impl | `lib/data/repositories/[name]_repository_impl.dart` | Implements Domain contract
 
 **Rules for this step:**
 - ✅ Drift Table MUST be placed at `lib/data/datasources/local/tables/`.
@@ -212,8 +212,6 @@ Each BLoC folder always has exactly 3 files:
 ---
 
 # PART C: AI BEHAVIOR (MANDATORY)
-
-To prevent AI from generating "lazy" or "wrong" code, AI **MUST** follow:
 
 ## C1. When CREATING new features
 1. **[MUST] CHECK BEFORE CREATING**: Before writing any new widget, MUST use `list_dir` or `grep_search` to check `lib/presentation/widgets/`. If similar widget exists, REUSE it.
