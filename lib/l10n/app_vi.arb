@@ -1,0 +1,39 @@
+{
+  "@@locale": "vi",
+
+  "appName": "Quản Lý Bán Hàng",
+
+  "login": "Đăng nhập",
+  "register": "Đăng ký",
+  "logout": "Đăng xuất",
+
+  "email": "Email",
+  "password": "Mật khẩu",
+  "confirmPassword": "Xác nhận mật khẩu",
+  "userName": "Tên của bạn",
+  "storeName": "Tên cửa hàng",
+  "rememberMe": "Ghi nhớ đăng nhập",
+  "createAccount": "Tạo tài khoản",
+
+  "noAccountYet": "Chưa có tài khoản? ",
+  "alreadyHaveAccount": "Đã có tài khoản? ",
+
+  "validationEmailRequired": "Vui lòng nhập email",
+  "validationEmailInvalid": "Email không hợp lệ",
+  "validationPasswordRequired": "Vui lòng nhập mật khẩu",
+  "validationPasswordTooShort": "Mật khẩu phải có ít nhất 6 ký tự",
+  "validationConfirmPasswordRequired": "Vui lòng xác nhận mật khẩu",
+  "validationPasswordMismatch": "Mật khẩu không khớp",
+  "validationNameRequired": "Vui lòng nhập tên",
+  "validationStoreNameRequired": "Vui lòng nhập tên cửa hàng",
+
+  "home": "Trang chủ",
+  "welcomeUser": "Xin chào, {name}!",
+  "@welcomeUser": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "owner": "Chủ cửa hàng",
+  "employee": "Nhân viên"
+}

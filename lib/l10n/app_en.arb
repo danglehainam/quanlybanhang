@@ -1,0 +1,39 @@
+{
+  "@@locale": "en",
+
+  "appName": "Sales Management",
+
+  "login": "Login",
+  "register": "Register",
+  "logout": "Logout",
+
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm password",
+  "userName": "Your name",
+  "storeName": "Store name",
+  "rememberMe": "Remember me",
+  "createAccount": "Create account",
+
+  "noAccountYet": "Don't have an account? ",
+  "alreadyHaveAccount": "Already have an account? ",
+
+  "validationEmailRequired": "Please enter your email",
+  "validationEmailInvalid": "Invalid email format",
+  "validationPasswordRequired": "Please enter your password",
+  "validationPasswordTooShort": "Password must be at least 6 characters",
+  "validationConfirmPasswordRequired": "Please confirm your password",
+  "validationPasswordMismatch": "Passwords do not match",
+  "validationNameRequired": "Please enter your name",
+  "validationStoreNameRequired": "Please enter store name",
+
+  "home": "Home",
+  "welcomeUser": "Hello, {name}!",
+  "@welcomeUser": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "owner": "Store Owner",
+  "employee": "Employee"
+}
