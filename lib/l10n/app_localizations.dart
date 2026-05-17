@@ -307,6 +307,60 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Giao diện Mobile'**
   String get switchMobile;
+
+  /// No description provided for @filterAndSearch.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bộ lọc & Tìm kiếm'**
+  String get filterAndSearch;
+
+  /// No description provided for @searchCategory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm danh mục...'**
+  String get searchCategory;
+
+  /// No description provided for @searchByName.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm theo tên...'**
+  String get searchByName;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sắp xếp theo'**
+  String get sortBy;
+
+  /// No description provided for @newest.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mới nhất'**
+  String get newest;
+
+  /// No description provided for @oldest.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cũ nhất'**
+  String get oldest;
+
+  /// No description provided for @emptyCategoryMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có danh mục nào.\nHãy thêm danh mục mới để quản lý dễ dàng hơn.'**
+  String get emptyCategoryMessage;
+
+  /// No description provided for @retry.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thử lại'**
+  String get retry;
+
+  /// No description provided for @addCategory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm danh mục'**
+  String get addCategory;
 }
 
 class _AppLocalizationsDelegate

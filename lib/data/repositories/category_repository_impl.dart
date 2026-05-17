@@ -21,8 +21,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
       } catch (e) {
         return Left(DatabaseFailure('Failed to parse categories: $e'));
       }
-    }).handleError((error) {
-      return Left(DatabaseFailure('Failed to watch categories: $error'));
-    }).cast<Either<Failure, List<CategoryEntity>>>();
+    }).handleError((error, stackTrace) {
+      // Stream.handleError doesn't change the stream's type, but we can't emit a new value easily without rxdart.
+      // So we just throw it and let the caller catch it, or better:
+      throw DatabaseFailure('Failed to watch categories: $error');
+    });
   }
 }

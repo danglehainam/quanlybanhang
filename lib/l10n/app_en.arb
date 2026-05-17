@@ -46,5 +46,15 @@
   "menuReports": "Reports",
   "btnSell": "Sell",
   "switchDesktop": "Desktop View",
-  "switchMobile": "Mobile View"
+  "switchMobile": "Mobile View",
+
+  "filterAndSearch": "Filter & Search",
+  "searchCategory": "Search categories...",
+  "searchByName": "Search by name...",
+  "sortBy": "Sort by",
+  "newest": "Newest",
+  "oldest": "Oldest",
+  "emptyCategoryMessage": "No categories found.\nPlease add a new category to manage them easily.",
+  "retry": "Retry",
+  "addCategory": "Add Category"
 }

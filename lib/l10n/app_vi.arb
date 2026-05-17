@@ -46,5 +46,15 @@
   "menuReports": "Báo cáo",
   "btnSell": "Bán hàng",
   "switchDesktop": "Giao diện Desktop",
-  "switchMobile": "Giao diện Mobile"
+  "switchMobile": "Giao diện Mobile",
+
+  "filterAndSearch": "Bộ lọc & Tìm kiếm",
+  "searchCategory": "Tìm kiếm danh mục...",
+  "searchByName": "Tìm kiếm theo tên...",
+  "sortBy": "Sắp xếp theo",
+  "newest": "Mới nhất",
+  "oldest": "Cũ nhất",
+  "emptyCategoryMessage": "Chưa có danh mục nào.\nHãy thêm danh mục mới để quản lý dễ dàng hơn.",
+  "retry": "Thử lại",
+  "addCategory": "Thêm danh mục"
 }

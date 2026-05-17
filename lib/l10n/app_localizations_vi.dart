@@ -114,4 +114,32 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get switchMobile => 'Giao diện Mobile';
+
+  @override
+  String get filterAndSearch => 'Bộ lọc & Tìm kiếm';
+
+  @override
+  String get searchCategory => 'Tìm kiếm danh mục...';
+
+  @override
+  String get searchByName => 'Tìm kiếm theo tên...';
+
+  @override
+  String get sortBy => 'Sắp xếp theo';
+
+  @override
+  String get newest => 'Mới nhất';
+
+  @override
+  String get oldest => 'Cũ nhất';
+
+  @override
+  String get emptyCategoryMessage =>
+      'Chưa có danh mục nào.\nHãy thêm danh mục mới để quản lý dễ dàng hơn.';
+
+  @override
+  String get retry => 'Thử lại';
+
+  @override
+  String get addCategory => 'Thêm danh mục';
 }

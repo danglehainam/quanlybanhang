@@ -8,6 +8,10 @@ import '../../bloc/categories/categories_bloc.dart';
 import '../../bloc/categories/categories_event.dart';
 import '../../bloc/categories/categories_state.dart';
 import '../../bloc/settings/settings_bloc.dart';
+import '../../widgets/app_loading_widget.dart';
+import '../../widgets/empty_data_widget.dart';
+import '../../widgets/app_error_widget.dart';
+import '../../widgets/app_floating_action_button.dart';
 import 'widgets/categories_desktop_view.dart';
 import 'widgets/categories_mobile_view.dart';
 
@@ -31,10 +35,19 @@ class CategoriesView extends StatefulWidget {
 }
 
 class _CategoriesViewState extends State<CategoriesView> {
+  late final TextEditingController _searchController;
+
   @override
   void initState() {
     super.initState();
+    _searchController = TextEditingController();
     context.read<CategoriesBloc>().add(const CategoriesEvent.watchCategories());
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,23 +68,34 @@ class _CategoriesViewState extends State<CategoriesView> {
       body: BlocBuilder<CategoriesBloc, CategoriesState>(
         builder: (context, state) {
           return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (message) => Center(child: Text(message, style: const TextStyle(color: AppColors.error))),
+            initial: () => const AppLoadingWidget(),
+            loading: () => const AppLoadingWidget(),
+            error: (message) => AppErrorWidget(
+              message: message,
+              onRetry: () => context.read<CategoriesBloc>().add(const CategoriesEvent.watchCategories()),
+            ),
             loaded: (categories) {
-              if (categories.isEmpty) {
-                return const Center(child: Text('Chưa có danh mục nào'));
-              }
-              
               if (isMobileView) {
-                return CategoriesMobileView(categories: categories);
+                return CategoriesMobileView(
+                  categories: categories,
+                  searchController: _searchController,
+                );
               }
               
-              return CategoriesDesktopView(categories: categories);
+              return CategoriesDesktopView(
+                categories: categories,
+                searchController: _searchController,
+              );
             },
           );
         },
       ),
+      floatingActionButton: isMobileView
+          ? AppFloatingActionButton(
+              icon: Icons.add,
+              onPressed: () {},
+            )
+          : null,
     );
   }
 }

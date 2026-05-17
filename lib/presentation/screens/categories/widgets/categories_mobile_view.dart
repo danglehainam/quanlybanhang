@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/category_entity.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import '../../../widgets/empty_data_widget.dart';
+import '../../../widgets/app_text_field.dart';
 
 class CategoriesMobileView extends StatelessWidget {
   final List<CategoryEntity> categories;
+  final TextEditingController searchController;
 
-  const CategoriesMobileView({super.key, required this.categories});
+  const CategoriesMobileView({
+    super.key,
+    required this.categories,
+    required this.searchController,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         ExpansionTile(
-          title: const Text('Bộ lọc & Tìm kiếm', style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(l10n.filterAndSearch, style: const TextStyle(fontWeight: FontWeight.bold)),
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -19,14 +29,14 @@ class CategoriesMobileView extends StatelessWidget {
                 children: [
                   DropdownButtonFormField<String>(
                     value: 'newest',
-                    decoration: const InputDecoration(
-                      labelText: 'Sắp xếp theo',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                    decoration: InputDecoration(
+                      labelText: l10n.sortBy,
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                     ),
-                    items: const [
-                      DropdownMenuItem(value: 'newest', child: Text('Mới nhất')),
-                      DropdownMenuItem(value: 'oldest', child: Text('Cũ nhất')),
+                    items: [
+                      DropdownMenuItem(value: 'newest', child: Text(l10n.newest)),
+                      DropdownMenuItem(value: 'oldest', child: Text(l10n.oldest)),
                     ],
                     onChanged: (value) {},
                   ),
@@ -37,34 +47,35 @@ class CategoriesMobileView extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Tìm kiếm theo tên...',
-              prefixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
+          child: AppTextField(
+            controller: searchController,
+            labelText: l10n.searchByName,
+            prefixIcon: Icons.search,
           ),
         ),
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: categories.length,
-            separatorBuilder: (context, index) => const Divider(height: 1),
-            itemBuilder: (context, index) {
-              final category = categories[index];
-              return ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(category.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text(category.description ?? ''),
-                trailing: const Icon(Icons.more_vert),
-                onTap: () {
-                  // Bottom sheet for options
-                },
-              );
-            },
-          ),
+          child: categories.isEmpty
+              ? EmptyDataWidget(
+                  message: l10n.emptyCategoryMessage,
+                  icon: Icons.category_outlined,
+                )
+              : ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: categories.length,
+                  separatorBuilder: (context, index) => const Divider(height: 1),
+                  itemBuilder: (context, index) {
+                    final category = categories[index];
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(category.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text(category.description ?? ''),
+                      trailing: const Icon(Icons.more_vert),
+                      onTap: () {
+                        // Bottom sheet for options
+                      },
+                    );
+                  },
+                ),
         ),
       ],
     );

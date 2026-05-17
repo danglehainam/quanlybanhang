@@ -116,4 +116,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get switchMobile => 'Mobile View';
+
+  @override
+  String get filterAndSearch => 'Filter & Search';
+
+  @override
+  String get searchCategory => 'Search categories...';
+
+  @override
+  String get searchByName => 'Search by name...';
+
+  @override
+  String get sortBy => 'Sort by';
+
+  @override
+  String get newest => 'Newest';
+
+  @override
+  String get oldest => 'Oldest';
+
+  @override
+  String get emptyCategoryMessage =>
+      'No categories found.\nPlease add a new category to manage them easily.';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get addCategory => 'Add Category';
 }
