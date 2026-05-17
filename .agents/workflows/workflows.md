@@ -13,16 +13,13 @@ description: Standard Development & Maintenance Workflow (Clean Architecture & U
 The following rules apply to **EVERY step**, **EVERY file**, **EVERY layer** in the project.
 
 ## A1. Required Tech Stack
-| Purpose | Library | Note |
-| :--- | :--- | :--- |
-| State management | `flutter_bloc` + `freezed` | No `equatable`, `provider`, `riverpod` |
-| Navigation | `go_router` | Config at `lib/core/routes/app_router.dart` |
-| Dependency Injection | `get_it` | Register at `lib/core/di/dependency_injection.dart` |
-| Local database | `drift` | SQLite local storage |
-| Localization | `intl` (`.arb` files) | Stored at `lib/l10n/` |
-| User settings | `shared_preferences` | Used by SettingsBloc |
-| Error handling | `dartz` or `fpdart` | Return type `Either<Failure, T>` |
-
+- **State**: `flutter_bloc` + `freezed` (❌ No `equatable`, `provider`, `riverpod`)
+- **Nav**: `go_router` (Config at `lib/core/routes/app_router.dart`)
+- **DI**: `get_it` (Register at `lib/core/di/dependency_injection.dart`)
+- **DB**: `drift` (SQLite local storage)
+- **l10n**: `intl` (`.arb` files stored at `lib/l10n/`)
+- **Settings**: `shared_preferences` (Used by SettingsBloc)
+- **Error**: `dartz` or `fpdart` (Return type `Either<Failure, T>`)
 - ❌ **FORBIDDEN**: Adding new packages to `pubspec.yaml` without user permission.
 
 ## A2. Naming Rules
