@@ -55,6 +55,12 @@ class AppDrawer extends StatelessWidget {
                   isSelected: currentRoute == AppRoutes.products,
                 ),
                 _DrawerItem(
+                  title: l10n.menuCategories,
+                  icon: Icons.category_outlined,
+                  route: AppRoutes.categories,
+                  isSelected: currentRoute == AppRoutes.categories,
+                ),
+                _DrawerItem(
                   title: l10n.menuTransactions,
                   icon: Icons.swap_horiz_outlined,
                   route: AppRoutes.transactions,

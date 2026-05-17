@@ -257,8 +257,14 @@ abstract class AppLocalizations {
   /// No description provided for @menuProducts.
   ///
   /// In vi, this message translates to:
-  /// **'Hàng hóa'**
+  /// **'Sản phẩm'**
   String get menuProducts;
+
+  /// No description provided for @menuCategories.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh mục'**
+  String get menuCategories;
 
   /// No description provided for @menuTransactions.
   ///

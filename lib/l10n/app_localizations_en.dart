@@ -94,6 +94,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menuProducts => 'Products';
 
   @override
+  String get menuCategories => 'Categories';
+
+  @override
   String get menuTransactions => 'Transactions';
 
   @override

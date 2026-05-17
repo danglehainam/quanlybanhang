@@ -171,6 +171,7 @@ Each BLoC folder always has exactly 3 files:
 **Rules:**
 - ✅ MUST use `freezed` for State and Event. Class declaration MUST include `abstract` keyword.
 - ✅ MUST have all 4 standard states: `initial`, `loading`, `loaded/success`, `error/failure`.
+- ✅ **Screen-specific Blocs MUST be provided locally** inside their respective screen file (e.g. `BlocProvider` wraps `[Name]View` inside `[name]_screen.dart`). ❌ **FORBIDDEN** to provide screen-specific Blocs globally in `main.dart` or inside `app_router.dart`.
 - ✅ For Streams (e.g. Drift watch query): Always use `emit.forEach`, **FORBIDDEN** to use `Stream.listen`.
 - ❌ **FORBIDDEN** to call `emit` inside un-awaited callbacks or after handler completes.
 - ❌ **FORBIDDEN** to write `try-catch` in BLoC (errors are handled at Repository layer).

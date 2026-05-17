@@ -89,7 +89,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get menuOverview => 'Tổng quan';
 
   @override
-  String get menuProducts => 'Hàng hóa';
+  String get menuProducts => 'Sản phẩm';
+
+  @override
+  String get menuCategories => 'Danh mục';
 
   @override
   String get menuTransactions => 'Giao dịch';

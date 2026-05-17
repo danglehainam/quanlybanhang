@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../constants/app_routes.dart';
 import '../../presentation/bloc/auth/auth_bloc.dart';
 import '../../presentation/bloc/auth/auth_state.dart';
@@ -10,6 +12,7 @@ import '../../presentation/screens/register/register_screen.dart';
 import '../../presentation/screens/products/products_screen.dart';
 import '../../presentation/screens/transactions/transactions_screen.dart';
 import '../../presentation/screens/partners/partners_screen.dart';
+import '../../presentation/screens/categories/categories_screen.dart';
 import '../../presentation/screens/cashbook/cashbook_screen.dart';
 import '../../presentation/screens/reports/reports_screen.dart';
 import '../../presentation/widgets/layout/main_layout.dart';
@@ -68,6 +71,10 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.partners,
             builder: (context, state) => const PartnersScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.categories,
+            builder: (context, state) => const CategoriesScreen(),
           ),
           GoRoute(
             path: AppRoutes.cashbook,

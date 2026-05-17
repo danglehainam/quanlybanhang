@@ -7,15 +7,20 @@ import 'package:path/path.dart' as p;
 
 import 'tables/stores_table.dart';
 import 'tables/users_table.dart';
+import 'tables/categories_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Stores, Users])
+@DriftDatabase(tables: [
+  Stores,
+  Users,
+  Categories,
+])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

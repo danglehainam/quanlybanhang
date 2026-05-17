@@ -8,14 +8,19 @@ import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../data/datasources/local/settings_local_datasource.dart';
+import '../../data/datasources/local/category_local_datasource.dart';
 import '../../data/repositories/settings_repository_impl.dart';
+import '../../data/repositories/category_repository_impl.dart';
 import '../../domain/repositories/settings_repository.dart';
+import '../../domain/repositories/category_repository.dart';
 import '../../domain/usecases/get_layout_preference_usecase.dart';
 import '../../domain/usecases/save_layout_preference_usecase.dart';
 import '../../domain/usecases/get_language_usecase.dart';
 import '../../domain/usecases/save_language_usecase.dart';
+import '../../domain/usecases/get_categories_usecase.dart';
 import '../../presentation/bloc/settings/settings_bloc.dart';
 import '../../presentation/bloc/auth/auth_bloc.dart';
+import '../../presentation/bloc/categories/categories_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -35,6 +40,9 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<SettingsLocalDataSource>(
     () => SettingsLocalDataSource(getIt<SharedPreferences>()),
   );
+  getIt.registerLazySingleton<CategoryLocalDataSource>(
+    () => CategoryLocalDataSource(getIt<AppDatabase>()),
+  );
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -42,6 +50,9 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<SettingsRepository>(
     () => SettingsRepositoryImpl(getIt<SettingsLocalDataSource>()),
+  );
+  getIt.registerLazySingleton<CategoryRepository>(
+    () => CategoryRepositoryImpl(getIt<CategoryLocalDataSource>()),
   );
 
   // UseCase
@@ -63,6 +74,9 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<SaveLanguageUseCase>(
     () => SaveLanguageUseCase(getIt<SettingsRepository>()),
   );
+  getIt.registerLazySingleton<GetCategoriesUseCase>(
+    () => GetCategoriesUseCase(getIt<CategoryRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthBloc>(
@@ -80,5 +94,8 @@ Future<void> setupDependencies() async {
       getLanguageUseCase: getIt<GetLanguageUseCase>(),
       saveLanguageUseCase: getIt<SaveLanguageUseCase>(),
     ),
+  );
+  getIt.registerFactory<CategoriesBloc>(
+    () => CategoriesBloc(getCategoriesUseCase: getIt<GetCategoriesUseCase>()),
   );
 }
