@@ -84,4 +84,31 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get employee => 'Nhân viên';
+
+  @override
+  String get menuOverview => 'Tổng quan';
+
+  @override
+  String get menuProducts => 'Hàng hóa';
+
+  @override
+  String get menuTransactions => 'Giao dịch';
+
+  @override
+  String get menuPartners => 'Đối tác';
+
+  @override
+  String get menuCashbook => 'Sổ quỹ';
+
+  @override
+  String get menuReports => 'Báo cáo';
+
+  @override
+  String get btnSell => 'Bán hàng';
+
+  @override
+  String get switchDesktop => 'Giao diện Desktop';
+
+  @override
+  String get switchMobile => 'Giao diện Mobile';
 }

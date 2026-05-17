@@ -1,0 +1,9 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'settings_event.freezed.dart';
+
+@freezed
+abstract class SettingsEvent with _$SettingsEvent {
+  const factory SettingsEvent.loadSettings(double screenWidth) = LoadSettings;
+  const factory SettingsEvent.toggleLayoutView() = ToggleLayoutView;
+}

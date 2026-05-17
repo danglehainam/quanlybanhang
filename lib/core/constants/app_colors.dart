@@ -18,6 +18,12 @@ class AppColors {
   static const Color ownerBadge = Color(0xFFFFF8E1);
   static const Color employeeBadge = Color(0xFFE3F2FD);
 
+  // Layout
+  static const Color headerBackground = Colors.white;
+  static const Color navBarBackground = Color(0xFF0073B7); // KiotViet blue
+  static const Color navBarSelected = Color(0xFF005688); // Darker blue for selected tab
+  static const Color background = Color(0xFFF4F5F7); // Light gray background
+
   // Text
   static const Color textSecondary = Color(0xFF757575);
 }

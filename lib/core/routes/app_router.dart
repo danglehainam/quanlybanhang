@@ -7,6 +7,12 @@ import '../../presentation/bloc/auth/auth_state.dart';
 import '../../presentation/screens/home/home_screen.dart';
 import '../../presentation/screens/login/login_screen.dart';
 import '../../presentation/screens/register/register_screen.dart';
+import '../../presentation/screens/products/products_screen.dart';
+import '../../presentation/screens/transactions/transactions_screen.dart';
+import '../../presentation/screens/partners/partners_screen.dart';
+import '../../presentation/screens/cashbook/cashbook_screen.dart';
+import '../../presentation/screens/reports/reports_screen.dart';
+import '../../presentation/widgets/layout/main_layout.dart';
 
 class AppRouter {
   final AuthBloc authBloc;
@@ -42,9 +48,36 @@ class AppRouter {
         path: AppRoutes.register,
         builder: (context, state) => const RegisterScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.home,
-        builder: (context, state) => const HomeScreen(),
+      ShellRoute(
+        builder: (context, state, child) {
+          return MainLayout(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: AppRoutes.home,
+            builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.products,
+            builder: (context, state) => const ProductsScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.transactions,
+            builder: (context, state) => const TransactionsScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.partners,
+            builder: (context, state) => const PartnersScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.cashbook,
+            builder: (context, state) => const CashbookScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.reports,
+            builder: (context, state) => const ReportsScreen(),
+          ),
+        ],
       ),
     ],
   );

@@ -35,5 +35,15 @@
     }
   },
   "owner": "Chủ cửa hàng",
-  "employee": "Nhân viên"
+  "employee": "Nhân viên",
+
+  "menuOverview": "Tổng quan",
+  "menuProducts": "Hàng hóa",
+  "menuTransactions": "Giao dịch",
+  "menuPartners": "Đối tác",
+  "menuCashbook": "Sổ quỹ",
+  "menuReports": "Báo cáo",
+  "btnSell": "Bán hàng",
+  "switchDesktop": "Giao diện Desktop",
+  "switchMobile": "Giao diện Mobile"
 }

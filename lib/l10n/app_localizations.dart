@@ -247,6 +247,60 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Nhân viên'**
   String get employee;
+
+  /// No description provided for @menuOverview.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tổng quan'**
+  String get menuOverview;
+
+  /// No description provided for @menuProducts.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hàng hóa'**
+  String get menuProducts;
+
+  /// No description provided for @menuTransactions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch'**
+  String get menuTransactions;
+
+  /// No description provided for @menuPartners.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đối tác'**
+  String get menuPartners;
+
+  /// No description provided for @menuCashbook.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sổ quỹ'**
+  String get menuCashbook;
+
+  /// No description provided for @menuReports.
+  ///
+  /// In vi, this message translates to:
+  /// **'Báo cáo'**
+  String get menuReports;
+
+  /// No description provided for @btnSell.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bán hàng'**
+  String get btnSell;
+
+  /// No description provided for @switchDesktop.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao diện Desktop'**
+  String get switchDesktop;
+
+  /// No description provided for @switchMobile.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao diện Mobile'**
+  String get switchMobile;
 }
 
 class _AppLocalizationsDelegate

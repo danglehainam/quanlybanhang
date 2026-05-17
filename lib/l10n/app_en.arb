@@ -35,5 +35,15 @@
     }
   },
   "owner": "Store Owner",
-  "employee": "Employee"
+  "employee": "Employee",
+
+  "menuOverview": "Overview",
+  "menuProducts": "Products",
+  "menuTransactions": "Transactions",
+  "menuPartners": "Partners",
+  "menuCashbook": "Cashbook",
+  "menuReports": "Reports",
+  "btnSell": "Sell",
+  "switchDesktop": "Desktop View",
+  "switchMobile": "Mobile View"
 }

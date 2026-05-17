@@ -7,6 +7,8 @@ import 'core/routes/app_router.dart';
 import 'presentation/bloc/auth/auth_bloc.dart';
 import 'presentation/bloc/auth/auth_event.dart';
 
+import 'presentation/bloc/settings/settings_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupDependencies();
@@ -18,8 +20,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<AuthBloc>()..add(const AuthEvent.checkRememberedUser()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<AuthBloc>()..add(const AuthEvent.checkRememberedUser()),
+        ),
+        BlocProvider(
+          create: (_) => getIt<SettingsBloc>(),
+        ),
+      ],
       child: Builder(
         builder: (context) {
           final appRouter = AppRouter(context.read<AuthBloc>());

@@ -7,6 +7,12 @@ import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
+import '../../data/datasources/local/settings_local_datasource.dart';
+import '../../data/repositories/settings_repository_impl.dart';
+import '../../domain/repositories/settings_repository.dart';
+import '../../domain/usecases/get_layout_preference_usecase.dart';
+import '../../domain/usecases/save_layout_preference_usecase.dart';
+import '../../presentation/bloc/settings/settings_bloc.dart';
 import '../../presentation/bloc/auth/auth_bloc.dart';
 
 final getIt = GetIt.instance;
@@ -24,9 +30,16 @@ Future<void> setupDependencies() async {
     () => AuthLocalDataSource(getIt<AppDatabase>()),
   );
 
+  getIt.registerLazySingleton<SettingsLocalDataSource>(
+    () => SettingsLocalDataSource(getIt<SharedPreferences>()),
+  );
+
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(getIt<AuthLocalDataSource>()),
+  );
+  getIt.registerLazySingleton<SettingsRepository>(
+    () => SettingsRepositoryImpl(getIt<SettingsLocalDataSource>()),
   );
 
   // UseCase
@@ -36,6 +49,12 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<RegisterUseCase>(
     () => RegisterUseCase(getIt<AuthRepository>()),
   );
+  getIt.registerLazySingleton<GetLayoutPreferenceUseCase>(
+    () => GetLayoutPreferenceUseCase(getIt<SettingsRepository>()),
+  );
+  getIt.registerLazySingleton<SaveLayoutPreferenceUseCase>(
+    () => SaveLayoutPreferenceUseCase(getIt<SettingsRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthBloc>(
@@ -44,6 +63,12 @@ Future<void> setupDependencies() async {
       registerUseCase: getIt<RegisterUseCase>(),
       authRepository: getIt<AuthRepository>(),
       prefs: getIt<SharedPreferences>(),
+    ),
+  );
+  getIt.registerFactory<SettingsBloc>(
+    () => SettingsBloc(
+      getLayoutPreferenceUseCase: getIt<GetLayoutPreferenceUseCase>(),
+      saveLayoutPreferenceUseCase: getIt<SaveLayoutPreferenceUseCase>(),
     ),
   );
 }

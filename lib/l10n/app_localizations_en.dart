@@ -86,4 +86,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get employee => 'Employee';
+
+  @override
+  String get menuOverview => 'Overview';
+
+  @override
+  String get menuProducts => 'Products';
+
+  @override
+  String get menuTransactions => 'Transactions';
+
+  @override
+  String get menuPartners => 'Partners';
+
+  @override
+  String get menuCashbook => 'Cashbook';
+
+  @override
+  String get menuReports => 'Reports';
+
+  @override
+  String get btnSell => 'Sell';
+
+  @override
+  String get switchDesktop => 'Desktop View';
+
+  @override
+  String get switchMobile => 'Mobile View';
 }

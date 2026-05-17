@@ -83,6 +83,12 @@ The following rules apply to **EVERY step**, **EVERY file**, **EVERY layer** in 
 - **Layer 2 — UseCase**: Validate business rules (duplicate name, insufficient balance). Return `Left(Failure)`.
 - ❌ **FORBIDDEN** to put business validation in UI. ❌ **FORBIDDEN** to put format validation in UseCase.
 
+## A15. Memory Management & Lifecycle Rules
+- ✅ **ALWAYS** call `dispose()` for any `Controller` (`TextEditingController`, `ScrollController`, `AnimationController`, etc.) inside `StatefulWidget.dispose`.
+- ✅ **ALWAYS** call `cancel()` on any `StreamSubscription` or `Timer` when the widget is disposed.
+- ✅ **ALWAYS** check `if (!mounted) return;` when using `BuildContext` after an `await` call (async gaps) to prevent memory leaks and crash errors.
+- ❌ **FORBIDDEN** to store large objects, Contexts, or unnecessary Lists in global singletons (GetIt) unless they are core Services/Repositories. State must be handled locally in BLoC.
+
 ## A14. Permission Rules
 - ✅ `AuthBloc` MUST cache user's permission codes (from `role_permissions` table) after login. No DB query per render.
 - ✅ Wrap permission-required widgets with `PermissionGuard(permission: 'code', child: widget)` at `lib/presentation/widgets/permission_guard.dart`.
