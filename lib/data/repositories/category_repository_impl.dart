@@ -46,4 +46,32 @@ class CategoryRepositoryImpl implements CategoryRepository {
       return Left(DatabaseFailure('Failed to create category: $e'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateCategory(CategoryEntity category) async {
+    try {
+      final companion = CategoriesCompanion(
+        id: drift.Value(category.id),
+        storeId: drift.Value(category.storeId),
+        name: drift.Value(category.name),
+        description: drift.Value(category.description),
+        createdAt: drift.Value(category.createdAt.millisecondsSinceEpoch),
+        updatedAt: drift.Value(category.updatedAt.millisecondsSinceEpoch),
+      );
+      await _localDataSource.updateCategory(companion);
+      return const Right(null);
+    } catch (e) {
+      return Left(DatabaseFailure('Failed to update category: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteCategory(int id) async {
+    try {
+      await _localDataSource.deleteCategory(id);
+      return const Right(null);
+    } catch (e) {
+      return Left(DatabaseFailure('Failed to delete category: $e'));
+    }
+  }
 }

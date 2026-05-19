@@ -9,7 +9,6 @@ import '../../bloc/categories/categories_event.dart';
 import '../../bloc/categories/categories_state.dart';
 import '../../bloc/settings/settings_bloc.dart';
 import '../../widgets/app_loading_widget.dart';
-import '../../widgets/empty_data_widget.dart';
 import '../../widgets/app_error_widget.dart';
 import '../../widgets/app_floating_action_button.dart';
 import 'widgets/categories_desktop_view.dart';

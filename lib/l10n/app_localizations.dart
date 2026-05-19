@@ -397,6 +397,54 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Vui lòng nhập tên danh mục'**
   String get validationCategoryNameRequired;
+
+  /// No description provided for @editCategory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật danh mục'**
+  String get editCategory;
+
+  /// No description provided for @edit.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sửa'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa'**
+  String get delete;
+
+  /// No description provided for @deleteCategoryConfirmTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa danh mục'**
+  String get deleteCategoryConfirmTitle;
+
+  /// No description provided for @deleteCategoryConfirmMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn xóa danh mục này không? Thao tác này không thể hoàn tác.'**
+  String get deleteCategoryConfirmMessage;
+
+  /// No description provided for @categoryCreatedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo danh mục thành công!'**
+  String get categoryCreatedSuccess;
+
+  /// No description provided for @categoryUpdatedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật danh mục thành công!'**
+  String get categoryUpdatedSuccess;
+
+  /// No description provided for @categoryDeletedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa danh mục thành công!'**
+  String get categoryDeletedSuccess;
 }
 
 class _AppLocalizationsDelegate

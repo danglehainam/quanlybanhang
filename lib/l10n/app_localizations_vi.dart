@@ -160,4 +160,29 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get validationCategoryNameRequired => 'Vui lòng nhập tên danh mục';
+
+  @override
+  String get editCategory => 'Cập nhật danh mục';
+
+  @override
+  String get edit => 'Sửa';
+
+  @override
+  String get delete => 'Xóa';
+
+  @override
+  String get deleteCategoryConfirmTitle => 'Xóa danh mục';
+
+  @override
+  String get deleteCategoryConfirmMessage =>
+      'Bạn có chắc chắn muốn xóa danh mục này không? Thao tác này không thể hoàn tác.';
+
+  @override
+  String get categoryCreatedSuccess => 'Tạo danh mục thành công!';
+
+  @override
+  String get categoryUpdatedSuccess => 'Cập nhật danh mục thành công!';
+
+  @override
+  String get categoryDeletedSuccess => 'Xóa danh mục thành công!';
 }

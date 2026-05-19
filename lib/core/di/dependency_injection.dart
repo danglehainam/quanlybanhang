@@ -19,6 +19,8 @@ import '../../domain/usecases/get_language_usecase.dart';
 import '../../domain/usecases/save_language_usecase.dart';
 import '../../domain/usecases/get_categories_usecase.dart';
 import '../../domain/usecases/create_category_usecase.dart';
+import '../../domain/usecases/update_category_usecase.dart';
+import '../../domain/usecases/delete_category_usecase.dart';
 import '../../presentation/bloc/settings/settings_bloc.dart';
 import '../../presentation/bloc/auth/auth_bloc.dart';
 import '../../presentation/bloc/categories/categories_bloc.dart';
@@ -81,6 +83,12 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<CreateCategoryUseCase>(
     () => CreateCategoryUseCase(getIt<CategoryRepository>()),
   );
+  getIt.registerLazySingleton<UpdateCategoryUseCase>(
+    () => UpdateCategoryUseCase(getIt<CategoryRepository>()),
+  );
+  getIt.registerLazySingleton<DeleteCategoryUseCase>(
+    () => DeleteCategoryUseCase(getIt<CategoryRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthBloc>(
@@ -103,6 +111,8 @@ Future<void> setupDependencies() async {
     () => CategoriesBloc(
       getCategoriesUseCase: getIt<GetCategoriesUseCase>(),
       createCategoryUseCase: getIt<CreateCategoryUseCase>(),
+      updateCategoryUseCase: getIt<UpdateCategoryUseCase>(),
+      deleteCategoryUseCase: getIt<DeleteCategoryUseCase>(),
     ),
   );
 }

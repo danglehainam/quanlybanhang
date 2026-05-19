@@ -55,12 +55,14 @@ extension CategoriesEventPatterns on CategoriesEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( WatchCategories value)?  watchCategories,TResult Function( CreateCategory value)?  createCategory,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( WatchCategories value)?  watchCategories,TResult Function( CreateCategory value)?  createCategory,TResult Function( UpdateCategory value)?  updateCategory,TResult Function( DeleteCategory value)?  deleteCategory,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
 return watchCategories(_that);case CreateCategory() when createCategory != null:
-return createCategory(_that);case _:
+return createCategory(_that);case UpdateCategory() when updateCategory != null:
+return updateCategory(_that);case DeleteCategory() when deleteCategory != null:
+return deleteCategory(_that);case _:
   return orElse();
 
 }
@@ -78,12 +80,14 @@ return createCategory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( WatchCategories value)  watchCategories,required TResult Function( CreateCategory value)  createCategory,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( WatchCategories value)  watchCategories,required TResult Function( CreateCategory value)  createCategory,required TResult Function( UpdateCategory value)  updateCategory,required TResult Function( DeleteCategory value)  deleteCategory,}){
 final _that = this;
 switch (_that) {
 case WatchCategories():
 return watchCategories(_that);case CreateCategory():
-return createCategory(_that);case _:
+return createCategory(_that);case UpdateCategory():
+return updateCategory(_that);case DeleteCategory():
+return deleteCategory(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +104,14 @@ return createCategory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( WatchCategories value)?  watchCategories,TResult? Function( CreateCategory value)?  createCategory,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( WatchCategories value)?  watchCategories,TResult? Function( CreateCategory value)?  createCategory,TResult? Function( UpdateCategory value)?  updateCategory,TResult? Function( DeleteCategory value)?  deleteCategory,}){
 final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
 return watchCategories(_that);case CreateCategory() when createCategory != null:
-return createCategory(_that);case _:
+return createCategory(_that);case UpdateCategory() when updateCategory != null:
+return updateCategory(_that);case DeleteCategory() when deleteCategory != null:
+return deleteCategory(_that);case _:
   return null;
 
 }
@@ -122,11 +128,13 @@ return createCategory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  watchCategories,TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  createCategory,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  watchCategories,TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  createCategory,TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  updateCategory,TResult Function( int id,  void Function() onSuccess,  void Function(String) onError)?  deleteCategory,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
 return watchCategories();case CreateCategory() when createCategory != null:
-return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
+return createCategory(_that.category,_that.onSuccess,_that.onError);case UpdateCategory() when updateCategory != null:
+return updateCategory(_that.category,_that.onSuccess,_that.onError);case DeleteCategory() when deleteCategory != null:
+return deleteCategory(_that.id,_that.onSuccess,_that.onError);case _:
   return orElse();
 
 }
@@ -144,11 +152,13 @@ return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  watchCategories,required TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)  createCategory,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  watchCategories,required TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)  createCategory,required TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)  updateCategory,required TResult Function( int id,  void Function() onSuccess,  void Function(String) onError)  deleteCategory,}) {final _that = this;
 switch (_that) {
 case WatchCategories():
 return watchCategories();case CreateCategory():
-return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
+return createCategory(_that.category,_that.onSuccess,_that.onError);case UpdateCategory():
+return updateCategory(_that.category,_that.onSuccess,_that.onError);case DeleteCategory():
+return deleteCategory(_that.id,_that.onSuccess,_that.onError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +175,13 @@ return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  watchCategories,TResult? Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  createCategory,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  watchCategories,TResult? Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  createCategory,TResult? Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  updateCategory,TResult? Function( int id,  void Function() onSuccess,  void Function(String) onError)?  deleteCategory,}) {final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
 return watchCategories();case CreateCategory() when createCategory != null:
-return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
+return createCategory(_that.category,_that.onSuccess,_that.onError);case UpdateCategory() when updateCategory != null:
+return updateCategory(_that.category,_that.onSuccess,_that.onError);case DeleteCategory() when deleteCategory != null:
+return deleteCategory(_that.id,_that.onSuccess,_that.onError);case _:
   return null;
 
 }
@@ -271,6 +283,146 @@ class _$CreateCategoryCopyWithImpl<$Res>
   return _then(CreateCategory(
 null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as CategoryEntity,onSuccess: null == onSuccess ? _self.onSuccess : onSuccess // ignore: cast_nullable_to_non_nullable
+as void Function(),onError: null == onError ? _self.onError : onError // ignore: cast_nullable_to_non_nullable
+as void Function(String),
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UpdateCategory implements CategoriesEvent {
+  const UpdateCategory(this.category, {required this.onSuccess, required this.onError});
+  
+
+ final  CategoryEntity category;
+ final  void Function() onSuccess;
+ final  void Function(String) onError;
+
+/// Create a copy of CategoriesEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateCategoryCopyWith<UpdateCategory> get copyWith => _$UpdateCategoryCopyWithImpl<UpdateCategory>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateCategory&&(identical(other.category, category) || other.category == category)&&(identical(other.onSuccess, onSuccess) || other.onSuccess == onSuccess)&&(identical(other.onError, onError) || other.onError == onError));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,category,onSuccess,onError);
+
+@override
+String toString() {
+  return 'CategoriesEvent.updateCategory(category: $category, onSuccess: $onSuccess, onError: $onError)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateCategoryCopyWith<$Res> implements $CategoriesEventCopyWith<$Res> {
+  factory $UpdateCategoryCopyWith(UpdateCategory value, $Res Function(UpdateCategory) _then) = _$UpdateCategoryCopyWithImpl;
+@useResult
+$Res call({
+ CategoryEntity category, void Function() onSuccess, void Function(String) onError
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateCategoryCopyWithImpl<$Res>
+    implements $UpdateCategoryCopyWith<$Res> {
+  _$UpdateCategoryCopyWithImpl(this._self, this._then);
+
+  final UpdateCategory _self;
+  final $Res Function(UpdateCategory) _then;
+
+/// Create a copy of CategoriesEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? category = null,Object? onSuccess = null,Object? onError = null,}) {
+  return _then(UpdateCategory(
+null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as CategoryEntity,onSuccess: null == onSuccess ? _self.onSuccess : onSuccess // ignore: cast_nullable_to_non_nullable
+as void Function(),onError: null == onError ? _self.onError : onError // ignore: cast_nullable_to_non_nullable
+as void Function(String),
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class DeleteCategory implements CategoriesEvent {
+  const DeleteCategory(this.id, {required this.onSuccess, required this.onError});
+  
+
+ final  int id;
+ final  void Function() onSuccess;
+ final  void Function(String) onError;
+
+/// Create a copy of CategoriesEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DeleteCategoryCopyWith<DeleteCategory> get copyWith => _$DeleteCategoryCopyWithImpl<DeleteCategory>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeleteCategory&&(identical(other.id, id) || other.id == id)&&(identical(other.onSuccess, onSuccess) || other.onSuccess == onSuccess)&&(identical(other.onError, onError) || other.onError == onError));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id,onSuccess,onError);
+
+@override
+String toString() {
+  return 'CategoriesEvent.deleteCategory(id: $id, onSuccess: $onSuccess, onError: $onError)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DeleteCategoryCopyWith<$Res> implements $CategoriesEventCopyWith<$Res> {
+  factory $DeleteCategoryCopyWith(DeleteCategory value, $Res Function(DeleteCategory) _then) = _$DeleteCategoryCopyWithImpl;
+@useResult
+$Res call({
+ int id, void Function() onSuccess, void Function(String) onError
+});
+
+
+
+
+}
+/// @nodoc
+class _$DeleteCategoryCopyWithImpl<$Res>
+    implements $DeleteCategoryCopyWith<$Res> {
+  _$DeleteCategoryCopyWithImpl(this._self, this._then);
+
+  final DeleteCategory _self;
+  final $Res Function(DeleteCategory) _then;
+
+/// Create a copy of CategoriesEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,Object? onSuccess = null,Object? onError = null,}) {
+  return _then(DeleteCategory(
+null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,onSuccess: null == onSuccess ? _self.onSuccess : onSuccess // ignore: cast_nullable_to_non_nullable
 as void Function(),onError: null == onError ? _self.onError : onError // ignore: cast_nullable_to_non_nullable
 as void Function(String),
   ));

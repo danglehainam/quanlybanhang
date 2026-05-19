@@ -162,4 +162,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationCategoryNameRequired => 'Please enter a category name';
+
+  @override
+  String get editCategory => 'Update Category';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleteCategoryConfirmTitle => 'Delete Category';
+
+  @override
+  String get deleteCategoryConfirmMessage =>
+      'Are you sure you want to delete this category? This action cannot be undone.';
+
+  @override
+  String get categoryCreatedSuccess => 'Category created successfully!';
+
+  @override
+  String get categoryUpdatedSuccess => 'Category updated successfully!';
+
+  @override
+  String get categoryDeletedSuccess => 'Category deleted successfully!';
 }

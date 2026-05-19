@@ -11,4 +11,14 @@ abstract class CategoriesEvent with _$CategoriesEvent {
     required void Function() onSuccess,
     required void Function(String) onError,
   }) = CreateCategory;
+  const factory CategoriesEvent.updateCategory(
+    CategoryEntity category, {
+    required void Function() onSuccess,
+    required void Function(String) onError,
+  }) = UpdateCategory;
+  const factory CategoriesEvent.deleteCategory(
+    int id, {
+    required void Function() onSuccess,
+    required void Function(String) onError,
+  }) = DeleteCategory;
 }

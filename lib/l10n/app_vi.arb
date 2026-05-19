@@ -62,5 +62,13 @@
   "categoryDescription": "Mô tả",
   "cancel": "Hủy",
   "save": "Lưu",
-  "validationCategoryNameRequired": "Vui lòng nhập tên danh mục"
+  "validationCategoryNameRequired": "Vui lòng nhập tên danh mục",
+  "editCategory": "Cập nhật danh mục",
+  "edit": "Sửa",
+  "delete": "Xóa",
+  "deleteCategoryConfirmTitle": "Xóa danh mục",
+  "deleteCategoryConfirmMessage": "Bạn có chắc chắn muốn xóa danh mục này không? Thao tác này không thể hoàn tác.",
+  "categoryCreatedSuccess": "Tạo danh mục thành công!",
+  "categoryUpdatedSuccess": "Cập nhật danh mục thành công!",
+  "categoryDeletedSuccess": "Xóa danh mục thành công!"
 }

@@ -28,11 +28,14 @@ class AppHeader extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      height: 60,
       color: AppColors.headerBackground,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
+      child: SafeArea(
+        bottom: false,
+        child: Container(
+          height: 60,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
           if (isMobileView)
             IconButton(
               icon: const Icon(Icons.menu, color: AppColors.primary),
@@ -40,15 +43,17 @@ class AppHeader extends StatelessWidget {
             ),
           const SizedBox(width: 8),
           const Icon(Icons.store_rounded, color: AppColors.primary, size: 32),
-          const SizedBox(width: 8),
-          Text(
-            l10n.appName,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primary,
+          if (!isMobileView) ...[
+            const SizedBox(width: 8),
+            Text(
+              l10n.appName,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
-          ),
+          ],
           const Spacer(),
           // View Toggle
           Row(
@@ -70,18 +75,20 @@ class AppHeader extends StatelessWidget {
                   Tooltip(message: 'Desktop View', child: Icon(Icons.desktop_windows, size: 20)),
                 ],
               ),
-              const SizedBox(width: 8),
-              const VerticalDivider(width: 1, indent: 20, endIndent: 20),
-              const SizedBox(width: 8),
-              // Language Toggle
-              TextButton.icon(
-                onPressed: onChangeLanguage,
-                icon: const Icon(Icons.language, color: AppColors.textSecondary),
-                label: Text(
-                  languageCode.toUpperCase(),
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary),
+              if (!isMobileView) ...[
+                const SizedBox(width: 8),
+                const VerticalDivider(width: 1, indent: 20, endIndent: 20),
+                const SizedBox(width: 8),
+                // Language Toggle
+                TextButton.icon(
+                  onPressed: onChangeLanguage,
+                  icon: const Icon(Icons.language, color: AppColors.textSecondary),
+                  label: Text(
+                    languageCode.toUpperCase(),
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary),
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
           const SizedBox(width: 16),
@@ -91,13 +98,15 @@ class AppHeader extends StatelessWidget {
               return state.maybeWhen(
                 authenticated: (user) => Row(
                   children: [
-                    const Icon(Icons.account_circle, color: AppColors.textSecondary),
-                    const SizedBox(width: 8),
-                    Text(
-                      user.name,
-                      style: const TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(width: 16),
+                    if (!isMobileView) ...[
+                      const Icon(Icons.account_circle, color: AppColors.textSecondary),
+                      const SizedBox(width: 8),
+                      Text(
+                        user.name,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(width: 16),
+                    ],
                     IconButton(
                       icon: const Icon(Icons.logout, color: AppColors.textSecondary),
                       tooltip: l10n.logout,
@@ -112,6 +121,8 @@ class AppHeader extends StatelessWidget {
             },
           ),
         ],
+      ),
+        ),
       ),
     );
   }

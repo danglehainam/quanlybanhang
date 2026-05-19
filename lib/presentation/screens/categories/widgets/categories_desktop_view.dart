@@ -6,8 +6,11 @@ import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/app_primary_button.dart';
+import '../../../widgets/app_confirm_dialog.dart';
 import '../../../bloc/categories/categories_bloc.dart';
+import '../../../bloc/categories/categories_event.dart';
 import 'category_form_dialog.dart';
+import 'category_desktop_item.dart';
 
 class CategoriesDesktopView extends StatelessWidget {
   final List<CategoryEntity> categories;
@@ -97,22 +100,46 @@ class CategoriesDesktopView extends StatelessWidget {
                       separatorBuilder: (context, index) => const Divider(height: 1),
                       itemBuilder: (context, index) {
                         final category = categories[index];
-                        return ListTile(
-                          title: Text(category.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Text(category.description ?? ''),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit, color: AppColors.primary),
-                                onPressed: () {},
+                        return CategoryDesktopItem(
+                          category: category,
+                          onEdit: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => BlocProvider.value(
+                                value: context.read<CategoriesBloc>(),
+                                child: CategoryFormDialog(categoryToEdit: category),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.delete, color: AppColors.error),
-                                onPressed: () {},
+                            );
+                          },
+                          onDelete: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AppConfirmDialog(
+                                title: l10n.deleteCategoryConfirmTitle,
+                                content: l10n.deleteCategoryConfirmMessage,
+                                confirmLabel: l10n.delete,
+                                cancelLabel: l10n.cancel,
+                                isDestructive: true,
+                                onConfirm: () {
+                                  context.read<CategoriesBloc>().add(
+                                    CategoriesEvent.deleteCategory(
+                                      category.id,
+                                      onSuccess: () {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text(l10n.categoryDeletedSuccess)),
+                                        );
+                                      },
+                                      onError: (error) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text(error), backgroundColor: AppColors.error),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         );
                       },
                     ),

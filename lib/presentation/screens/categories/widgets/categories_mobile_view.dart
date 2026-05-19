@@ -3,6 +3,12 @@ import '../../../../domain/entities/category_entity.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../../../widgets/app_text_field.dart';
+import '../../../widgets/app_confirm_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../bloc/categories/categories_bloc.dart';
+import '../../../bloc/categories/categories_event.dart';
+import 'category_form_dialog.dart';
+import 'category_mobile_item.dart';
 
 class CategoriesMobileView extends StatelessWidget {
   final List<CategoryEntity> categories;
@@ -65,13 +71,45 @@ class CategoriesMobileView extends StatelessWidget {
                   separatorBuilder: (context, index) => const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final category = categories[index];
-                    return ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(category.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text(category.description ?? ''),
-                      trailing: const Icon(Icons.more_vert),
-                      onTap: () {
-                        // Bottom sheet for options
+                    return CategoryMobileItem(
+                      category: category,
+                      onEdit: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => BlocProvider.value(
+                            value: context.read<CategoriesBloc>(),
+                            child: CategoryFormDialog(categoryToEdit: category),
+                          ),
+                        );
+                      },
+                      onDelete: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AppConfirmDialog(
+                            title: l10n.deleteCategoryConfirmTitle,
+                            content: l10n.deleteCategoryConfirmMessage,
+                            confirmLabel: l10n.delete,
+                            cancelLabel: l10n.cancel,
+                            isDestructive: true,
+                            onConfirm: () {
+                              context.read<CategoriesBloc>().add(
+                                CategoriesEvent.deleteCategory(
+                                  category.id,
+                                  onSuccess: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(l10n.categoryDeletedSuccess)),
+                                    );
+                                  },
+                                  onError: (error) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(error), backgroundColor: Colors.red),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        );
                       },
                     );
                   },
