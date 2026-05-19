@@ -73,7 +73,7 @@
   "categoryDeletedSuccess": "Xóa danh mục thành công!",
   "productName": "Tên sản phẩm",
   "price": "Giá bán",
-  "recipe": "Công thức pha chế",
+  "description": "Mô tả sản phẩm",
   "status": "Trạng thái",
   "selectCategory": "Chọn danh mục",
   "unassignedCategory": "Chưa phân loại",

@@ -8,7 +8,7 @@ class ProductModel {
   final String name;
   final int price;
   final String? imageUrl;
-  final String? recipe;
+  final String? description;
   final int status;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -20,7 +20,7 @@ class ProductModel {
     required this.name,
     required this.price,
     this.imageUrl,
-    this.recipe,
+    this.description,
     required this.status,
     required this.createdAt,
     required this.updatedAt,
@@ -35,7 +35,7 @@ class ProductModel {
       name: driftModel.name,
       price: driftModel.price,
       imageUrl: driftModel.imageUrl,
-      recipe: driftModel.recipe,
+      description: driftModel.description,
       status: driftModel.status,
       createdAt: DateTime.fromMillisecondsSinceEpoch(driftModel.createdAt),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(driftModel.updatedAt),
@@ -51,8 +51,8 @@ class ProductModel {
       name: json['name'] as String,
       price: json['price'] as int,
       imageUrl: json['image_url'] as String?,
-      recipe: json['recipe'] as String?,
-      status: json['status'] as int,
+      description: json['description'] as String?,
+      status: json['status'] as int? ?? 1,
       createdAt: DateTime.fromMillisecondsSinceEpoch(json['created_at'] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(json['updated_at'] as int),
     );
@@ -67,7 +67,7 @@ class ProductModel {
       'name': name,
       'price': price,
       'image_url': imageUrl,
-      'recipe': recipe,
+      'description': description,
       'status': status,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt.millisecondsSinceEpoch,
@@ -83,7 +83,7 @@ class ProductModel {
       name: name,
       price: price,
       imageUrl: imageUrl,
-      recipe: recipe,
+      description: description,
       status: status,
       createdAt: createdAt,
       updatedAt: updatedAt,
@@ -99,7 +99,7 @@ class ProductModel {
       name: entity.name,
       price: entity.price,
       imageUrl: entity.imageUrl,
-      recipe: entity.recipe,
+      description: entity.description,
       status: entity.status,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

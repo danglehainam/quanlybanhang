@@ -115,7 +115,7 @@ Quản lý thông tin chi tiết của từng mặt hàng.
 | `name` | TEXT | NOT NULL | Tên sản phẩm |
 | `price` | INTEGER | NOT NULL | Giá bán (VND) |
 | `image_url` | TEXT | NULLABLE | Đường dẫn ảnh sản phẩm |
-| `recipe` | TEXT | NULLABLE | Công thức pha chế / chế biến |
+| `description` | TEXT | NULLABLE | Mô tả sản phẩm |
 | `status` | INTEGER | NOT NULL, DEFAULT 1 | Trạng thái (0: hết hàng, 1: còn hàng) |
 | `created_at` | INTEGER | NOT NULL | Ngày tạo (UTC) |
 | `updated_at` | INTEGER | NOT NULL | Ngày cập nhật (UTC) |

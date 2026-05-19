@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../../../widgets/app_text_field.dart';
-import '../../../widgets/app_primary_button.dart';
+import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../widgets/app_confirm_dialog.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../../../bloc/categories/categories_event.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/category_entity.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import '../../../widgets/buttons/app_icon_button.dart';
 
 class CategoryMobileItem extends StatelessWidget {
   final CategoryEntity category;
@@ -57,8 +58,9 @@ class CategoryMobileItem extends StatelessWidget {
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Text(category.description ?? ''),
-      trailing: IconButton(
-        icon: const Icon(Icons.more_vert),
+      trailing: AppIconButton(
+        icon: Icons.more_vert,
+        tooltip: l10n.appName, // options
         onPressed: () => _showOptionsSheet(context, l10n),
       ),
       onTap: () => _showOptionsSheet(context, l10n),

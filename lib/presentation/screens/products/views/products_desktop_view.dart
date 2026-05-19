@@ -7,7 +7,7 @@ import '../../../../domain/entities/product_entity.dart';
 import '../../../../domain/entities/category_entity.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../widgets/app_text_field.dart';
-import '../../../widgets/app_primary_button.dart';
+import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../widgets/app_confirm_dialog.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../../../bloc/products/products_bloc.dart';
@@ -15,6 +15,7 @@ import '../../../bloc/products/products_event.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../widgets/product_form_dialog.dart';
 import '../../../widgets/layout/two_column_desktop_layout.dart';
+import '../../../widgets/buttons/app_icon_button.dart';
 
 class ProductsDesktopView extends StatelessWidget {
   final List<ProductEntity> products;
@@ -152,8 +153,10 @@ class ProductsDesktopView extends StatelessWidget {
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit, color: AppColors.primary),
+                                  AppIconButton(
+                                    icon: Icons.edit,
+                                    color: AppColors.primary,
+                                    tooltip: l10n.editProduct,
                                     onPressed: () {
                                       showDialog(
                                         context: context,
@@ -167,8 +170,10 @@ class ProductsDesktopView extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete, color: AppColors.error),
+                                  AppIconButton(
+                                    icon: Icons.delete,
+                                    color: AppColors.error,
+                                    tooltip: l10n.delete,
                                     onPressed: () {
                                       showDialog(
                                         context: context,

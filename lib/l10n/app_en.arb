@@ -73,7 +73,7 @@
   "categoryDeletedSuccess": "Category deleted successfully!",
   "productName": "Product Name",
   "price": "Price",
-  "recipe": "Recipe / Instruction",
+  "description": "Description",
   "status": "Status",
   "selectCategory": "Select Category",
   "unassignedCategory": "Unassigned",

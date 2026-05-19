@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'buttons/app_icon_button.dart';
 
 /// Reusable password input with toggle visibility.
 /// Use this for all password fields across the app.
@@ -23,13 +24,13 @@ class AppPasswordField extends StatefulWidget {
 }
 
 class _AppPasswordFieldState extends State<AppPasswordField> {
-  bool _obscure = true;
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      obscureText: _obscure,
+      obscureText: _obscureText,
       textInputAction: widget.textInputAction,
       onFieldSubmitted: widget.onFieldSubmitted != null
           ? (_) => widget.onFieldSubmitted!()
@@ -38,11 +39,12 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
         labelText: widget.labelText,
         prefixIcon: const Icon(Icons.lock_outlined),
         border: const OutlineInputBorder(),
-        suffixIcon: IconButton(
-          icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
+        suffixIcon: AppIconButton(
+          icon: _obscureText ? Icons.visibility_off : Icons.visibility,
+          tooltip: _obscureText ? 'Hiện mật khẩu' : 'Ẩn mật khẩu',
           onPressed: () {
             setState(() {
-              _obscure = !_obscure;
+              _obscureText = !_obscureText;
             });
           },
         ),

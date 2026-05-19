@@ -12,7 +12,7 @@ import '../../bloc/categories/categories_state.dart';
 import '../../bloc/settings/settings_bloc.dart';
 import '../../widgets/app_loading_widget.dart';
 import '../../widgets/app_error_widget.dart';
-import '../../widgets/app_floating_action_button.dart';
+import '../../widgets/buttons/app_floating_action_button.dart';
 import 'views/products_desktop_view.dart';
 import 'views/products_mobile_view.dart';
 import 'widgets/product_form_dialog.dart';

@@ -4,6 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/settings/settings_bloc.dart';
 import '../../bloc/settings/settings_event.dart';
 import '../../bloc/settings/settings_state.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+
+import '../../../../core/constants/app_routes.dart';
 import 'app_drawer.dart';
 import 'app_header.dart';
 import 'app_nav_bar.dart';
@@ -40,6 +44,27 @@ class _MainLayoutState extends State<MainLayout> {
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
         final isMobileView = state.isMobileView;
+        final currentRoute = GoRouterState.of(context).matchedLocation;
+        final l10n = AppLocalizations.of(context)!;
+        
+        String currentTitle = l10n.appName;
+        if (currentRoute.startsWith(AppRoutes.sell)) {
+          currentTitle = l10n.btnSell;
+        } else if (currentRoute.startsWith(AppRoutes.products)) {
+          currentTitle = l10n.menuProducts;
+        } else if (currentRoute.startsWith(AppRoutes.categories)) {
+          currentTitle = l10n.menuCategories;
+        } else if (currentRoute.startsWith(AppRoutes.transactions)) {
+          currentTitle = l10n.menuTransactions;
+        } else if (currentRoute.startsWith(AppRoutes.partners)) {
+          currentTitle = l10n.menuPartners;
+        } else if (currentRoute.startsWith(AppRoutes.cashbook)) {
+          currentTitle = l10n.menuCashbook;
+        } else if (currentRoute.startsWith(AppRoutes.reports)) {
+          currentTitle = l10n.menuReports;
+        } else if (currentRoute.startsWith(AppRoutes.home)) {
+          currentTitle = l10n.menuOverview;
+        }
         
         return Scaffold(
           key: _scaffoldKey,
@@ -50,6 +75,7 @@ class _MainLayoutState extends State<MainLayout> {
               AppHeader(
                 isMobileView: isMobileView,
                 languageCode: state.languageCode,
+                currentTitle: currentTitle,
                 onToggleView: () {
                   context.read<SettingsBloc>().add(const SettingsEvent.toggleLayoutView());
                 },

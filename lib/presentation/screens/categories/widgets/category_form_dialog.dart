@@ -4,9 +4,10 @@ import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../domain/entities/category_entity.dart';
 import '../../../widgets/app_dialog.dart';
 import '../../../widgets/app_text_field.dart';
-import '../../../widgets/app_primary_button.dart';
+import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../../../bloc/categories/categories_event.dart';
+import '../../../widgets/buttons/app_text_button.dart';
 
 class CategoryFormDialog extends StatefulWidget {
   final CategoryEntity? categoryToEdit;
@@ -139,9 +140,9 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
+          label: l10n.cancel,
         ),
         AppPrimaryButton(
           label: l10n.save,

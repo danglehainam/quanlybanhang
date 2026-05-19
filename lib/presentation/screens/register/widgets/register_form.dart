@@ -8,7 +8,8 @@ import '../../../bloc/auth/auth_event.dart';
 import '../../../bloc/auth/auth_state.dart';
 import '../../../widgets/app_password_field.dart';
 import '../../../widgets/app_text_field.dart';
-import '../../../widgets/app_primary_button.dart';
+import '../../../widgets/buttons/app_primary_button.dart';
+import '../../../widgets/buttons/app_text_button.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -153,9 +154,9 @@ class _LoginLink extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(l10n.alreadyHaveAccount),
-        TextButton(
+        AppTextButton(
           onPressed: () => context.pop(),
-          child: Text(l10n.login),
+          label: l10n.login,
         ),
       ],
     );

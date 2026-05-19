@@ -8,11 +8,12 @@ import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../widgets/app_dialog.dart';
 import '../../../widgets/app_text_field.dart';
-import '../../../widgets/app_primary_button.dart';
+import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../bloc/products/products_bloc.dart';
 import '../../../bloc/products/products_event.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../../../bloc/categories/categories_state.dart';
+import '../../../widgets/buttons/app_text_button.dart';
 
 class ProductFormDialog extends StatefulWidget {
   final ProductEntity? productToEdit;
@@ -30,7 +31,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late final TextEditingController _priceController;
-  late final TextEditingController _recipeController;
+  late final TextEditingController _descriptionController;
   int? _selectedCategoryId;
   String? _imageUrl;
   bool _isLoading = false;
@@ -42,7 +43,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
     super.initState();
     _nameController = TextEditingController(text: widget.productToEdit?.name);
     _priceController = TextEditingController(text: widget.productToEdit?.price.toString());
-    _recipeController = TextEditingController(text: widget.productToEdit?.recipe);
+    _descriptionController = TextEditingController(text: widget.productToEdit?.description);
     _selectedCategoryId = widget.productToEdit?.categoryId;
     _imageUrl = widget.productToEdit?.imageUrl;
   }
@@ -51,7 +52,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
   void dispose() {
     _nameController.dispose();
     _priceController.dispose();
-    _recipeController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -83,7 +84,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
         name: _nameController.text.trim(),
         price: price,
         imageUrl: _imageUrl,
-        recipe: _recipeController.text.trim(),
+        description: _descriptionController.text.trim(),
         status: widget.productToEdit?.status ?? 1,
         createdAt: _isEditMode ? widget.productToEdit!.createdAt : DateTime.now().toUtc(),
         updatedAt: DateTime.now().toUtc(),
@@ -244,9 +245,9 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              controller: _recipeController,
+              controller: _descriptionController,
               decoration: InputDecoration(
-                labelText: l10n.recipe,
+                labelText: l10n.description,
                 border: const OutlineInputBorder(),
               ),
               maxLines: 3,
@@ -255,9 +256,9 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
+          label: l10n.cancel,
         ),
         const SizedBox(width: 8),
         AppPrimaryButton(

@@ -5,7 +5,7 @@ class ProductEntity {
   final String name;
   final int price;
   final String? imageUrl;
-  final String? recipe;
+  final String? description;
   final int status;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -17,7 +17,7 @@ class ProductEntity {
     required this.name,
     required this.price,
     this.imageUrl,
-    this.recipe,
+    this.description,
     this.status = 1,
     required this.createdAt,
     required this.updatedAt,

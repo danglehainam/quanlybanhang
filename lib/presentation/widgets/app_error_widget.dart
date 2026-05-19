@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import 'buttons/app_primary_button.dart';
 
 class AppErrorWidget extends StatelessWidget {
   final String message;
@@ -36,10 +37,10 @@ class AppErrorWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton.icon(
+            AppPrimaryButton(
               onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
-              label: Text(AppLocalizations.of(context)!.retry),
+              icon: Icons.refresh,
+              label: AppLocalizations.of(context)!.retry,
             ),
           ],
         ),

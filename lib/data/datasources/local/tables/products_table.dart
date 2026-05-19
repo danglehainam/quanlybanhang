@@ -10,7 +10,7 @@ class Products extends Table {
   TextColumn get name => text()();
   IntColumn get price => integer()();
   TextColumn get imageUrl => text().nullable()();
-  TextColumn get recipe => text().nullable()();
+  TextColumn get description => text().nullable()();
   IntColumn get status => integer().withDefault(const Constant(1))();
   IntColumn get createdAt => integer()();
   IntColumn get updatedAt => integer()();

@@ -4,6 +4,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../../domain/entities/category_entity.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import '../../../widgets/buttons/app_icon_button.dart';
 
 class ProductDesktopItem extends StatelessWidget {
   final ProductEntity product;
@@ -51,12 +52,16 @@ class ProductDesktopItem extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          IconButton(
-            icon: const Icon(Icons.edit, color: AppColors.primary),
+          AppIconButton(
+            icon: Icons.edit,
+            color: AppColors.primary,
+            tooltip: l10n.editProduct,
             onPressed: onEdit,
           ),
-          IconButton(
-            icon: const Icon(Icons.delete, color: AppColors.error),
+          AppIconButton(
+            icon: Icons.delete,
+            color: AppColors.error,
+            tooltip: l10n.delete,
             onPressed: onDelete,
           ),
         ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import 'app_dialog.dart';
+import 'buttons/app_text_button.dart';
+import 'buttons/app_filled_button.dart';
 
 class AppConfirmDialog extends StatelessWidget {
   final String title;
@@ -26,19 +28,17 @@ class AppConfirmDialog extends StatelessWidget {
       title: title,
       content: Text(content),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(cancelLabel),
+          label: cancelLabel,
         ),
-        FilledButton(
+        AppFilledButton(
           onPressed: () {
             Navigator.of(context).pop(); // Close dialog first
             onConfirm(); // Then execute callback
           },
-          style: FilledButton.styleFrom(
-            backgroundColor: isDestructive ? AppColors.error : AppColors.primary,
-          ),
-          child: Text(confirmLabel),
+          backgroundColor: isDestructive ? AppColors.error : AppColors.primary,
+          label: confirmLabel,
         ),
       ],
     );

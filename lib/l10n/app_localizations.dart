@@ -458,11 +458,11 @@ abstract class AppLocalizations {
   /// **'Giá bán'**
   String get price;
 
-  /// No description provided for @recipe.
+  /// No description provided for @description.
   ///
   /// In vi, this message translates to:
-  /// **'Công thức pha chế'**
-  String get recipe;
+  /// **'Mô tả sản phẩm'**
+  String get description;
 
   /// No description provided for @status.
   ///

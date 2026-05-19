@@ -15,6 +15,7 @@ import '../../presentation/screens/partners/partners_screen.dart';
 import '../../presentation/screens/categories/categories_screen.dart';
 import '../../presentation/screens/cashbook/cashbook_screen.dart';
 import '../../presentation/screens/reports/reports_screen.dart';
+import '../../presentation/screens/sell/sell_screen.dart';
 import '../../presentation/widgets/layout/main_layout.dart';
 
 class AppRouter {
@@ -59,6 +60,10 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.home,
             builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.sell,
+            builder: (context, state) => const SellScreen(),
           ),
           GoRoute(
             path: AppRoutes.products,

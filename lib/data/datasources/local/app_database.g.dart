@@ -1478,10 +1478,12 @@ class $ProductsTable extends Products
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _recipeMeta = const VerificationMeta('recipe');
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
   @override
-  late final GeneratedColumn<String> recipe = GeneratedColumn<String>(
-    'recipe',
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -1527,7 +1529,7 @@ class $ProductsTable extends Products
     name,
     price,
     imageUrl,
-    recipe,
+    description,
     status,
     createdAt,
     updatedAt,
@@ -1583,10 +1585,13 @@ class $ProductsTable extends Products
         imageUrl.isAcceptableOrUnknown(data['image_url']!, _imageUrlMeta),
       );
     }
-    if (data.containsKey('recipe')) {
+    if (data.containsKey('description')) {
       context.handle(
-        _recipeMeta,
-        recipe.isAcceptableOrUnknown(data['recipe']!, _recipeMeta),
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
       );
     }
     if (data.containsKey('status')) {
@@ -1644,9 +1649,9 @@ class $ProductsTable extends Products
         DriftSqlType.string,
         data['${effectivePrefix}image_url'],
       ),
-      recipe: attachedDatabase.typeMapping.read(
+      description: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}recipe'],
+        data['${effectivePrefix}description'],
       ),
       status: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -1677,7 +1682,7 @@ class ProductDriftModel extends DataClass
   final String name;
   final int price;
   final String? imageUrl;
-  final String? recipe;
+  final String? description;
   final int status;
   final int createdAt;
   final int updatedAt;
@@ -1688,7 +1693,7 @@ class ProductDriftModel extends DataClass
     required this.name,
     required this.price,
     this.imageUrl,
-    this.recipe,
+    this.description,
     required this.status,
     required this.createdAt,
     required this.updatedAt,
@@ -1706,8 +1711,8 @@ class ProductDriftModel extends DataClass
     if (!nullToAbsent || imageUrl != null) {
       map['image_url'] = Variable<String>(imageUrl);
     }
-    if (!nullToAbsent || recipe != null) {
-      map['recipe'] = Variable<String>(recipe);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
     }
     map['status'] = Variable<int>(status);
     map['created_at'] = Variable<int>(createdAt);
@@ -1727,9 +1732,9 @@ class ProductDriftModel extends DataClass
       imageUrl: imageUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(imageUrl),
-      recipe: recipe == null && nullToAbsent
+      description: description == null && nullToAbsent
           ? const Value.absent()
-          : Value(recipe),
+          : Value(description),
       status: Value(status),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
@@ -1748,7 +1753,7 @@ class ProductDriftModel extends DataClass
       name: serializer.fromJson<String>(json['name']),
       price: serializer.fromJson<int>(json['price']),
       imageUrl: serializer.fromJson<String?>(json['imageUrl']),
-      recipe: serializer.fromJson<String?>(json['recipe']),
+      description: serializer.fromJson<String?>(json['description']),
       status: serializer.fromJson<int>(json['status']),
       createdAt: serializer.fromJson<int>(json['createdAt']),
       updatedAt: serializer.fromJson<int>(json['updatedAt']),
@@ -1764,7 +1769,7 @@ class ProductDriftModel extends DataClass
       'name': serializer.toJson<String>(name),
       'price': serializer.toJson<int>(price),
       'imageUrl': serializer.toJson<String?>(imageUrl),
-      'recipe': serializer.toJson<String?>(recipe),
+      'description': serializer.toJson<String?>(description),
       'status': serializer.toJson<int>(status),
       'createdAt': serializer.toJson<int>(createdAt),
       'updatedAt': serializer.toJson<int>(updatedAt),
@@ -1778,7 +1783,7 @@ class ProductDriftModel extends DataClass
     String? name,
     int? price,
     Value<String?> imageUrl = const Value.absent(),
-    Value<String?> recipe = const Value.absent(),
+    Value<String?> description = const Value.absent(),
     int? status,
     int? createdAt,
     int? updatedAt,
@@ -1789,7 +1794,7 @@ class ProductDriftModel extends DataClass
     name: name ?? this.name,
     price: price ?? this.price,
     imageUrl: imageUrl.present ? imageUrl.value : this.imageUrl,
-    recipe: recipe.present ? recipe.value : this.recipe,
+    description: description.present ? description.value : this.description,
     status: status ?? this.status,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
@@ -1804,7 +1809,9 @@ class ProductDriftModel extends DataClass
       name: data.name.present ? data.name.value : this.name,
       price: data.price.present ? data.price.value : this.price,
       imageUrl: data.imageUrl.present ? data.imageUrl.value : this.imageUrl,
-      recipe: data.recipe.present ? data.recipe.value : this.recipe,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
       status: data.status.present ? data.status.value : this.status,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
@@ -1820,7 +1827,7 @@ class ProductDriftModel extends DataClass
           ..write('name: $name, ')
           ..write('price: $price, ')
           ..write('imageUrl: $imageUrl, ')
-          ..write('recipe: $recipe, ')
+          ..write('description: $description, ')
           ..write('status: $status, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -1836,7 +1843,7 @@ class ProductDriftModel extends DataClass
     name,
     price,
     imageUrl,
-    recipe,
+    description,
     status,
     createdAt,
     updatedAt,
@@ -1851,7 +1858,7 @@ class ProductDriftModel extends DataClass
           other.name == this.name &&
           other.price == this.price &&
           other.imageUrl == this.imageUrl &&
-          other.recipe == this.recipe &&
+          other.description == this.description &&
           other.status == this.status &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
@@ -1864,7 +1871,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
   final Value<String> name;
   final Value<int> price;
   final Value<String?> imageUrl;
-  final Value<String?> recipe;
+  final Value<String?> description;
   final Value<int> status;
   final Value<int> createdAt;
   final Value<int> updatedAt;
@@ -1875,7 +1882,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
     this.name = const Value.absent(),
     this.price = const Value.absent(),
     this.imageUrl = const Value.absent(),
-    this.recipe = const Value.absent(),
+    this.description = const Value.absent(),
     this.status = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -1887,7 +1894,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
     required String name,
     required int price,
     this.imageUrl = const Value.absent(),
-    this.recipe = const Value.absent(),
+    this.description = const Value.absent(),
     this.status = const Value.absent(),
     required int createdAt,
     required int updatedAt,
@@ -1903,7 +1910,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
     Expression<String>? name,
     Expression<int>? price,
     Expression<String>? imageUrl,
-    Expression<String>? recipe,
+    Expression<String>? description,
     Expression<int>? status,
     Expression<int>? createdAt,
     Expression<int>? updatedAt,
@@ -1915,7 +1922,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
       if (name != null) 'name': name,
       if (price != null) 'price': price,
       if (imageUrl != null) 'image_url': imageUrl,
-      if (recipe != null) 'recipe': recipe,
+      if (description != null) 'description': description,
       if (status != null) 'status': status,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
@@ -1929,7 +1936,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
     Value<String>? name,
     Value<int>? price,
     Value<String?>? imageUrl,
-    Value<String?>? recipe,
+    Value<String?>? description,
     Value<int>? status,
     Value<int>? createdAt,
     Value<int>? updatedAt,
@@ -1941,7 +1948,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
       name: name ?? this.name,
       price: price ?? this.price,
       imageUrl: imageUrl ?? this.imageUrl,
-      recipe: recipe ?? this.recipe,
+      description: description ?? this.description,
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -1969,8 +1976,8 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
     if (imageUrl.present) {
       map['image_url'] = Variable<String>(imageUrl.value);
     }
-    if (recipe.present) {
-      map['recipe'] = Variable<String>(recipe.value);
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
     }
     if (status.present) {
       map['status'] = Variable<int>(status.value);
@@ -1993,7 +2000,7 @@ class ProductsCompanion extends UpdateCompanion<ProductDriftModel> {
           ..write('name: $name, ')
           ..write('price: $price, ')
           ..write('imageUrl: $imageUrl, ')
-          ..write('recipe: $recipe, ')
+          ..write('description: $description, ')
           ..write('status: $status, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -3144,7 +3151,7 @@ typedef $$ProductsTableCreateCompanionBuilder =
       required String name,
       required int price,
       Value<String?> imageUrl,
-      Value<String?> recipe,
+      Value<String?> description,
       Value<int> status,
       required int createdAt,
       required int updatedAt,
@@ -3157,7 +3164,7 @@ typedef $$ProductsTableUpdateCompanionBuilder =
       Value<String> name,
       Value<int> price,
       Value<String?> imageUrl,
-      Value<String?> recipe,
+      Value<String?> description,
       Value<int> status,
       Value<int> createdAt,
       Value<int> updatedAt,
@@ -3234,8 +3241,8 @@ class $$ProductsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get recipe => $composableBuilder(
-    column: $table.recipe,
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3330,8 +3337,8 @@ class $$ProductsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get recipe => $composableBuilder(
-    column: $table.recipe,
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -3418,8 +3425,10 @@ class $$ProductsTableAnnotationComposer
   GeneratedColumn<String> get imageUrl =>
       $composableBuilder(column: $table.imageUrl, builder: (column) => column);
 
-  GeneratedColumn<String> get recipe =>
-      $composableBuilder(column: $table.recipe, builder: (column) => column);
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<int> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
@@ -3511,7 +3520,7 @@ class $$ProductsTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<int> price = const Value.absent(),
                 Value<String?> imageUrl = const Value.absent(),
-                Value<String?> recipe = const Value.absent(),
+                Value<String?> description = const Value.absent(),
                 Value<int> status = const Value.absent(),
                 Value<int> createdAt = const Value.absent(),
                 Value<int> updatedAt = const Value.absent(),
@@ -3522,7 +3531,7 @@ class $$ProductsTableTableManager
                 name: name,
                 price: price,
                 imageUrl: imageUrl,
-                recipe: recipe,
+                description: description,
                 status: status,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
@@ -3535,7 +3544,7 @@ class $$ProductsTableTableManager
                 required String name,
                 required int price,
                 Value<String?> imageUrl = const Value.absent(),
-                Value<String?> recipe = const Value.absent(),
+                Value<String?> description = const Value.absent(),
                 Value<int> status = const Value.absent(),
                 required int createdAt,
                 required int updatedAt,
@@ -3546,7 +3555,7 @@ class $$ProductsTableTableManager
                 name: name,
                 price: price,
                 imageUrl: imageUrl,
-                recipe: recipe,
+                description: description,
                 status: status,
                 createdAt: createdAt,
                 updatedAt: updatedAt,

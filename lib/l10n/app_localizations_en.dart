@@ -195,7 +195,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get price => 'Price';
 
   @override
-  String get recipe => 'Recipe / Instruction';
+  String get description => 'Description';
 
   @override
   String get status => 'Status';

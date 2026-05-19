@@ -193,7 +193,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get price => 'Giá bán';
 
   @override
-  String get recipe => 'Công thức pha chế';
+  String get description => 'Mô tả sản phẩm';
 
   @override
   String get status => 'Trạng thái';

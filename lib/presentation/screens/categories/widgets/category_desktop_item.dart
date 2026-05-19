@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/category_entity.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import '../../../widgets/buttons/app_icon_button.dart';
 
 class CategoryDesktopItem extends StatelessWidget {
   final CategoryEntity category;
@@ -16,6 +18,8 @@ class CategoryDesktopItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ListTile(
       title: Text(
         category.name,
@@ -25,12 +29,16 @@ class CategoryDesktopItem extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(
-            icon: const Icon(Icons.edit, color: AppColors.primary),
+          AppIconButton(
+            icon: Icons.edit,
+            color: AppColors.primary,
+            tooltip: l10n.editCategory,
             onPressed: onEdit,
           ),
-          IconButton(
-            icon: const Icon(Icons.delete, color: AppColors.error),
+          AppIconButton(
+            icon: Icons.delete,
+            color: AppColors.error,
+            tooltip: l10n.delete,
             onPressed: onDelete,
           ),
         ],

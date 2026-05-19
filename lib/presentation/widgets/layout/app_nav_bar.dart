@@ -29,6 +29,12 @@ class AppNavBar extends StatelessWidget {
                   isSelected: currentRoute == AppRoutes.home,
                 ),
                 _NavItem(
+                  title: l10n.btnSell,
+                  icon: Icons.point_of_sale,
+                  route: AppRoutes.sell,
+                  isSelected: currentRoute == AppRoutes.sell,
+                ),
+                _NavItem(
                   title: l10n.menuProducts,
                   icon: Icons.inventory_2_outlined,
                   route: AppRoutes.products,
@@ -65,20 +71,6 @@ class AppNavBar extends StatelessWidget {
                   isSelected: currentRoute == AppRoutes.reports,
                 ),
               ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: FilledButton.icon(
-              onPressed: () {
-                // TODO: Navigate to POS screen
-              },
-              icon: const Icon(Icons.shopping_cart_outlined, size: 18),
-              label: Text(l10n.btnSell),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.success,
-                foregroundColor: Colors.white,
-              ),
             ),
           ),
         ],

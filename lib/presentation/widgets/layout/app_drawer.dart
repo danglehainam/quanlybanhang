@@ -4,6 +4,9 @@ import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/auth/auth_bloc.dart';
+import '../../bloc/auth/auth_event.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -49,6 +52,12 @@ class AppDrawer extends StatelessWidget {
                   isSelected: currentRoute == AppRoutes.home,
                 ),
                 _DrawerItem(
+                  title: l10n.btnSell,
+                  icon: Icons.point_of_sale,
+                  route: AppRoutes.sell,
+                  isSelected: currentRoute == AppRoutes.sell,
+                ),
+                _DrawerItem(
                   title: l10n.menuProducts,
                   icon: Icons.inventory_2_outlined,
                   route: AppRoutes.products,
@@ -87,21 +96,17 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: FilledButton.icon(
-              onPressed: () {
-                // TODO: Navigate to POS screen
-              },
-              icon: const Icon(Icons.shopping_cart_outlined),
-              label: Text(l10n.btnSell),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.success,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-            ),
+          const Divider(height: 1),
+          ListTile(
+            leading: const Icon(Icons.logout, color: AppColors.error),
+            title: Text(l10n.logout, style: const TextStyle(color: AppColors.error, fontWeight: FontWeight.bold)),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+              context.read<AuthBloc>().add(const AuthEvent.logout());
+            },
           ),
+          const SizedBox(height: 16),
         ],
       ),
     );
