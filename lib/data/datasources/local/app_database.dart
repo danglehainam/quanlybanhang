@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'tables/stores_table.dart';
 import 'tables/users_table.dart';
 import 'tables/categories_table.dart';
+import 'tables/products_table.dart';
 
 part 'app_database.g.dart';
 
@@ -15,12 +16,13 @@ part 'app_database.g.dart';
   Stores,
   Users,
   Categories,
+  Products,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -30,6 +32,12 @@ class AppDatabase extends _$AppDatabase {
         onUpgrade: (Migrator m, int from, int to) async {
           if (from < 3) {
             await m.createTable(categories);
+          }
+          if (from < 4) {
+            await m.createTable(products);
+          }
+          if (from < 5) {
+            await m.addColumn(products, products.imageUrl);
           }
         },
       );

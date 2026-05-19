@@ -20,7 +20,7 @@ class AppColors {
 
   // Layout
   static const Color headerBackground = Colors.white;
-  static const Color navBarBackground = Color(0xFF0073B7); // KiotViet blue
+  static const Color navBarBackground = Color(0xFF0073B7); // blue
   static const Color navBarSelected = Color(0xFF005688); // Darker blue for selected tab
   static const Color background = Color(0xFFF4F5F7); // Light gray background
 

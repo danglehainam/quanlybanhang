@@ -24,7 +24,14 @@ import '../../domain/usecases/delete_category_usecase.dart';
 import '../../presentation/bloc/settings/settings_bloc.dart';
 import '../../presentation/bloc/auth/auth_bloc.dart';
 import '../../presentation/bloc/categories/categories_bloc.dart';
-
+import '../../data/datasources/local/product_local_datasource.dart';
+import '../../data/repositories/product_repository_impl.dart';
+import '../../domain/repositories/product_repository.dart';
+import '../../domain/usecases/get_products_usecase.dart';
+import '../../domain/usecases/create_product_usecase.dart';
+import '../../domain/usecases/update_product_usecase.dart';
+import '../../domain/usecases/delete_product_usecase.dart';
+import '../../presentation/bloc/products/products_bloc.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
@@ -46,6 +53,9 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<CategoryLocalDataSource>(
     () => CategoryLocalDataSource(getIt<AppDatabase>()),
   );
+  getIt.registerLazySingleton<ProductLocalDataSource>(
+    () => ProductLocalDataSource(getIt<AppDatabase>()),
+  );
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -56,6 +66,9 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<CategoryRepository>(
     () => CategoryRepositoryImpl(getIt<CategoryLocalDataSource>()),
+  );
+  getIt.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(getIt<ProductLocalDataSource>()),
   );
 
   // UseCase
@@ -89,6 +102,18 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<DeleteCategoryUseCase>(
     () => DeleteCategoryUseCase(getIt<CategoryRepository>()),
   );
+  getIt.registerLazySingleton<GetProductsUseCase>(
+    () => GetProductsUseCase(getIt<ProductRepository>()),
+  );
+  getIt.registerLazySingleton<CreateProductUseCase>(
+    () => CreateProductUseCase(getIt<ProductRepository>()),
+  );
+  getIt.registerLazySingleton<UpdateProductUseCase>(
+    () => UpdateProductUseCase(getIt<ProductRepository>()),
+  );
+  getIt.registerLazySingleton<DeleteProductUseCase>(
+    () => DeleteProductUseCase(getIt<ProductRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthBloc>(
@@ -113,6 +138,14 @@ Future<void> setupDependencies() async {
       createCategoryUseCase: getIt<CreateCategoryUseCase>(),
       updateCategoryUseCase: getIt<UpdateCategoryUseCase>(),
       deleteCategoryUseCase: getIt<DeleteCategoryUseCase>(),
+    ),
+  );
+  getIt.registerFactory<ProductsBloc>(
+    () => ProductsBloc(
+      getProductsUseCase: getIt<GetProductsUseCase>(),
+      createProductUseCase: getIt<CreateProductUseCase>(),
+      updateProductUseCase: getIt<UpdateProductUseCase>(),
+      deleteProductUseCase: getIt<DeleteProductUseCase>(),
     ),
   );
 }

@@ -445,6 +445,108 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Xóa danh mục thành công!'**
   String get categoryDeletedSuccess;
+
+  /// No description provided for @productName.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên sản phẩm'**
+  String get productName;
+
+  /// No description provided for @price.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giá bán'**
+  String get price;
+
+  /// No description provided for @recipe.
+  ///
+  /// In vi, this message translates to:
+  /// **'Công thức pha chế'**
+  String get recipe;
+
+  /// No description provided for @status.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trạng thái'**
+  String get status;
+
+  /// No description provided for @selectCategory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn danh mục'**
+  String get selectCategory;
+
+  /// No description provided for @unassignedCategory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa phân loại'**
+  String get unassignedCategory;
+
+  /// No description provided for @addProduct.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm sản phẩm'**
+  String get addProduct;
+
+  /// No description provided for @editProduct.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật sản phẩm'**
+  String get editProduct;
+
+  /// No description provided for @deleteProductConfirmTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa sản phẩm'**
+  String get deleteProductConfirmTitle;
+
+  /// No description provided for @deleteProductConfirmMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn xóa sản phẩm này không?'**
+  String get deleteProductConfirmMessage;
+
+  /// No description provided for @productCreatedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo sản phẩm thành công!'**
+  String get productCreatedSuccess;
+
+  /// No description provided for @productUpdatedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật sản phẩm thành công!'**
+  String get productUpdatedSuccess;
+
+  /// No description provided for @productDeletedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa sản phẩm thành công!'**
+  String get productDeletedSuccess;
+
+  /// No description provided for @emptyProductMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có sản phẩm nào. Hãy bấm nút Thêm để bắt đầu!'**
+  String get emptyProductMessage;
+
+  /// No description provided for @validationRequired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập thông tin này'**
+  String get validationRequired;
+
+  /// No description provided for @validationPriceRequired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập giá bán hợp lệ'**
+  String get validationPriceRequired;
+
+  /// No description provided for @searchProduct.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm sản phẩm...'**
+  String get searchProduct;
 }
 
 class _AppLocalizationsDelegate

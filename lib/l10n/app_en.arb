@@ -70,5 +70,22 @@
   "deleteCategoryConfirmMessage": "Are you sure you want to delete this category? This action cannot be undone.",
   "categoryCreatedSuccess": "Category created successfully!",
   "categoryUpdatedSuccess": "Category updated successfully!",
-  "categoryDeletedSuccess": "Category deleted successfully!"
+  "categoryDeletedSuccess": "Category deleted successfully!",
+  "productName": "Product Name",
+  "price": "Price",
+  "recipe": "Recipe / Instruction",
+  "status": "Status",
+  "selectCategory": "Select Category",
+  "unassignedCategory": "Unassigned",
+  "addProduct": "Add Product",
+  "editProduct": "Update Product",
+  "deleteProductConfirmTitle": "Delete Product",
+  "deleteProductConfirmMessage": "Are you sure you want to delete this product?",
+  "productCreatedSuccess": "Product created successfully!",
+  "productUpdatedSuccess": "Product updated successfully!",
+  "productDeletedSuccess": "Product deleted successfully!",
+  "emptyProductMessage": "No products yet. Click Add to get started!",
+  "validationRequired": "This field is required",
+  "validationPriceRequired": "Please enter a valid price",
+  "searchProduct": "Search products..."
 }

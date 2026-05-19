@@ -16,7 +16,12 @@ class AppDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      content: content,
+      content: SizedBox(
+        width: 500, // Đảm bảo chiều rộng cố định trên Desktop, tự động thu nhỏ trên Mobile
+        child: SingleChildScrollView(
+          child: content,
+        ),
+      ),
       actions: actions,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),

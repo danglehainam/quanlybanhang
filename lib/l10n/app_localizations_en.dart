@@ -187,4 +187,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categoryDeletedSuccess => 'Category deleted successfully!';
+
+  @override
+  String get productName => 'Product Name';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get recipe => 'Recipe / Instruction';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get selectCategory => 'Select Category';
+
+  @override
+  String get unassignedCategory => 'Unassigned';
+
+  @override
+  String get addProduct => 'Add Product';
+
+  @override
+  String get editProduct => 'Update Product';
+
+  @override
+  String get deleteProductConfirmTitle => 'Delete Product';
+
+  @override
+  String get deleteProductConfirmMessage =>
+      'Are you sure you want to delete this product?';
+
+  @override
+  String get productCreatedSuccess => 'Product created successfully!';
+
+  @override
+  String get productUpdatedSuccess => 'Product updated successfully!';
+
+  @override
+  String get productDeletedSuccess => 'Product deleted successfully!';
+
+  @override
+  String get emptyProductMessage =>
+      'No products yet. Click Add to get started!';
+
+  @override
+  String get validationRequired => 'This field is required';
+
+  @override
+  String get validationPriceRequired => 'Please enter a valid price';
+
+  @override
+  String get searchProduct => 'Search products...';
 }

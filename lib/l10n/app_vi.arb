@@ -70,5 +70,22 @@
   "deleteCategoryConfirmMessage": "Bạn có chắc chắn muốn xóa danh mục này không? Thao tác này không thể hoàn tác.",
   "categoryCreatedSuccess": "Tạo danh mục thành công!",
   "categoryUpdatedSuccess": "Cập nhật danh mục thành công!",
-  "categoryDeletedSuccess": "Xóa danh mục thành công!"
+  "categoryDeletedSuccess": "Xóa danh mục thành công!",
+  "productName": "Tên sản phẩm",
+  "price": "Giá bán",
+  "recipe": "Công thức pha chế",
+  "status": "Trạng thái",
+  "selectCategory": "Chọn danh mục",
+  "unassignedCategory": "Chưa phân loại",
+  "addProduct": "Thêm sản phẩm",
+  "editProduct": "Cập nhật sản phẩm",
+  "deleteProductConfirmTitle": "Xóa sản phẩm",
+  "deleteProductConfirmMessage": "Bạn có chắc chắn muốn xóa sản phẩm này không?",
+  "productCreatedSuccess": "Tạo sản phẩm thành công!",
+  "productUpdatedSuccess": "Cập nhật sản phẩm thành công!",
+  "productDeletedSuccess": "Xóa sản phẩm thành công!",
+  "emptyProductMessage": "Chưa có sản phẩm nào. Hãy bấm nút Thêm để bắt đầu!",
+  "validationRequired": "Vui lòng nhập thông tin này",
+  "validationPriceRequired": "Vui lòng nhập giá bán hợp lệ",
+  "searchProduct": "Tìm sản phẩm..."
 }

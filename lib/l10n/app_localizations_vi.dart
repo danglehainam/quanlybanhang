@@ -185,4 +185,57 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get categoryDeletedSuccess => 'Xóa danh mục thành công!';
+
+  @override
+  String get productName => 'Tên sản phẩm';
+
+  @override
+  String get price => 'Giá bán';
+
+  @override
+  String get recipe => 'Công thức pha chế';
+
+  @override
+  String get status => 'Trạng thái';
+
+  @override
+  String get selectCategory => 'Chọn danh mục';
+
+  @override
+  String get unassignedCategory => 'Chưa phân loại';
+
+  @override
+  String get addProduct => 'Thêm sản phẩm';
+
+  @override
+  String get editProduct => 'Cập nhật sản phẩm';
+
+  @override
+  String get deleteProductConfirmTitle => 'Xóa sản phẩm';
+
+  @override
+  String get deleteProductConfirmMessage =>
+      'Bạn có chắc chắn muốn xóa sản phẩm này không?';
+
+  @override
+  String get productCreatedSuccess => 'Tạo sản phẩm thành công!';
+
+  @override
+  String get productUpdatedSuccess => 'Cập nhật sản phẩm thành công!';
+
+  @override
+  String get productDeletedSuccess => 'Xóa sản phẩm thành công!';
+
+  @override
+  String get emptyProductMessage =>
+      'Chưa có sản phẩm nào. Hãy bấm nút Thêm để bắt đầu!';
+
+  @override
+  String get validationRequired => 'Vui lòng nhập thông tin này';
+
+  @override
+  String get validationPriceRequired => 'Vui lòng nhập giá bán hợp lệ';
+
+  @override
+  String get searchProduct => 'Tìm sản phẩm...';
 }
