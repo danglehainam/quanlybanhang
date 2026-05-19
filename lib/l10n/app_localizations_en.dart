@@ -144,4 +144,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addCategory => 'Add Category';
+
+  @override
+  String get addCategoryTitle => 'Add New Category';
+
+  @override
+  String get categoryName => 'Category Name';
+
+  @override
+  String get categoryDescription => 'Description';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get validationCategoryNameRequired => 'Please enter a category name';
 }

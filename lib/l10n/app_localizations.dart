@@ -361,6 +361,42 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thêm danh mục'**
   String get addCategory;
+
+  /// No description provided for @addCategoryTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm danh mục mới'**
+  String get addCategoryTitle;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên danh mục'**
+  String get categoryName;
+
+  /// No description provided for @categoryDescription.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mô tả'**
+  String get categoryDescription;
+
+  /// No description provided for @cancel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hủy'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu'**
+  String get save;
+
+  /// No description provided for @validationCategoryNameRequired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập tên danh mục'**
+  String get validationCategoryNameRequired;
 }
 
 class _AppLocalizationsDelegate

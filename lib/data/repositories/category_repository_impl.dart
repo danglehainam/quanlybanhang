@@ -1,8 +1,10 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:drift/drift.dart' as drift;
 import '../../core/error/failures.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/repositories/category_repository.dart';
 import '../datasources/local/category_local_datasource.dart';
+import '../datasources/local/app_database.dart';
 import '../models/category_model.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
@@ -26,5 +28,22 @@ class CategoryRepositoryImpl implements CategoryRepository {
       // So we just throw it and let the caller catch it, or better:
       throw DatabaseFailure('Failed to watch categories: $error');
     });
+  }
+
+  @override
+  Future<Either<Failure, void>> createCategory(CategoryEntity category) async {
+    try {
+      final companion = CategoriesCompanion.insert(
+        storeId: category.storeId,
+        name: category.name,
+        description: drift.Value(category.description),
+        createdAt: category.createdAt.millisecondsSinceEpoch,
+        updatedAt: category.updatedAt.millisecondsSinceEpoch,
+      );
+      await _localDataSource.insertCategory(companion);
+      return const Right(null);
+    } catch (e) {
+      return Left(DatabaseFailure('Failed to create category: $e'));
+    }
   }
 }

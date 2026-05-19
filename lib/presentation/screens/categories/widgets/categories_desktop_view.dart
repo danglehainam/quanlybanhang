@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/category_entity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/app_primary_button.dart';
+import '../../../bloc/categories/categories_bloc.dart';
+import 'category_form_dialog.dart';
 
 class CategoriesDesktopView extends StatelessWidget {
   final List<CategoryEntity> categories;
@@ -58,7 +61,15 @@ class CategoriesDesktopView extends StatelessWidget {
                 AppPrimaryButton(
                   label: l10n.addCategory,
                   icon: Icons.add,
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => BlocProvider.value(
+                        value: context.read<CategoriesBloc>(),
+                        child: const CategoryFormDialog(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

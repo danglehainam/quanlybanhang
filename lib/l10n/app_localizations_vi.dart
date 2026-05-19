@@ -142,4 +142,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get addCategory => 'Thêm danh mục';
+
+  @override
+  String get addCategoryTitle => 'Thêm danh mục mới';
+
+  @override
+  String get categoryName => 'Tên danh mục';
+
+  @override
+  String get categoryDescription => 'Mô tả';
+
+  @override
+  String get cancel => 'Hủy';
+
+  @override
+  String get save => 'Lưu';
+
+  @override
+  String get validationCategoryNameRequired => 'Vui lòng nhập tên danh mục';
 }

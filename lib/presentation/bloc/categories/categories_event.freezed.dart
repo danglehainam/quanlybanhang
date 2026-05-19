@@ -55,11 +55,12 @@ extension CategoriesEventPatterns on CategoriesEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( WatchCategories value)?  watchCategories,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( WatchCategories value)?  watchCategories,TResult Function( CreateCategory value)?  createCategory,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
-return watchCategories(_that);case _:
+return watchCategories(_that);case CreateCategory() when createCategory != null:
+return createCategory(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return watchCategories(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( WatchCategories value)  watchCategories,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( WatchCategories value)  watchCategories,required TResult Function( CreateCategory value)  createCategory,}){
 final _that = this;
 switch (_that) {
 case WatchCategories():
-return watchCategories(_that);case _:
+return watchCategories(_that);case CreateCategory():
+return createCategory(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +100,12 @@ return watchCategories(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( WatchCategories value)?  watchCategories,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( WatchCategories value)?  watchCategories,TResult? Function( CreateCategory value)?  createCategory,}){
 final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
-return watchCategories(_that);case _:
+return watchCategories(_that);case CreateCategory() when createCategory != null:
+return createCategory(_that);case _:
   return null;
 
 }
@@ -119,10 +122,11 @@ return watchCategories(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  watchCategories,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  watchCategories,TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  createCategory,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
-return watchCategories();case _:
+return watchCategories();case CreateCategory() when createCategory != null:
+return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
   return orElse();
 
 }
@@ -140,10 +144,11 @@ return watchCategories();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  watchCategories,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  watchCategories,required TResult Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)  createCategory,}) {final _that = this;
 switch (_that) {
 case WatchCategories():
-return watchCategories();case _:
+return watchCategories();case CreateCategory():
+return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +165,11 @@ return watchCategories();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  watchCategories,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  watchCategories,TResult? Function( CategoryEntity category,  void Function() onSuccess,  void Function(String) onError)?  createCategory,}) {final _that = this;
 switch (_that) {
 case WatchCategories() when watchCategories != null:
-return watchCategories();case _:
+return watchCategories();case CreateCategory() when createCategory != null:
+return createCategory(_that.category,_that.onSuccess,_that.onError);case _:
   return null;
 
 }
@@ -202,5 +208,75 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class CreateCategory implements CategoriesEvent {
+  const CreateCategory(this.category, {required this.onSuccess, required this.onError});
+  
+
+ final  CategoryEntity category;
+ final  void Function() onSuccess;
+ final  void Function(String) onError;
+
+/// Create a copy of CategoriesEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CreateCategoryCopyWith<CreateCategory> get copyWith => _$CreateCategoryCopyWithImpl<CreateCategory>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateCategory&&(identical(other.category, category) || other.category == category)&&(identical(other.onSuccess, onSuccess) || other.onSuccess == onSuccess)&&(identical(other.onError, onError) || other.onError == onError));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,category,onSuccess,onError);
+
+@override
+String toString() {
+  return 'CategoriesEvent.createCategory(category: $category, onSuccess: $onSuccess, onError: $onError)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CreateCategoryCopyWith<$Res> implements $CategoriesEventCopyWith<$Res> {
+  factory $CreateCategoryCopyWith(CreateCategory value, $Res Function(CreateCategory) _then) = _$CreateCategoryCopyWithImpl;
+@useResult
+$Res call({
+ CategoryEntity category, void Function() onSuccess, void Function(String) onError
+});
+
+
+
+
+}
+/// @nodoc
+class _$CreateCategoryCopyWithImpl<$Res>
+    implements $CreateCategoryCopyWith<$Res> {
+  _$CreateCategoryCopyWithImpl(this._self, this._then);
+
+  final CreateCategory _self;
+  final $Res Function(CreateCategory) _then;
+
+/// Create a copy of CategoriesEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? category = null,Object? onSuccess = null,Object? onError = null,}) {
+  return _then(CreateCategory(
+null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as CategoryEntity,onSuccess: null == onSuccess ? _self.onSuccess : onSuccess // ignore: cast_nullable_to_non_nullable
+as void Function(),onError: null == onError ? _self.onError : onError // ignore: cast_nullable_to_non_nullable
+as void Function(String),
+  ));
+}
+
+
+}
 
 // dart format on

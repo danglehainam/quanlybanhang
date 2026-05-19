@@ -56,5 +56,11 @@
   "oldest": "Cũ nhất",
   "emptyCategoryMessage": "Chưa có danh mục nào.\nHãy thêm danh mục mới để quản lý dễ dàng hơn.",
   "retry": "Thử lại",
-  "addCategory": "Thêm danh mục"
+  "addCategory": "Thêm danh mục",
+  "addCategoryTitle": "Thêm danh mục mới",
+  "categoryName": "Tên danh mục",
+  "categoryDescription": "Mô tả",
+  "cancel": "Hủy",
+  "save": "Lưu",
+  "validationCategoryNameRequired": "Vui lòng nhập tên danh mục"
 }

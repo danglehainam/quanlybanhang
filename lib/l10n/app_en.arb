@@ -56,5 +56,11 @@
   "oldest": "Oldest",
   "emptyCategoryMessage": "No categories found.\nPlease add a new category to manage them easily.",
   "retry": "Retry",
-  "addCategory": "Add Category"
+  "addCategory": "Add Category",
+  "addCategoryTitle": "Add New Category",
+  "categoryName": "Category Name",
+  "categoryDescription": "Description",
+  "cancel": "Cancel",
+  "save": "Save",
+  "validationCategoryNameRequired": "Please enter a category name"
 }

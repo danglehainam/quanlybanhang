@@ -14,6 +14,7 @@ import '../../widgets/app_error_widget.dart';
 import '../../widgets/app_floating_action_button.dart';
 import 'widgets/categories_desktop_view.dart';
 import 'widgets/categories_mobile_view.dart';
+import 'widgets/category_form_dialog.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -93,7 +94,15 @@ class _CategoriesViewState extends State<CategoriesView> {
       floatingActionButton: isMobileView
           ? AppFloatingActionButton(
               icon: Icons.add,
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => BlocProvider.value(
+                    value: context.read<CategoriesBloc>(),
+                    child: const CategoryFormDialog(),
+                  ),
+                );
+              },
             )
           : null,
     );
