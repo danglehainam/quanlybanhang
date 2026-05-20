@@ -8,8 +8,8 @@ import '../../../bloc/sell/sell_event.dart';
 import '../../../bloc/sell/sell_state.dart';
 import '../../../widgets/buttons/app_icon_button.dart';
 import '../../../widgets/empty_data_widget.dart';
-import '../widgets/pos_product_item.dart';
 import '../widgets/pos_order_card.dart';
+import '../widgets/product_grouped_grid.dart';
 import '../widgets/sell_filter_sidebar.dart';
 
 class SellDesktopView extends StatelessWidget {
@@ -71,24 +71,12 @@ class SellDesktopView extends StatelessWidget {
 
     return Container(
       color: AppColors.background,
-      padding: const EdgeInsets.all(16.0),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 6,
-          childAspectRatio: 0.85,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-        ),
-        itemCount: state.filteredProducts.length,
-        itemBuilder: (context, index) {
-          final product = state.filteredProducts[index];
-          return PosProductItem(
-            product: product,
-            onTap: () {
-              context.read<SellBloc>().add(SellEvent.addProductToOrder(product));
-            },
-          );
-        },
+      child: ProductGroupedGrid(
+        products: state.filteredProducts,
+        categories: state.categories,
+        crossAxisCount: 6,
+        childAspectRatio: 0.85,
+        bottomPadding: 16,
       ),
     );
   }

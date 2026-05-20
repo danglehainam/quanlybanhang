@@ -9,8 +9,8 @@ import '../../../bloc/sell/sell_state.dart';
 import '../../../widgets/app_formatters.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/empty_data_widget.dart';
-import '../widgets/pos_product_item.dart';
 import '../widgets/pos_order_card.dart';
+import '../widgets/product_grouped_grid.dart';
 import '../widgets/sell_filter_sidebar.dart';
 
 class SellMobileView extends StatelessWidget {
@@ -75,30 +75,12 @@ class SellMobileView extends StatelessWidget {
                             message: l10n.emptyProductMessage,
                           ),
                         )
-                      : GridView.builder(
-                          padding: const EdgeInsets.all(16).copyWith(bottom: 100), // padding for bottom bar
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, // 4 columns for mobile (compact)
-                            childAspectRatio: 1.0,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                          itemCount: state.filteredProducts.length,
-                          itemBuilder: (context, index) {
-                            final product = state.filteredProducts[index];
-                            return PosProductItem(
-                              product: product,
-                              onTap: () {
-                                context.read<SellBloc>().add(SellEvent.addProductToOrder(product));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Đã thêm ${product.name}'),
-                                    duration: const Duration(milliseconds: 500),
-                                  ),
-                                );
-                              },
-                            );
-                          },
+                      : ProductGroupedGrid(
+                          products: state.filteredProducts,
+                          categories: state.categories,
+                          crossAxisCount: 4, // 4 columns for mobile (compact)
+                          childAspectRatio: 1.0,
+                          bottomPadding: 100, // padding for bottom bar
                         ),
                 ),
               ],
@@ -226,7 +208,10 @@ class SellMobileView extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-              child: const SellFilterSidebar(showCloseButton: true),
+              child: const SellFilterSidebar(
+                showCloseButton: true,
+                showSearchField: false,
+              ),
             ),
           ),
         );

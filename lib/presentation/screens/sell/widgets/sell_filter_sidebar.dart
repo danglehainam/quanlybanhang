@@ -11,8 +11,13 @@ import '../../../widgets/filter_accordion_block.dart';
 
 class SellFilterSidebar extends StatelessWidget {
   final bool showCloseButton;
+  final bool showSearchField;
   
-  const SellFilterSidebar({super.key, this.showCloseButton = false});
+  const SellFilterSidebar({
+    super.key, 
+    this.showCloseButton = false,
+    this.showSearchField = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,23 +53,24 @@ class SellFilterSidebar extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   children: [
                     // Search Block
-                    FilterAccordionBlock(
-                      title: 'Tìm kiếm',
-                      child: AppTextField(
-                        labelText: 'Tên sản phẩm...',
-                        prefixIcon: Icons.search,
-                        onChanged: (val) {
-                          context.read<SellBloc>().add(SellEvent.filterProducts(
-                            query: val,
-                            categoryId: state.selectedCategoryId,
-                            minPrice: state.minPrice,
-                            maxPrice: state.maxPrice,
-                            productStatus: state.productStatus,
-                            sortOption: state.sortOption,
-                          ));
-                        },
+                    if (showSearchField)
+                      FilterAccordionBlock(
+                        title: 'Tìm kiếm',
+                        child: AppTextField(
+                          labelText: 'Tên sản phẩm...',
+                          prefixIcon: Icons.search,
+                          onChanged: (val) {
+                            context.read<SellBloc>().add(SellEvent.filterProducts(
+                              query: val,
+                              categoryId: state.selectedCategoryId,
+                              minPrice: state.minPrice,
+                              maxPrice: state.maxPrice,
+                              productStatus: state.productStatus,
+                              sortOption: state.sortOption,
+                            ));
+                          },
+                        ),
                       ),
-                    ),
 
                     // Category Block
                     FilterAccordionBlock(
