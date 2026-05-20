@@ -120,10 +120,10 @@ class SellDesktopView extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 6,
           childAspectRatio: 0.85,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         itemCount: state.filteredProducts.length,
         itemBuilder: (context, index) {

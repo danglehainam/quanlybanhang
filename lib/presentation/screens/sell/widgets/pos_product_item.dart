@@ -44,22 +44,23 @@ class PosProductItem extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     product.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Text(
                     AppFormatters.formatCurrency(product.price),
                     style: const TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,
+                      fontSize: 11,
                     ),
                   ),
                 ],
@@ -80,7 +81,7 @@ class _PlaceholderImage extends StatelessWidget {
     return Container(
       color: AppColors.background,
       child: const Center(
-        child: Icon(Icons.image_outlined, color: AppColors.textSecondary, size: 40),
+        child: Icon(Icons.image_outlined, color: AppColors.textSecondary, size: 24),
       ),
     );
   }

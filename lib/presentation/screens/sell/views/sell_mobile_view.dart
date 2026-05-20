@@ -80,10 +80,10 @@ class SellMobileView extends StatelessWidget {
                       : GridView.builder(
                           padding: const EdgeInsets.all(16).copyWith(bottom: 100), // padding for bottom bar
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // 2 columns for mobile
+                            crossAxisCount: 4, // 4 columns for mobile (compact)
                             childAspectRatio: 1.0,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
                           ),
                           itemCount: state.filteredProducts.length,
                           itemBuilder: (context, index) {
