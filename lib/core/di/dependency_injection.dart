@@ -32,6 +32,9 @@ import '../../domain/usecases/create_product_usecase.dart';
 import '../../domain/usecases/update_product_usecase.dart';
 import '../../domain/usecases/delete_product_usecase.dart';
 import '../../presentation/bloc/products/products_bloc.dart';
+import '../../data/repositories/order_repository_impl.dart';
+import '../../domain/repositories/order_repository.dart';
+import '../../presentation/bloc/sell/sell_bloc.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
@@ -69,6 +72,9 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(getIt<ProductLocalDataSource>()),
+  );
+  getIt.registerLazySingleton<OrderRepository>(
+    () => OrderRepositoryImpl(localDatabase: getIt<AppDatabase>()),
   );
 
   // UseCase
@@ -146,6 +152,14 @@ Future<void> setupDependencies() async {
       createProductUseCase: getIt<CreateProductUseCase>(),
       updateProductUseCase: getIt<UpdateProductUseCase>(),
       deleteProductUseCase: getIt<DeleteProductUseCase>(),
+    ),
+  );
+  getIt.registerFactory<SellBloc>(
+    () => SellBloc(
+      productRepository: getIt<ProductRepository>(),
+      categoryRepository: getIt<CategoryRepository>(),
+      orderRepository: getIt<OrderRepository>(),
+      prefs: getIt<SharedPreferences>(),
     ),
   );
 }

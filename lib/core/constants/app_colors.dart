@@ -24,6 +24,7 @@ class AppColors {
   static const Color navBarSelected = Color(0xFF005688); // Darker blue for selected tab
   static const Color background = Color(0xFFF4F5F7); // Light gray background
 
-  // Text
+  static const Color textPrimary = Color(0xFF212121);
   static const Color textSecondary = Color(0xFF757575);
+  static const Color divider = Color(0xFFE0E0E0);
 }

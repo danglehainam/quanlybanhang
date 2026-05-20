@@ -87,5 +87,21 @@
   "emptyProductMessage": "No products yet. Click Add to get started!",
   "validationRequired": "This field is required",
   "validationPriceRequired": "Please enter a valid price",
-  "searchProduct": "Search products..."
+  "searchProduct": "Search products...",
+  "addOrder": "Add Order",
+  "orderNumber": "Order #{number}",
+  "@orderNumber": {
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+  "completeOrder": "Complete",
+  "confirmOrder": "Confirm",
+  "emptyOrderMessage": "No items yet.",
+  "cart": "Cart",
+  "totalAmount": "Total",
+  "checkout": "Checkout",
+  "draftOrders": "Active Orders",
+  "orderCompletedSuccess": "Order completed successfully!",
+  "orderConfirmedSuccess": "Order saved as pending!"
 }

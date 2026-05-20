@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppPrimaryButton extends StatelessWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool isLoading;
   final IconData? icon;
 

@@ -1,0 +1,225 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+
+import '../../../../core/constants/app_colors.dart';
+import '../../../bloc/sell/sell_bloc.dart';
+import '../../../bloc/sell/sell_event.dart';
+import '../../../bloc/sell/sell_state.dart';
+import '../../../widgets/app_text_field.dart';
+import '../../../widgets/buttons/app_icon_button.dart';
+import '../../../widgets/empty_data_widget.dart';
+import '../widgets/pos_product_item.dart';
+import '../widgets/pos_order_card.dart';
+
+class SellDesktopView extends StatelessWidget {
+  const SellDesktopView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return BlocBuilder<SellBloc, SellState>(
+      builder: (context, state) {
+        if (state.isLoading && state.allProducts.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Left Column: 1 flex (Filters)
+            Expanded(
+              flex: 1,
+              child: _buildLeftColumn(context, state, l10n),
+            ),
+            
+            const VerticalDivider(width: 1),
+
+            // Middle Column: 2 flex (Products)
+            Expanded(
+              flex: 2,
+              child: _buildMiddleColumn(context, state, l10n),
+            ),
+            
+            const VerticalDivider(width: 1),
+
+            // Right Column: 1 flex (Orders)
+            Expanded(
+              flex: 1,
+              child: _buildRightColumn(context, state, l10n),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildLeftColumn(BuildContext context, SellState state, AppLocalizations l10n) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.filterAndSearch,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          AppTextField(
+            labelText: l10n.searchProduct,
+            prefixIcon: Icons.search,
+            onChanged: (val) {
+              context.read<SellBloc>().add(SellEvent.filterProducts(val, state.selectedCategoryId));
+            },
+          ),
+          const SizedBox(height: 24),
+          Text(
+            l10n.menuCategories,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: ListView(
+              children: [
+                _CategoryTile(
+                  title: 'Tất cả',
+                  isSelected: state.selectedCategoryId == null || state.selectedCategoryId == 0,
+                  onTap: () {
+                    context.read<SellBloc>().add(SellEvent.filterProducts(state.searchQuery, 0));
+                  },
+                ),
+                ...state.categories.map((cat) => _CategoryTile(
+                  title: cat.name,
+                  isSelected: state.selectedCategoryId == cat.id,
+                  onTap: () {
+                    context.read<SellBloc>().add(SellEvent.filterProducts(state.searchQuery, cat.id));
+                  },
+                )),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMiddleColumn(BuildContext context, SellState state, AppLocalizations l10n) {
+    if (state.filteredProducts.isEmpty) {
+      return Center(
+        child: EmptyDataWidget(
+          icon: Icons.inventory_2_outlined,
+          message: l10n.emptyProductMessage,
+        ),
+      );
+    }
+
+    return Container(
+      color: AppColors.background,
+      padding: const EdgeInsets.all(16.0),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          childAspectRatio: 0.85,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+        ),
+        itemCount: state.filteredProducts.length,
+        itemBuilder: (context, index) {
+          final product = state.filteredProducts[index];
+          return PosProductItem(
+            product: product,
+            onTap: () {
+              context.read<SellBloc>().add(SellEvent.addProductToOrder(product));
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildRightColumn(BuildContext context, SellState state, AppLocalizations l10n) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  l10n.draftOrders,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                AppIconButton(
+                  icon: Icons.add,
+                  tooltip: l10n.addOrder,
+                  color: AppColors.primary,
+                  onPressed: () {
+                    context.read<SellBloc>().add(const SellEvent.addOrder());
+                  },
+                )
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+          Expanded(
+            child: state.draftOrders.isEmpty
+                ? Center(
+                    child: Text(
+                      'Chưa có đơn hàng nào.',
+                      style: TextStyle(color: AppColors.textSecondary),
+                    ),
+                  )
+                : ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: state.draftOrders.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 16),
+                    itemBuilder: (context, index) {
+                      final order = state.draftOrders[index];
+                      final isExpanded = index == state.selectedOrderIndex;
+                      
+                      return PosOrderCard(
+                        order: order,
+                        orderIndex: index,
+                        isExpanded: isExpanded,
+                        onExpand: () {
+                          context.read<SellBloc>().add(SellEvent.selectOrder(index));
+                        },
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategoryTile extends StatelessWidget {
+  final String title;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _CategoryTile({required this.title, required this.isSelected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        title,
+        style: TextStyle(
+          color: isSelected ? AppColors.primary : AppColors.textPrimary,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        ),
+      ),
+      selected: isSelected,
+      selectedTileColor: AppColors.primaryLight.withAlpha(26),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      onTap: onTap,
+    );
+  }
+}

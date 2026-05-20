@@ -547,6 +547,72 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Tìm sản phẩm...'**
   String get searchProduct;
+
+  /// No description provided for @addOrder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm đơn'**
+  String get addOrder;
+
+  /// No description provided for @orderNumber.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đơn #{number}'**
+  String orderNumber(int number);
+
+  /// No description provided for @completeOrder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hoàn thành'**
+  String get completeOrder;
+
+  /// No description provided for @confirmOrder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận'**
+  String get confirmOrder;
+
+  /// No description provided for @emptyOrderMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có món nào.'**
+  String get emptyOrderMessage;
+
+  /// No description provided for @cart.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giỏ hàng'**
+  String get cart;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tổng cộng'**
+  String get totalAmount;
+
+  /// No description provided for @checkout.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thanh toán'**
+  String get checkout;
+
+  /// No description provided for @draftOrders.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đơn hàng đang phục vụ'**
+  String get draftOrders;
+
+  /// No description provided for @orderCompletedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã hoàn thành đơn hàng!'**
+  String get orderCompletedSuccess;
+
+  /// No description provided for @orderConfirmedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xác nhận đơn hàng (lưu nháp)!'**
+  String get orderConfirmedSuccess;
 }
 
 class _AppLocalizationsDelegate

@@ -87,5 +87,21 @@
   "emptyProductMessage": "Chưa có sản phẩm nào. Hãy bấm nút Thêm để bắt đầu!",
   "validationRequired": "Vui lòng nhập thông tin này",
   "validationPriceRequired": "Vui lòng nhập giá bán hợp lệ",
-  "searchProduct": "Tìm sản phẩm..."
+  "searchProduct": "Tìm sản phẩm...",
+  "addOrder": "Thêm đơn",
+  "orderNumber": "Đơn #{number}",
+  "@orderNumber": {
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+  "completeOrder": "Hoàn thành",
+  "confirmOrder": "Xác nhận",
+  "emptyOrderMessage": "Chưa có món nào.",
+  "cart": "Giỏ hàng",
+  "totalAmount": "Tổng cộng",
+  "checkout": "Thanh toán",
+  "draftOrders": "Đơn hàng đang phục vụ",
+  "orderCompletedSuccess": "Đã hoàn thành đơn hàng!",
+  "orderConfirmedSuccess": "Đã xác nhận đơn hàng (lưu nháp)!"
 }

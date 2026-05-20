@@ -240,4 +240,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchProduct => 'Search products...';
+
+  @override
+  String get addOrder => 'Add Order';
+
+  @override
+  String orderNumber(int number) {
+    return 'Order #$number';
+  }
+
+  @override
+  String get completeOrder => 'Complete';
+
+  @override
+  String get confirmOrder => 'Confirm';
+
+  @override
+  String get emptyOrderMessage => 'No items yet.';
+
+  @override
+  String get cart => 'Cart';
+
+  @override
+  String get totalAmount => 'Total';
+
+  @override
+  String get checkout => 'Checkout';
+
+  @override
+  String get draftOrders => 'Active Orders';
+
+  @override
+  String get orderCompletedSuccess => 'Order completed successfully!';
+
+  @override
+  String get orderConfirmedSuccess => 'Order saved as pending!';
 }

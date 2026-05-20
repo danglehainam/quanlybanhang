@@ -238,4 +238,39 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get searchProduct => 'Tìm sản phẩm...';
+
+  @override
+  String get addOrder => 'Thêm đơn';
+
+  @override
+  String orderNumber(int number) {
+    return 'Đơn #$number';
+  }
+
+  @override
+  String get completeOrder => 'Hoàn thành';
+
+  @override
+  String get confirmOrder => 'Xác nhận';
+
+  @override
+  String get emptyOrderMessage => 'Chưa có món nào.';
+
+  @override
+  String get cart => 'Giỏ hàng';
+
+  @override
+  String get totalAmount => 'Tổng cộng';
+
+  @override
+  String get checkout => 'Thanh toán';
+
+  @override
+  String get draftOrders => 'Đơn hàng đang phục vụ';
+
+  @override
+  String get orderCompletedSuccess => 'Đã hoàn thành đơn hàng!';
+
+  @override
+  String get orderConfirmedSuccess => 'Đã xác nhận đơn hàng (lưu nháp)!';
 }
