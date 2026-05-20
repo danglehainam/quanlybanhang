@@ -6,9 +6,12 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/order_entity.dart';
 import '../../../bloc/sell/sell_bloc.dart';
 import '../../../bloc/sell/sell_event.dart';
-import '../../../widgets/app_formatters.dart';
+
 import '../../../widgets/buttons/app_primary_button.dart';
-import '../../../widgets/buttons/app_icon_button.dart';
+import '../../../widgets/buttons/app_outlined_button.dart';
+
+import 'pos_order_card_header.dart';
+import 'pos_order_item_row.dart';
 
 class PosOrderCard extends StatelessWidget {
   final OrderEntity order;
@@ -27,8 +30,6 @@ class PosOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
-    // Fallback for L10n args if not perfectly matched
     final orderName = 'Đơn #${orderIndex + 1}';
 
     return Card(
@@ -44,55 +45,13 @@ class PosOrderCard extends StatelessWidget {
       child: Column(
         children: [
           // Header (Click to expand)
-          InkWell(
-            onTap: onExpand,
-            borderRadius: BorderRadius.circular(12),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          orderName,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: isExpanded ? FontWeight.bold : FontWeight.w600,
-                            color: isExpanded ? AppColors.primary : AppColors.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${order.items.length} món',
-                          style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Text(
-                    AppFormatters.formatCurrency(order.finalAmount),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  if (isExpanded) ...[
-                    const SizedBox(width: 8),
-                    AppIconButton(
-                      icon: Icons.close,
-                      color: AppColors.error,
-                      tooltip: 'Xoá đơn',
-                      onPressed: () {
-                        context.read<SellBloc>().add(SellEvent.removeOrder(orderIndex));
-                      },
-                    ),
-                  ]
-                ],
-              ),
-            ),
+          PosOrderCardHeader(
+            orderName: orderName,
+            itemCount: order.items.length,
+            totalAmount: order.finalAmount,
+            isExpanded: isExpanded,
+            onExpand: onExpand,
+            onRemove: () => context.read<SellBloc>().add(SellEvent.removeOrder(orderIndex)),
           ),
 
           // Expanded Content
@@ -114,62 +73,13 @@ class PosOrderCard extends StatelessWidget {
                 itemCount: order.items.length,
                 itemBuilder: (context, idx) {
                   final item = order.items[idx];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(item.productName, style: const TextStyle(fontWeight: FontWeight.w500)),
-                              Text(
-                                AppFormatters.formatCurrency(item.priceAtPurchase),
-                                style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Quantity controls
-                        Row(
-                          children: [
-                            AppIconButton(
-                              icon: Icons.remove_circle_outline,
-                              color: AppColors.textSecondary,
-                              tooltip: 'Giảm',
-                              onPressed: () {
-                                context.read<SellBloc>().add(SellEvent.updateItemQuantity(idx, item.quantity - 1));
-                              },
-                            ),
-                            SizedBox(
-                              width: 30,
-                              child: Text(
-                                '${item.quantity}',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            AppIconButton(
-                              icon: Icons.add_circle_outline,
-                              color: AppColors.primary,
-                              tooltip: 'Tăng',
-                              onPressed: () {
-                                context.read<SellBloc>().add(SellEvent.updateItemQuantity(idx, item.quantity + 1));
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 16),
-                        SizedBox(
-                          width: 80,
-                          child: Text(
-                            AppFormatters.formatCurrency(item.subtotal),
-                            textAlign: TextAlign.right,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
+                  return PosOrderItemRow(
+                    productName: item.productName,
+                    price: item.priceAtPurchase,
+                    quantity: item.quantity,
+                    subtotal: item.subtotal,
+                    onIncrease: () => context.read<SellBloc>().add(SellEvent.updateItemQuantity(idx, item.quantity + 1)),
+                    onDecrease: () => context.read<SellBloc>().add(SellEvent.updateItemQuantity(idx, item.quantity - 1)),
                   );
                 },
               ),
@@ -180,29 +90,16 @@ class PosOrderCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
-                      onPressed: order.items.isEmpty
-                          ? null
-                          : () {
-                              context.read<SellBloc>().add(const SellEvent.confirmOrder());
-                            },
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        side: const BorderSide(color: AppColors.primary),
-                        foregroundColor: AppColors.primary,
-                      ),
-                      child: Text(l10n.confirmOrder),
+                    child: AppOutlinedButton(
+                      label: l10n.confirmOrder,
+                      onPressed: order.items.isEmpty ? null : () => context.read<SellBloc>().add(const SellEvent.confirmOrder()),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: AppPrimaryButton(
                       label: l10n.completeOrder,
-                      onPressed: order.items.isEmpty
-                          ? null
-                          : () {
-                              context.read<SellBloc>().add(const SellEvent.completeOrder());
-                            },
+                      onPressed: order.items.isEmpty ? null : () => context.read<SellBloc>().add(const SellEvent.completeOrder()),
                     ),
                   ),
                 ],
