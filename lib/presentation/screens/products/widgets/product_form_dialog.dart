@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
+import '../../../../core/utils/file_utils.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../widgets/app_dialog.dart';
 import '../../../widgets/app_text_field.dart';
@@ -64,8 +65,12 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
+      // Lưu file vĩnh viễn vào documents directory
+      final savedPath = await FileUtils.saveFileToDocumentsDirectory(pickedFile.path);
+      
+      if (!mounted) return;
       setState(() {
-        _imageUrl = pickedFile.path;
+        _imageUrl = savedPath;
       });
     }
   }
