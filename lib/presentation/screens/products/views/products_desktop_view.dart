@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import 'package:intl/intl.dart' as intl;
+import '../../../../core/utils/currency_utils.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../../domain/entities/category_entity.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -85,7 +86,6 @@ class ProductsDesktopView extends StatelessWidget {
                       ],
                       rows: products.map((product) {
                         final category = product.categoryId != null ? categoryMap[product.categoryId] : null;
-                        final currencyFormatter = intl.NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
 
                         return DataRow(
                           cells: [
@@ -131,7 +131,7 @@ class ProductsDesktopView extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            DataCell(Text(currencyFormatter.format(product.price))),
+                            DataCell(Text(CurrencyUtils.formatCurrency(product.price))),
                             DataCell(
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

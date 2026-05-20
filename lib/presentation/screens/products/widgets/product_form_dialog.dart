@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
 import '../../../../core/utils/file_utils.dart';
+import '../../../../core/utils/currency_utils.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../widgets/app_dialog.dart';
 import '../../../widgets/app_text_field.dart';
@@ -43,7 +44,11 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.productToEdit?.name);
-    _priceController = TextEditingController(text: widget.productToEdit?.price.toString());
+    _priceController = TextEditingController(
+      text: widget.productToEdit != null 
+        ? CurrencyUtils.formatNumber(widget.productToEdit!.price)
+        : '',
+    );
     _descriptionController = TextEditingController(text: widget.productToEdit?.description);
     _selectedCategoryId = widget.productToEdit?.categoryId;
     _imageUrl = widget.productToEdit?.imageUrl;
@@ -80,7 +85,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
       setState(() => _isLoading = true);
 
       final l10n = AppLocalizations.of(context)!;
-      final price = int.tryParse(_priceController.text.trim()) ?? 0;
+      final price = CurrencyUtils.parseCurrency(_priceController.text);
 
       final productData = ProductEntity(
         id: _isEditMode ? widget.productToEdit!.id : 0,
@@ -202,12 +207,16 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
                 border: const OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                CurrencyInputFormatter(),
+              ],
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return l10n.validationPriceRequired;
                 }
-                if (int.tryParse(value) == null) {
+                final parsedValue = CurrencyUtils.parseCurrency(value);
+                if (parsedValue <= 0) {
                   return l10n.validationPriceRequired;
                 }
                 return null;

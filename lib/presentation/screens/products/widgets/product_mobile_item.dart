@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../../domain/entities/category_entity.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import '../../../../core/utils/currency_utils.dart';
 import '../../../widgets/buttons/app_icon_button.dart';
 
 class ProductMobileItem extends StatelessWidget {
@@ -54,7 +55,6 @@ class ProductMobileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormatter = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
     final l10n = AppLocalizations.of(context)!;
 
     return Card(
@@ -119,7 +119,7 @@ class ProductMobileItem extends StatelessWidget {
           ],
         ),
         subtitle: Text(
-          '${currencyFormatter.format(product.price)} - ${category?.name ?? l10n.unassignedCategory}',
+          '${CurrencyUtils.formatCurrency(product.price)} - ${category?.name ?? l10n.unassignedCategory}',
         ),
         trailing: AppIconButton(
           icon: Icons.more_vert,
