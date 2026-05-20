@@ -21,6 +21,12 @@ abstract class SellState with _$SellState {
     @Default('') String searchQuery,
     int? selectedCategoryId,
     
+    // KiotViet advanced filters
+    int? minPrice,
+    int? maxPrice,
+    int? productStatus, // 1: Active, 0: Inactive
+    int? sortOption, // 0: Price Ascending, 1: Price Descending
+    
     String? error,
     @Default(false) bool isActionSuccess, // Used for showing success snackbar
   }) = _SellState;

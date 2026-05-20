@@ -6,11 +6,11 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../bloc/sell/sell_bloc.dart';
 import '../../../bloc/sell/sell_event.dart';
 import '../../../bloc/sell/sell_state.dart';
-import '../../../widgets/app_text_field.dart';
 import '../../../widgets/buttons/app_icon_button.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../widgets/pos_product_item.dart';
 import '../widgets/pos_order_card.dart';
+import '../widgets/sell_filter_sidebar.dart';
 
 class SellDesktopView extends StatelessWidget {
   const SellDesktopView({super.key});
@@ -56,53 +56,7 @@ class SellDesktopView extends StatelessWidget {
   }
 
   Widget _buildLeftColumn(BuildContext context, SellState state, AppLocalizations l10n) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            l10n.filterAndSearch,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          AppTextField(
-            labelText: l10n.searchProduct,
-            prefixIcon: Icons.search,
-            onChanged: (val) {
-              context.read<SellBloc>().add(SellEvent.filterProducts(val, state.selectedCategoryId));
-            },
-          ),
-          const SizedBox(height: 24),
-          Text(
-            l10n.menuCategories,
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: ListView(
-              children: [
-                _CategoryTile(
-                  title: 'Tất cả',
-                  isSelected: state.selectedCategoryId == null || state.selectedCategoryId == 0,
-                  onTap: () {
-                    context.read<SellBloc>().add(SellEvent.filterProducts(state.searchQuery, 0));
-                  },
-                ),
-                ...state.categories.map((cat) => _CategoryTile(
-                  title: cat.name,
-                  isSelected: state.selectedCategoryId == cat.id,
-                  onTap: () {
-                    context.read<SellBloc>().add(SellEvent.filterProducts(state.searchQuery, cat.id));
-                  },
-                )),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    return const SellFilterSidebar();
   }
 
   Widget _buildMiddleColumn(BuildContext context, SellState state, AppLocalizations l10n) {
@@ -199,27 +153,3 @@ class SellDesktopView extends StatelessWidget {
   }
 }
 
-class _CategoryTile extends StatelessWidget {
-  final String title;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _CategoryTile({required this.title, required this.isSelected, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          color: isSelected ? AppColors.primary : AppColors.textPrimary,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-        ),
-      ),
-      selected: isSelected,
-      selectedTileColor: AppColors.primaryLight.withAlpha(26),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      onTap: onTap,
-    );
-  }
-}

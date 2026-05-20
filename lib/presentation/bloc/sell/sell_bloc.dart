@@ -64,18 +64,48 @@ class SellBloc extends Bloc<SellEvent, SellState> {
   }
 
   void _onFilterProducts(FilterProductsEvent event, Emitter<SellState> emit) {
-    final query = event.query.toLowerCase();
+    final query = event.query ?? '';
     final categoryId = event.categoryId;
+    final minPrice = event.minPrice;
+    final maxPrice = event.maxPrice;
+    final productStatus = event.productStatus;
+    final sortOption = event.sortOption;
 
-    final filtered = state.allProducts.where((p) {
-      final matchesSearch = p.name.toLowerCase().contains(query);
+    var filtered = state.allProducts.where((p) {
+      // 1. Search Query
+      final matchesSearch = query.isEmpty || p.name.toLowerCase().contains(query.toLowerCase());
+      
+      // 2. Category
       final matchesCategory = categoryId == null || categoryId == 0 || p.categoryId == categoryId;
-      return matchesSearch && matchesCategory;
+      
+      // 3. Price Range
+      final matchesMinPrice = minPrice == null || p.price >= minPrice;
+      final matchesMaxPrice = maxPrice == null || p.price <= maxPrice;
+      
+      // 4. Status
+      final matchesStatus = productStatus == null || p.status == productStatus;
+      
+      return matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStatus;
     }).toList();
 
+    // 5. Sort
+    if (sortOption != null) {
+      filtered.sort((a, b) {
+        if (sortOption == 0) {
+          return a.price.compareTo(b.price); // Ascending
+        } else {
+          return b.price.compareTo(a.price); // Descending
+        }
+      });
+    }
+
     emit(state.copyWith(
-      searchQuery: event.query,
+      searchQuery: query,
       selectedCategoryId: categoryId,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      productStatus: productStatus,
+      sortOption: sortOption,
       filteredProducts: filtered,
     ));
   }

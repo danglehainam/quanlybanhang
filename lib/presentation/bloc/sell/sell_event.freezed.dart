@@ -146,11 +146,11 @@ return completeOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadInitialData,TResult Function( String query,  int? categoryId)?  filterProducts,TResult Function()?  addOrder,TResult Function( int index)?  selectOrder,TResult Function( int index)?  removeOrder,TResult Function( ProductEntity product)?  addProductToOrder,TResult Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult Function( int itemIndex)?  removeItem,TResult Function()?  confirmOrder,TResult Function()?  completeOrder,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadInitialData,TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  filterProducts,TResult Function()?  addOrder,TResult Function( int index)?  selectOrder,TResult Function( int index)?  removeOrder,TResult Function( ProductEntity product)?  addProductToOrder,TResult Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult Function( int itemIndex)?  removeItem,TResult Function()?  confirmOrder,TResult Function()?  completeOrder,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadInitialDataEvent() when loadInitialData != null:
 return loadInitialData();case FilterProductsEvent() when filterProducts != null:
-return filterProducts(_that.query,_that.categoryId);case AddOrderEvent() when addOrder != null:
+return filterProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case AddOrderEvent() when addOrder != null:
 return addOrder();case SelectOrderEvent() when selectOrder != null:
 return selectOrder(_that.index);case RemoveOrderEvent() when removeOrder != null:
 return removeOrder(_that.index);case AddProductToOrderEvent() when addProductToOrder != null:
@@ -176,11 +176,11 @@ return completeOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadInitialData,required TResult Function( String query,  int? categoryId)  filterProducts,required TResult Function()  addOrder,required TResult Function( int index)  selectOrder,required TResult Function( int index)  removeOrder,required TResult Function( ProductEntity product)  addProductToOrder,required TResult Function( int itemIndex,  int newQuantity)  updateItemQuantity,required TResult Function( int itemIndex)  removeItem,required TResult Function()  confirmOrder,required TResult Function()  completeOrder,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadInitialData,required TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)  filterProducts,required TResult Function()  addOrder,required TResult Function( int index)  selectOrder,required TResult Function( int index)  removeOrder,required TResult Function( ProductEntity product)  addProductToOrder,required TResult Function( int itemIndex,  int newQuantity)  updateItemQuantity,required TResult Function( int itemIndex)  removeItem,required TResult Function()  confirmOrder,required TResult Function()  completeOrder,}) {final _that = this;
 switch (_that) {
 case LoadInitialDataEvent():
 return loadInitialData();case FilterProductsEvent():
-return filterProducts(_that.query,_that.categoryId);case AddOrderEvent():
+return filterProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case AddOrderEvent():
 return addOrder();case SelectOrderEvent():
 return selectOrder(_that.index);case RemoveOrderEvent():
 return removeOrder(_that.index);case AddProductToOrderEvent():
@@ -205,11 +205,11 @@ return completeOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadInitialData,TResult? Function( String query,  int? categoryId)?  filterProducts,TResult? Function()?  addOrder,TResult? Function( int index)?  selectOrder,TResult? Function( int index)?  removeOrder,TResult? Function( ProductEntity product)?  addProductToOrder,TResult? Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult? Function( int itemIndex)?  removeItem,TResult? Function()?  confirmOrder,TResult? Function()?  completeOrder,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadInitialData,TResult? Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  filterProducts,TResult? Function()?  addOrder,TResult? Function( int index)?  selectOrder,TResult? Function( int index)?  removeOrder,TResult? Function( ProductEntity product)?  addProductToOrder,TResult? Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult? Function( int itemIndex)?  removeItem,TResult? Function()?  confirmOrder,TResult? Function()?  completeOrder,}) {final _that = this;
 switch (_that) {
 case LoadInitialDataEvent() when loadInitialData != null:
 return loadInitialData();case FilterProductsEvent() when filterProducts != null:
-return filterProducts(_that.query,_that.categoryId);case AddOrderEvent() when addOrder != null:
+return filterProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case AddOrderEvent() when addOrder != null:
 return addOrder();case SelectOrderEvent() when selectOrder != null:
 return selectOrder(_that.index);case RemoveOrderEvent() when removeOrder != null:
 return removeOrder(_that.index);case AddProductToOrderEvent() when addProductToOrder != null:
@@ -261,11 +261,15 @@ String toString() {
 
 
 class FilterProductsEvent implements SellEvent {
-  const FilterProductsEvent(this.query, this.categoryId);
+  const FilterProductsEvent({this.query, this.categoryId, this.minPrice, this.maxPrice, this.productStatus, this.sortOption});
   
 
- final  String query;
+ final  String? query;
  final  int? categoryId;
+ final  int? minPrice;
+ final  int? maxPrice;
+ final  int? productStatus;
+ final  int? sortOption;
 
 /// Create a copy of SellEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -277,16 +281,16 @@ $FilterProductsEventCopyWith<FilterProductsEvent> get copyWith => _$FilterProduc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterProductsEvent&&(identical(other.query, query) || other.query == query)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterProductsEvent&&(identical(other.query, query) || other.query == query)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.productStatus, productStatus) || other.productStatus == productStatus)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,query,categoryId);
+int get hashCode => Object.hash(runtimeType,query,categoryId,minPrice,maxPrice,productStatus,sortOption);
 
 @override
 String toString() {
-  return 'SellEvent.filterProducts(query: $query, categoryId: $categoryId)';
+  return 'SellEvent.filterProducts(query: $query, categoryId: $categoryId, minPrice: $minPrice, maxPrice: $maxPrice, productStatus: $productStatus, sortOption: $sortOption)';
 }
 
 
@@ -297,7 +301,7 @@ abstract mixin class $FilterProductsEventCopyWith<$Res> implements $SellEventCop
   factory $FilterProductsEventCopyWith(FilterProductsEvent value, $Res Function(FilterProductsEvent) _then) = _$FilterProductsEventCopyWithImpl;
 @useResult
 $Res call({
- String query, int? categoryId
+ String? query, int? categoryId, int? minPrice, int? maxPrice, int? productStatus, int? sortOption
 });
 
 
@@ -314,10 +318,14 @@ class _$FilterProductsEventCopyWithImpl<$Res>
 
 /// Create a copy of SellEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? query = null,Object? categoryId = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? query = freezed,Object? categoryId = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? productStatus = freezed,Object? sortOption = freezed,}) {
   return _then(FilterProductsEvent(
-null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+query: freezed == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as String?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,minPrice: freezed == minPrice ? _self.minPrice : minPrice // ignore: cast_nullable_to_non_nullable
+as int?,maxPrice: freezed == maxPrice ? _self.maxPrice : maxPrice // ignore: cast_nullable_to_non_nullable
+as int?,productStatus: freezed == productStatus ? _self.productStatus : productStatus // ignore: cast_nullable_to_non_nullable
+as int?,sortOption: freezed == sortOption ? _self.sortOption : sortOption // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
 }

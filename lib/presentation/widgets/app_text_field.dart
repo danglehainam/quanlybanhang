@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Reusable text input widget for the app.
 /// Use this instead of raw TextFormField to ensure consistent styling.
@@ -11,6 +12,7 @@ class AppTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final VoidCallback? onFieldSubmitted;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AppTextField({
     super.key,
@@ -22,6 +24,7 @@ class AppTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onFieldSubmitted,
+    this.inputFormatters,
   });
 
   @override
@@ -31,6 +34,7 @@ class AppTextField extends StatelessWidget {
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       onChanged: onChanged,
+      inputFormatters: inputFormatters,
       onFieldSubmitted: onFieldSubmitted != null ? (_) => onFieldSubmitted!() : null,
       decoration: InputDecoration(
         labelText: labelText,

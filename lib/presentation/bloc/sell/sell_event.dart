@@ -7,7 +7,14 @@ part 'sell_event.freezed.dart';
 @freezed
 class SellEvent with _$SellEvent {
   const factory SellEvent.loadInitialData() = LoadInitialDataEvent;
-  const factory SellEvent.filterProducts(String query, int? categoryId) = FilterProductsEvent;
+  const factory SellEvent.filterProducts({
+    String? query,
+    int? categoryId,
+    int? minPrice,
+    int? maxPrice,
+    int? productStatus,
+    int? sortOption,
+  }) = FilterProductsEvent;
   
   // Order Management
   const factory SellEvent.addOrder() = AddOrderEvent;

@@ -11,6 +11,7 @@ import '../../../widgets/app_text_field.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../widgets/pos_product_item.dart';
 import '../widgets/pos_order_card.dart';
+import '../widgets/sell_filter_sidebar.dart';
 
 class SellMobileView extends StatelessWidget {
   const SellMobileView({super.key});
@@ -33,36 +34,33 @@ class SellMobileView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   color: Colors.white,
-                  child: Column(
+                  child: Row(
                     children: [
-                      AppTextField(
-                        labelText: l10n.searchProduct,
-                        prefixIcon: Icons.search,
-                        onChanged: (val) {
-                          context.read<SellBloc>().add(SellEvent.filterProducts(val, state.selectedCategoryId));
-                        },
+                      Expanded(
+                        child: AppTextField(
+                          labelText: l10n.searchProduct,
+                          prefixIcon: Icons.search,
+                          onChanged: (val) {
+                            context.read<SellBloc>().add(SellEvent.filterProducts(
+                              query: val,
+                              categoryId: state.selectedCategoryId,
+                              minPrice: state.minPrice,
+                              maxPrice: state.maxPrice,
+                              productStatus: state.productStatus,
+                              sortOption: state.sortOption,
+                            ));
+                          },
+                        ),
                       ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        height: 40,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            _FilterChip(
-                              label: 'Tất cả',
-                              isSelected: state.selectedCategoryId == null || state.selectedCategoryId == 0,
-                              onTap: () {
-                                context.read<SellBloc>().add(SellEvent.filterProducts(state.searchQuery, 0));
-                              },
-                            ),
-                            ...state.categories.map((cat) => _FilterChip(
-                                  label: cat.name,
-                                  isSelected: state.selectedCategoryId == cat.id,
-                                  onTap: () {
-                                    context.read<SellBloc>().add(SellEvent.filterProducts(state.searchQuery, cat.id));
-                                  },
-                                )),
-                          ],
+                      const SizedBox(width: 12),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryLight.withAlpha(20),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.filter_list, color: AppColors.primary),
+                          onPressed: () => _showFilterBottomSheet(context),
                         ),
                       ),
                     ],
@@ -212,6 +210,30 @@ class SellMobileView extends StatelessWidget {
     );
   }
 
+  void _showFilterBottomSheet(BuildContext parentContext) {
+    showModalBottomSheet(
+      context: parentContext,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return BlocProvider.value(
+          value: parentContext.read<SellBloc>(),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.85,
+            decoration: const BoxDecoration(
+              color: AppColors.background,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              child: const SellFilterSidebar(showCloseButton: true),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _showCartBottomSheet(BuildContext parentContext, SellState state, AppLocalizations l10n) {
     showModalBottomSheet(
       context: parentContext,
@@ -295,28 +317,3 @@ class SellMobileView extends StatelessWidget {
   }
 }
 
-class _FilterChip extends StatelessWidget {
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _FilterChip({required this.label, required this.isSelected, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: FilterChip(
-        label: Text(label),
-        selected: isSelected,
-        onSelected: (_) => onTap(),
-        selectedColor: AppColors.primaryLight.withAlpha(50),
-        checkmarkColor: AppColors.primary,
-        labelStyle: TextStyle(
-          color: isSelected ? AppColors.primary : AppColors.textPrimary,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-        ),
-      ),
-    );
-  }
-}
