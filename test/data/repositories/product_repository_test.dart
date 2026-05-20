@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:quan_ly_ban_hang/data/datasources/local/app_database.dart';
 import 'package:quan_ly_ban_hang/data/datasources/local/product_local_datasource.dart';
 import 'package:quan_ly_ban_hang/data/repositories/product_repository_impl.dart';

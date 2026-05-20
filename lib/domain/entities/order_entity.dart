@@ -5,6 +5,7 @@ class OrderEntity {
   final int storeId;
   final int createdBy;
   final int? customerId;
+  final int? tableId;
   final int totalAmount;
   final int discount;
   final int finalAmount;
@@ -21,6 +22,7 @@ class OrderEntity {
     required this.storeId,
     required this.createdBy,
     this.customerId,
+    this.tableId,
     required this.totalAmount,
     this.discount = 0,
     required this.finalAmount,

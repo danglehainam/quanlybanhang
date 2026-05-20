@@ -12,6 +12,7 @@ import 'tables/products_table.dart';
 import 'tables/orders_table.dart';
 import 'tables/order_items_table.dart';
 import 'tables/transactions_table.dart';
+import 'tables/customer_tables_table.dart';
 
 part 'app_database.g.dart';
 
@@ -23,12 +24,13 @@ part 'app_database.g.dart';
   Orders,
   OrderItems,
   Transactions,
+  CustomerTables,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -51,6 +53,10 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 7) {
             await m.createTable(transactions);
+          }
+          if (from < 8) {
+            await m.createTable(customerTables);
+            await m.addColumn(orders, orders.tableId);
           }
         },
       );

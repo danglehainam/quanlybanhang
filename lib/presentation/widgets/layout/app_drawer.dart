@@ -76,6 +76,12 @@ class AppDrawer extends StatelessWidget {
                   isSelected: currentRoute == AppRoutes.transactions,
                 ),
                 _DrawerItem(
+                  title: 'Quản lý Bàn', // TODO: translate
+                  icon: Icons.table_restaurant_outlined,
+                  route: AppRoutes.tables,
+                  isSelected: currentRoute == AppRoutes.tables,
+                ),
+                _DrawerItem(
                   title: l10n.menuPartners,
                   icon: Icons.people_outline,
                   route: AppRoutes.partners,

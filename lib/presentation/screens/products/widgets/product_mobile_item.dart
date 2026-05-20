@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../../domain/entities/category_entity.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';

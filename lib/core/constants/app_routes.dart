@@ -13,4 +13,5 @@ class AppRoutes {
   static const String categories = '/categories';
   static const String cashbook = '/cashbook';
   static const String reports = '/reports';
+  static const String tables = '/tables';
 }

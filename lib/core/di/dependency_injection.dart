@@ -43,6 +43,15 @@ import '../../domain/usecases/create_transaction_usecase.dart';
 import '../../domain/usecases/update_transaction_usecase.dart';
 import '../../domain/usecases/delete_transaction_usecase.dart';
 import '../../presentation/screens/transactions/bloc/transactions_bloc.dart';
+import '../../data/datasources/local/customer_table_local_datasource.dart';
+import '../../data/repositories/customer_table_repository_impl.dart';
+import '../../domain/repositories/customer_table_repository.dart';
+import '../../domain/usecases/get_customer_tables_usecase.dart';
+import '../../domain/usecases/create_customer_table_usecase.dart';
+import '../../domain/usecases/update_customer_table_usecase.dart';
+import '../../domain/usecases/delete_customer_table_usecase.dart';
+import '../../presentation/screens/tables/bloc/customer_tables_bloc.dart';
+
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
@@ -70,6 +79,9 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<TransactionLocalDataSource>(
     () => TransactionLocalDataSource(getIt<AppDatabase>()),
   );
+  getIt.registerLazySingleton<CustomerTableLocalDataSource>(
+    () => CustomerTableLocalDataSource(getIt<AppDatabase>()),
+  );
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -89,6 +101,9 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<TransactionRepository>(
     () => TransactionRepositoryImpl(getIt<TransactionLocalDataSource>()),
+  );
+  getIt.registerLazySingleton<CustomerTableRepository>(
+    () => CustomerTableRepositoryImpl(getIt<CustomerTableLocalDataSource>()),
   );
 
   // UseCase
@@ -146,6 +161,18 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<DeleteTransactionUseCase>(
     () => DeleteTransactionUseCase(getIt<TransactionRepository>()),
   );
+  getIt.registerLazySingleton<GetCustomerTablesUseCase>(
+    () => GetCustomerTablesUseCase(getIt<CustomerTableRepository>()),
+  );
+  getIt.registerLazySingleton<CreateCustomerTableUseCase>(
+    () => CreateCustomerTableUseCase(getIt<CustomerTableRepository>()),
+  );
+  getIt.registerLazySingleton<UpdateCustomerTableUseCase>(
+    () => UpdateCustomerTableUseCase(getIt<CustomerTableRepository>()),
+  );
+  getIt.registerLazySingleton<DeleteCustomerTableUseCase>(
+    () => DeleteCustomerTableUseCase(getIt<CustomerTableRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthBloc>(
@@ -194,6 +221,14 @@ Future<void> setupDependencies() async {
       getIt<CreateTransactionUseCase>(),
       getIt<UpdateTransactionUseCase>(),
       getIt<DeleteTransactionUseCase>(),
+    ),
+  );
+  getIt.registerFactory<CustomerTablesBloc>(
+    () => CustomerTablesBloc(
+      getIt<GetCustomerTablesUseCase>(),
+      getIt<CreateCustomerTableUseCase>(),
+      getIt<UpdateCustomerTableUseCase>(),
+      getIt<DeleteCustomerTableUseCase>(),
     ),
   );
 }
