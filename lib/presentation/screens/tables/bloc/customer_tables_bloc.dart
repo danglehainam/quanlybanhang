@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/usecases/get_customer_tables_usecase.dart';
@@ -14,8 +13,6 @@ class CustomerTablesBloc extends Bloc<CustomerTablesEvent, CustomerTablesState> 
   final UpdateCustomerTableUseCase _updateTableUseCase;
   final DeleteCustomerTableUseCase _deleteTableUseCase;
 
-  StreamSubscription? _tablesSubscription;
-
   CustomerTablesBloc(
     this._getTablesUseCase,
     this._createTableUseCase,
@@ -26,18 +23,13 @@ class CustomerTablesBloc extends Bloc<CustomerTablesEvent, CustomerTablesState> 
       await event.map(
         loadTables: (e) async {
           emit(const CustomerTablesState.loading());
-          await _tablesSubscription?.cancel();
-
-          _tablesSubscription = _getTablesUseCase.execute(e.storeId).listen(
-            (result) {
-              result.fold(
-                (failure) => addError(failure), // Handle via BlocObserver or emit error
-                (tables) => emit(CustomerTablesState.loaded(tables)),
-              );
-            },
-            onError: (error) {
-              emit(CustomerTablesState.error('Lỗi stream: $error'));
-            },
+          await emit.forEach(
+            _getTablesUseCase.execute(e.storeId),
+            onData: (result) => result.fold(
+              (failure) => CustomerTablesState.error(failure.message),
+              (tables) => CustomerTablesState.loaded(tables),
+            ),
+            onError: (error, stackTrace) => CustomerTablesState.error('Lỗi stream: $error'),
           );
         },
         createTable: (e) async {
@@ -63,11 +55,5 @@ class CustomerTablesBloc extends Bloc<CustomerTablesEvent, CustomerTablesState> 
         },
       );
     });
-  }
-
-  @override
-  Future<void> close() {
-    _tablesSubscription?.cancel();
-    return super.close();
   }
 }

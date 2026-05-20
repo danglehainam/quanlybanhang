@@ -7,6 +7,7 @@ import '../../bloc/auth/auth_state.dart';
 import '../../bloc/settings/settings_bloc.dart';
 import '../../widgets/app_error_widget.dart';
 import '../../widgets/app_loading_widget.dart';
+import '../../widgets/empty_data_widget.dart';
 import 'bloc/customer_tables_bloc.dart';
 import 'bloc/customer_tables_event.dart';
 import 'bloc/customer_tables_state.dart';
@@ -60,6 +61,9 @@ class _CustomerTablesContent extends StatelessWidget {
             },
           ),
           loaded: (tables) {
+            if (tables.isEmpty) {
+              return const EmptyDataWidget(message: 'Chưa có bàn nào. Vui lòng thêm bàn mới.');
+            }
             if (isMobileView) {
               return CustomerTablesMobileView(tables: tables);
             }
