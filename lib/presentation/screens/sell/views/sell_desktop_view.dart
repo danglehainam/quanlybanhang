@@ -22,7 +22,7 @@ class SellDesktopView extends StatelessWidget {
     return BlocBuilder<SellBloc, SellState>(
       builder: (context, state) {
         if (state.isLoading && state.allProducts.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
 
         return Row(

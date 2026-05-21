@@ -253,7 +253,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
                       },
                     );
                   },
-                  orElse: () => const CircularProgressIndicator(),
+                  orElse: () => const CircularProgressIndicator.adaptive(),
                 );
               },
             ),

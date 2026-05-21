@@ -28,7 +28,7 @@ class AppPrimaryButton extends StatelessWidget {
             ? const SizedBox(
                 height: 20,
                 width: 20,
-                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                child: CircularProgressIndicator.adaptive(strokeWidth: 2, backgroundColor: Colors.white),
               )
             : Icon(icon),
         label: Text(label, style: const TextStyle(fontSize: 16)),
@@ -42,7 +42,7 @@ class AppPrimaryButton extends StatelessWidget {
           ? const SizedBox(
               height: 20,
               width: 20,
-              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+              child: CircularProgressIndicator.adaptive(strokeWidth: 2, backgroundColor: Colors.white),
             )
           : Text(label, style: const TextStyle(fontSize: 16)),
     );

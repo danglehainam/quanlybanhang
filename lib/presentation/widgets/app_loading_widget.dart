@@ -8,7 +8,7 @@ class AppLoadingWidget extends StatelessWidget {
     return const Center(
       child: Padding(
         padding: EdgeInsets.all(32.0),
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator.adaptive(),
       ),
     );
   }

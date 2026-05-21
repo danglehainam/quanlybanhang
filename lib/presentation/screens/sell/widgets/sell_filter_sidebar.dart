@@ -241,7 +241,7 @@ class SellFilterSidebar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
-            Radio<T>(
+            Radio.adaptive(
               value: value,
               groupValue: groupValue,
               toggleable: true,

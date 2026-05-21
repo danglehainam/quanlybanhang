@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              orElse: () => const Center(child: CircularProgressIndicator()),
+              orElse: () => const Center(child: CircularProgressIndicator.adaptive()),
             );
           },
         ),

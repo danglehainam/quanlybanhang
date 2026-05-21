@@ -123,7 +123,7 @@ class _RememberMeCheckbox extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return Row(
       children: [
-        Checkbox(
+        Checkbox.adaptive(
           value: value,
           onChanged: (v) => onChanged(v ?? false),
         ),

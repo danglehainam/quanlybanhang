@@ -32,7 +32,7 @@ class AppOutlinedButton extends StatelessWidget {
             ? const SizedBox(
                 height: 20,
                 width: 20,
-                child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                child: CircularProgressIndicator.adaptive(strokeWidth: 2),
               )
             : Icon(icon),
         label: Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -46,7 +46,7 @@ class AppOutlinedButton extends StatelessWidget {
           ? const SizedBox(
               height: 20,
               width: 20,
-              child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+              child: CircularProgressIndicator.adaptive(strokeWidth: 2),
             )
           : Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
     );
