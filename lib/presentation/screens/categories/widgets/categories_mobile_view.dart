@@ -74,7 +74,7 @@ class CategoriesMobileView extends StatelessWidget {
                     return CategoryMobileItem(
                       category: category,
                       onEdit: () {
-                        showDialog(
+                        showAdaptiveDialog(
                           context: context,
                           builder: (_) => BlocProvider.value(
                             value: context.read<CategoriesBloc>(),
@@ -83,7 +83,7 @@ class CategoriesMobileView extends StatelessWidget {
                         );
                       },
                       onDelete: () {
-                        showDialog(
+                        showAdaptiveDialog(
                           context: context,
                           builder: (_) => AppConfirmDialog(
                             title: l10n.deleteCategoryConfirmTitle,

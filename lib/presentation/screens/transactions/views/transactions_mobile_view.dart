@@ -83,11 +83,11 @@ class TransactionsMobileView extends StatelessWidget {
   }
 
   void _confirmDelete(BuildContext context, TransactionEntity transaction) {
-    showDialog(
+    showAdaptiveDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => AlertDialog.adaptive(
         title: const Text('Xác nhận xóa'),
-        content: const Text('Bạn có chắc chắn muốn xóa giao dịch này?'),
+        content: Text('Bạn có chắc chắn muốn xóa giao dịch ${transaction.id} này không?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),

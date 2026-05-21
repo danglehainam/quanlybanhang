@@ -61,7 +61,7 @@ class ProductsMobileView extends StatelessWidget {
                         product: product,
                         category: category,
                         onEdit: () {
-                          showDialog(
+                          showAdaptiveDialog(
                             context: context,
                             builder: (_) => MultiBlocProvider(
                               providers: [
@@ -73,7 +73,7 @@ class ProductsMobileView extends StatelessWidget {
                           );
                         },
                         onDelete: () {
-                          showDialog(
+                          showAdaptiveDialog(
                             context: context,
                             builder: (_) => AppConfirmDialog(
                               title: l10n.deleteProductConfirmTitle,

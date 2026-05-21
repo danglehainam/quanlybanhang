@@ -74,7 +74,7 @@ class TransactionsView extends StatelessWidget {
       ),
       floatingActionButton: isMobileView ? FloatingActionButton(
         onPressed: () {
-          showDialog(
+          showAdaptiveDialog(
             context: context,
             builder: (_) => BlocProvider.value(
               value: context.read<TransactionsBloc>(),

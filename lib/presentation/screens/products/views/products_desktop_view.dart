@@ -51,7 +51,7 @@ class ProductsDesktopView extends StatelessWidget {
           AppPrimaryButton(
             label: l10n.addProduct,
             onPressed: () {
-              showDialog(
+              showAdaptiveDialog(
                 context: context,
                 builder: (_) => MultiBlocProvider(
                   providers: [
@@ -156,7 +156,7 @@ class ProductsDesktopView extends StatelessWidget {
                                     color: AppColors.primary,
                                     tooltip: l10n.editProduct,
                                     onPressed: () {
-                                      showDialog(
+                                      showAdaptiveDialog(
                                         context: context,
                                         builder: (_) => MultiBlocProvider(
                                           providers: [
@@ -173,7 +173,7 @@ class ProductsDesktopView extends StatelessWidget {
                                     color: AppColors.error,
                                     tooltip: l10n.delete,
                                     onPressed: () {
-                                      showDialog(
+                                      showAdaptiveDialog(
                                         context: context,
                                         builder: (_) => AppConfirmDialog(
                                           title: l10n.deleteProductConfirmTitle,

@@ -14,7 +14,7 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return AlertDialog.adaptive(
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
       content: SizedBox(
         width: 500, // Đảm bảo chiều rộng cố định trên Desktop, tự động thu nhỏ trên Mobile

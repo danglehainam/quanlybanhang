@@ -88,7 +88,7 @@ class _ProductsScreenContent extends StatelessWidget {
           ? AppFloatingActionButton(
               icon: Icons.add,
               onPressed: () {
-                showDialog(
+                showAdaptiveDialog(
                   context: context,
                   builder: (_) => MultiBlocProvider(
                     providers: [

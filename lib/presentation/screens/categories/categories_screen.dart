@@ -94,7 +94,7 @@ class _CategoriesViewState extends State<CategoriesView> {
           ? AppFloatingActionButton(
               icon: Icons.add,
               onPressed: () {
-                showDialog(
+                showAdaptiveDialog(
                   context: context,
                   builder: (_) => BlocProvider.value(
                     value: context.read<CategoriesBloc>(),

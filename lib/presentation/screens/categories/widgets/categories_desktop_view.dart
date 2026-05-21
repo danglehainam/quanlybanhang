@@ -59,7 +59,7 @@ class CategoriesDesktopView extends StatelessWidget {
             label: l10n.addCategory,
             icon: Icons.add,
             onPressed: () {
-              showDialog(
+              showAdaptiveDialog(
                 context: context,
                 builder: (_) => BlocProvider.value(
                   value: context.read<CategoriesBloc>(),
@@ -83,7 +83,7 @@ class CategoriesDesktopView extends StatelessWidget {
                 return CategoryDesktopItem(
                   category: category,
                   onEdit: () {
-                    showDialog(
+                    showAdaptiveDialog(
                       context: context,
                       builder: (_) => BlocProvider.value(
                         value: context.read<CategoriesBloc>(),
@@ -92,7 +92,7 @@ class CategoriesDesktopView extends StatelessWidget {
                     );
                   },
                   onDelete: () {
-                    showDialog(
+                    showAdaptiveDialog(
                       context: context,
                       builder: (_) => AppConfirmDialog(
                         title: l10n.deleteCategoryConfirmTitle,
