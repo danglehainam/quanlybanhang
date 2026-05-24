@@ -74,11 +74,46 @@ class TransactionsView extends StatelessWidget {
       ),
       floatingActionButton: isMobileView ? FloatingActionButton(
         onPressed: () {
-          showAdaptiveDialog(
+          final transactionsBloc = context.read<TransactionsBloc>();
+          showModalBottomSheet(
             context: context,
-            builder: (_) => BlocProvider.value(
-              value: context.read<TransactionsBloc>(),
-              child: const TransactionFormDialog(),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            builder: (bottomSheetContext) => SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.add_circle_outline, color: Colors.green),
+                    title: const Text('Thêm khoản thu'),
+                    onTap: () {
+                      Navigator.pop(bottomSheetContext);
+                      showDialog(
+                        context: context,
+                        builder: (_) => BlocProvider.value(
+                          value: transactionsBloc,
+                          child: const TransactionFormDialog(initialType: 0),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.remove_circle_outline, color: Colors.red),
+                    title: const Text('Thêm khoản chi'),
+                    onTap: () {
+                      Navigator.pop(bottomSheetContext);
+                      showDialog(
+                        context: context,
+                        builder: (_) => BlocProvider.value(
+                          value: transactionsBloc,
+                          child: const TransactionFormDialog(initialType: 1),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },

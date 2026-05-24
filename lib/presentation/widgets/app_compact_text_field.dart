@@ -31,6 +31,7 @@ class AppCompactTextField extends StatelessWidget {
       decoration: InputDecoration(
         isDense: true,
         hintText: hintText,
+        hintStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
         contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
         enabledBorder: OutlineInputBorder(

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../domain/entities/order_entity.dart';
@@ -155,8 +156,9 @@ class _PosDesktopOrderHeaderState extends State<PosDesktopOrderHeader> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     const inputStyle = TextStyle(fontSize: 13);
-    const labelStyle = TextStyle(fontSize: 12, color: AppColors.textSecondary);
+    const labelStyle = TextStyle(fontSize: 12, color: AppColors.textPrimary, fontWeight: FontWeight.bold);
 
     return Container(
       padding: const EdgeInsets.all(6),
@@ -173,7 +175,7 @@ class _PosDesktopOrderHeaderState extends State<PosDesktopOrderHeader> {
             children: [
               SizedBox(
                 width: 50,
-                child: Text('Khách:', style: labelStyle),
+                child: Text('${l10n.customer}:', style: labelStyle),
               ),
               SizedBox(
                 width: 130,
@@ -208,7 +210,7 @@ class _PosDesktopOrderHeaderState extends State<PosDesktopOrderHeader> {
                     ),
                     child: _isCheckingCustomer 
                         ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                        : const Text('Tìm', style: inputStyle),
+                        : Text(l10n.searchLabel, style: inputStyle),
                   ),
                 ),
               if (widget.activeOrder.customer != null)
@@ -229,7 +231,7 @@ class _PosDesktopOrderHeaderState extends State<PosDesktopOrderHeader> {
             children: [
               SizedBox(
                 width: 50,
-                child: Text('Bàn:', style: labelStyle),
+                child: Text('${l10n.table}:', style: labelStyle),
               ),
               Expanded(
                 child: SizedBox(
@@ -245,12 +247,20 @@ class _PosDesktopOrderHeaderState extends State<PosDesktopOrderHeader> {
                             isDense: true,
                             contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: const BorderSide(color: Colors.grey, width: 0.5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: const BorderSide(color: AppColors.primary, width: 1.0),
+                            ),
                           ),
-                          hint: Text('Chọn bàn', style: inputStyle),
+                          hint: Text(l10n.selectTable, style: inputStyle.copyWith(color: AppColors.textSecondary)),
                           items: [
                             DropdownMenuItem<CustomerTableEntity?>(
                               value: null,
-                              child: const Text('Chọn bàn', style: inputStyle),
+                              child: Text(l10n.selectTable, style: inputStyle.copyWith(color: AppColors.textSecondary)),
                             ),
                             ..._tables.map((t) => DropdownMenuItem(
                                   value: t,
@@ -272,7 +282,7 @@ class _PosDesktopOrderHeaderState extends State<PosDesktopOrderHeader> {
             children: [
               SizedBox(
                 width: 50,
-                child: Text('Giảm:', style: labelStyle),
+                child: Text('${l10n.discount}:', style: labelStyle),
               ),
               Expanded(
                 child: SizedBox(
@@ -326,13 +336,13 @@ class _PosDesktopOrderHeaderState extends State<PosDesktopOrderHeader> {
                 width: 50,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: Text('Ghi chú:', style: labelStyle),
+                  child: Text('${l10n.note}:', style: labelStyle),
                 ),
               ),
               Expanded(
                 child: AppCompactTextField(
                   controller: _noteController,
-                  hintText: 'Nhập ghi chú...',
+                  hintText: l10n.enterNote,
                   maxLines: 2,
                   onChanged: (val) {
                     context.read<SellBloc>().add(SellEvent.updateNote(val.isEmpty ? null : val));

@@ -6,7 +6,7 @@ import '../../../../domain/entities/transaction_entity.dart';
 import '../../../../core/utils/currency_utils.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../../../widgets/layout/two_column_desktop_layout.dart';
-import '../../../widgets/buttons/app_primary_button.dart';
+import '../../../widgets/buttons/app_filled_button.dart';
 import '../../../widgets/buttons/app_icon_button.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../bloc/transactions_bloc.dart';
@@ -62,17 +62,48 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
             },
           ),
           const SizedBox(height: 24),
-          AppPrimaryButton(
-            label: 'Thêm giao dịch',
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (_) => BlocProvider.value(
-                  value: context.read<TransactionsBloc>(),
-                  child: const TransactionFormDialog(),
+          Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 48,
+                  child: AppFilledButton(
+                    label: 'Thêm thu',
+                    backgroundColor: AppColors.success,
+                    foregroundColor: Colors.white,
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => BlocProvider.value(
+                          value: context.read<TransactionsBloc>(),
+                          child: const TransactionFormDialog(initialType: 0),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              );
-            },
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: SizedBox(
+                  height: 48,
+                  child: AppFilledButton(
+                    label: 'Thêm chi',
+                    backgroundColor: AppColors.error,
+                    foregroundColor: Colors.white,
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => BlocProvider.value(
+                          value: context.read<TransactionsBloc>(),
+                          child: const TransactionFormDialog(initialType: 1),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

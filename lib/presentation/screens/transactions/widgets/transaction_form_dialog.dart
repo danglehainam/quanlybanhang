@@ -15,8 +15,13 @@ import '../bloc/transactions_event.dart';
 
 class TransactionFormDialog extends StatefulWidget {
   final TransactionEntity? transactionToEdit;
+  final int? initialType;
 
-  const TransactionFormDialog({super.key, this.transactionToEdit});
+  const TransactionFormDialog({
+    super.key,
+    this.transactionToEdit,
+    this.initialType,
+  });
 
   @override
   State<TransactionFormDialog> createState() => _TransactionFormDialogState();
@@ -40,7 +45,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
         : '',
     );
     _noteController = TextEditingController(text: widget.transactionToEdit?.note);
-    _selectedType = widget.transactionToEdit?.type ?? 0;
+    _selectedType = widget.transactionToEdit?.type ?? widget.initialType ?? 0;
   }
 
   @override
@@ -126,34 +131,40 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final showTypeSelection = widget.initialType == null && !_isEditMode;
+
     return AppDialog(
-      title: _isEditMode ? 'Sửa giao dịch' : 'Thêm giao dịch',
+      title: _isEditMode 
+          ? (_selectedType == 0 ? 'Sửa khoản thu' : 'Sửa khoản chi')
+          : (_selectedType == 0 ? 'Thêm khoản thu' : 'Thêm khoản chi'),
       content: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: RadioListTile<int>(
-                    title: const Text('Thu'),
-                    value: 0,
-                    groupValue: _selectedType,
-                    onChanged: (val) => setState(() => _selectedType = val!),
+            if (showTypeSelection) ...[
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<int>(
+                      title: const Text('Thu'),
+                      value: 0,
+                      groupValue: _selectedType,
+                      onChanged: (val) => setState(() => _selectedType = val!),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: RadioListTile<int>(
-                    title: const Text('Chi'),
-                    value: 1,
-                    groupValue: _selectedType,
-                    onChanged: (val) => setState(() => _selectedType = val!),
+                  Expanded(
+                    child: RadioListTile<int>(
+                      title: const Text('Chi'),
+                      value: 1,
+                      groupValue: _selectedType,
+                      onChanged: (val) => setState(() => _selectedType = val!),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
+                ],
+              ),
+              const SizedBox(height: 16),
+            ],
             AppTextField(
               controller: _amountController,
               labelText: 'Số tiền (VND)',

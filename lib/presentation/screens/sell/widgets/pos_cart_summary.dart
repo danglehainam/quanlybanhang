@@ -9,6 +9,7 @@ import '../../../bloc/sell/sell_event.dart';
 
 import '../../../widgets/app_formatters.dart';
 import '../../../widgets/buttons/app_primary_button.dart';
+import '../../../widgets/buttons/app_outlined_button.dart';
 
 class PosCartSummary extends StatelessWidget {
   final OrderEntity? activeOrder;
@@ -78,17 +79,12 @@ class PosCartSummary extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: const BorderSide(color: AppColors.divider),
-                      ),
-                      foregroundColor: AppColors.textSecondary,
+                  child: SizedBox(
+                    height: 48,
+                    child: AppOutlinedButton(
+                      label: l10n.confirmOrder,
+                      onPressed: hasItems ? () => context.read<SellBloc>().add(const SellEvent.confirmOrder()) : null,
                     ),
-                    onPressed: hasItems ? () => context.read<SellBloc>().add(const SellEvent.confirmOrder()) : null,
-                    child: Text(l10n.confirmOrder, style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                 ),
                 const SizedBox(width: 12),
