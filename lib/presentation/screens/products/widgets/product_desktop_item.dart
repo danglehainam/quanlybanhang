@@ -31,7 +31,7 @@ class ProductDesktopItem extends StatelessWidget {
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Text(
-        '${currencyFormatter.format(product.price)} - ${category?.name ?? l10n.unassignedCategory}',
+        '${currencyFormatter.format(product.price)} - ${category?.name ?? l10n.unassignedCategory}${product.stock != null ? ' - Tồn: ${product.stock}' : ' - Chế biến'}',
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

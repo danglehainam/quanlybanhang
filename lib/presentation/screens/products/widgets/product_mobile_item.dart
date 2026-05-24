@@ -118,7 +118,7 @@ class ProductMobileItem extends StatelessWidget {
           ],
         ),
         subtitle: Text(
-          '${CurrencyUtils.formatCurrency(product.price)} - ${category?.name ?? l10n.unassignedCategory}',
+          '${CurrencyUtils.formatCurrency(product.price)} - ${category?.name ?? l10n.unassignedCategory}${product.stock != null ? ' - Tồn: ${product.stock}' : ' - Chế biến'}',
         ),
         trailing: AppIconButton(
           icon: Icons.more_vert,

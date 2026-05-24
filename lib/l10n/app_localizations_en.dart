@@ -100,6 +100,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menuTransactions => 'Transactions';
 
   @override
+  String get menuOrders => 'Orders';
+
+  @override
   String get menuPartners => 'Partners';
 
   @override
@@ -274,5 +277,90 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderCompletedSuccess => 'Order completed successfully!';
 
   @override
-  String get orderConfirmedSuccess => 'Order saved as pending!';
+  String get orderConfirmedSuccess => 'Order confirmed (saved as draft)!';
+
+  @override
+  String get customer => 'Customer';
+
+  @override
+  String get retailCustomer => 'Walk-in';
+
+  @override
+  String get table => 'Table';
+
+  @override
+  String get selectTable => 'Select Table';
+
+  @override
+  String get discount => 'Discount';
+
+  @override
+  String get enterDiscount => 'Enter discount amount';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get enterNote => 'Enter order note';
+
+  @override
+  String get orderCode => 'Order ID';
+
+  @override
+  String get orderTime => 'Time';
+
+  @override
+  String get finalAmount => 'Due';
+
+  @override
+  String get actions => 'Details';
+
+  @override
+  String get emptyOrdersMessage => 'No orders found.';
+
+  @override
+  String get orderStatusPending => 'Pending';
+
+  @override
+  String get orderStatusCompleted => 'Completed';
+
+  @override
+  String get orderStatusCancelled => 'Cancelled';
+
+  @override
+  String get searchOrdersPlaceholder => 'Search orders...';
+
+  @override
+  String get searchFieldLabel => 'Search phone, table, ID...';
+
+  @override
+  String orderDetailTitle(int id) {
+    return 'Order Details #$id';
+  }
+
+  @override
+  String get orderDetailProducts => 'Product List';
+
+  @override
+  String get orderDate => 'Date:';
+
+  @override
+  String get customerLabel => 'Customer:';
+
+  @override
+  String get phoneLabel => 'Phone:';
+
+  @override
+  String get tableLabel => 'Table:';
+
+  @override
+  String get statusLabel => 'Status:';
+
+  @override
+  String get noteLabel => 'Note:';
+
+  @override
+  String itemsCount(int count) {
+    return '$count items';
+  }
 }

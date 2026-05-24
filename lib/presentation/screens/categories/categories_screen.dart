@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/di/dependency_injection.dart';
@@ -8,6 +7,8 @@ import '../../bloc/categories/categories_bloc.dart';
 import '../../bloc/categories/categories_event.dart';
 import '../../bloc/categories/categories_state.dart';
 import '../../bloc/settings/settings_bloc.dart';
+import '../../bloc/auth/auth_bloc.dart';
+import '../../bloc/auth/auth_state.dart';
 import '../../widgets/app_loading_widget.dart';
 import '../../widgets/app_error_widget.dart';
 import '../../widgets/buttons/app_floating_action_button.dart';
@@ -21,15 +22,22 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
+    final storeId = authState.maybeMap(
+      authenticated: (state) => state.user.storeId,
+      orElse: () => 0,
+    );
+
     return BlocProvider(
       create: (context) => getIt<CategoriesBloc>(),
-      child: const CategoriesView(),
+      child: CategoriesView(storeId: storeId),
     );
   }
 }
 
 class CategoriesView extends StatefulWidget {
-  const CategoriesView({super.key});
+  final int storeId;
+  const CategoriesView({super.key, required this.storeId});
 
   @override
   State<CategoriesView> createState() => _CategoriesViewState();
@@ -42,7 +50,12 @@ class _CategoriesViewState extends State<CategoriesView> {
   void initState() {
     super.initState();
     _searchController = TextEditingController();
-    context.read<CategoriesBloc>().add(const CategoriesEvent.watchCategories());
+    final authState = context.read<AuthBloc>().state;
+    authState.mapOrNull(
+      authenticated: (state) {
+        context.read<CategoriesBloc>().add(CategoriesEvent.watchCategories(storeId: widget.storeId));
+      },
+    );
   }
 
   @override
@@ -64,7 +77,7 @@ class _CategoriesViewState extends State<CategoriesView> {
             loading: () => const AppLoadingWidget(),
             error: (message) => AppErrorWidget(
               message: message,
-              onRetry: () => context.read<CategoriesBloc>().add(const CategoriesEvent.watchCategories()),
+              onRetry: () => context.read<CategoriesBloc>().add(CategoriesEvent.watchCategories(storeId: widget.storeId)),
             ),
             loaded: (categories) {
               if (isMobileView) {

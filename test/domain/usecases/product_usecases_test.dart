@@ -14,6 +14,7 @@ class MockProductRepository implements ProductRepository {
 
   @override
   Stream<Either<Failure, List<ProductEntity>>> watchProducts({
+    required int storeId,
     String? query,
     int? categoryId,
     int? minPrice,
@@ -81,7 +82,7 @@ void main() {
     test('GetProductsUseCase should return stream of products', () async {
       mockRepository.products = [testProduct];
       
-      final stream = getProductsUseCase();
+      final stream = getProductsUseCase(storeId: 1);
       final resultEither = await stream.first;
       
       expect(resultEither.isRight(), true);

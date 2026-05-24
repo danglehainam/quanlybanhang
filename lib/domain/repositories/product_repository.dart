@@ -4,6 +4,7 @@ import '../entities/product_entity.dart';
 
 abstract class ProductRepository {
   Stream<Either<Failure, List<ProductEntity>>> watchProducts({
+    required int storeId,
     String? query,
     int? categoryId,
     int? minPrice,

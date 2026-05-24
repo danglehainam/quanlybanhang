@@ -10,6 +10,8 @@ import '../../bloc/categories/categories_bloc.dart';
 import '../../bloc/categories/categories_event.dart';
 import '../../bloc/categories/categories_state.dart';
 import '../../bloc/settings/settings_bloc.dart';
+import '../../bloc/auth/auth_bloc.dart';
+import '../../bloc/auth/auth_state.dart';
 import '../../widgets/app_loading_widget.dart';
 import '../../widgets/app_error_widget.dart';
 import '../../widgets/buttons/app_floating_action_button.dart';
@@ -23,22 +25,29 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
+    final storeId = authState.maybeMap(
+      authenticated: (state) => state.user.storeId,
+      orElse: () => 0,
+    );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => getIt<ProductsBloc>()..add(const ProductsEvent.watchProducts()),
+          create: (_) => getIt<ProductsBloc>()..add(ProductsEvent.watchProducts(storeId: storeId)),
         ),
         BlocProvider(
-          create: (_) => getIt<CategoriesBloc>()..add(const CategoriesEvent.watchCategories()),
+          create: (_) => getIt<CategoriesBloc>()..add(CategoriesEvent.watchCategories(storeId: storeId)),
         ),
       ],
-      child: const _ProductsScreenContent(),
+      child: _ProductsScreenContent(storeId: storeId),
     );
   }
 }
 
 class _ProductsScreenContent extends StatelessWidget {
-  const _ProductsScreenContent();
+  final int storeId;
+  const _ProductsScreenContent({required this.storeId});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +62,7 @@ class _ProductsScreenContent extends StatelessWidget {
             loading: () => const AppLoadingWidget(),
             error: (message) => AppErrorWidget(
               message: message,
-              onRetry: () => context.read<ProductsBloc>().add(const ProductsEvent.watchProducts()),
+              onRetry: () => context.read<ProductsBloc>().add(ProductsEvent.watchProducts(storeId: storeId)),
             ),
             loaded: (allProducts, filteredProducts, searchQuery, selectedCategoryId, sortOption, minPrice, maxPrice, productStatus) {
               // Now we also need to wait for categories to load
@@ -63,6 +72,7 @@ class _ProductsScreenContent extends StatelessWidget {
                     loaded: (categories) {
                       if (isMobileView) {
                         return ProductsMobileView(
+                          storeId: storeId,
                           products: filteredProducts,
                           categories: categories,
                           searchQuery: searchQuery,
@@ -75,6 +85,7 @@ class _ProductsScreenContent extends StatelessWidget {
                       }
                       
                       return ProductsDesktopView(
+                        storeId: storeId,
                         products: filteredProducts,
                         categories: categories,
                         searchQuery: searchQuery,
@@ -87,7 +98,7 @@ class _ProductsScreenContent extends StatelessWidget {
                     },
                     error: (message) => AppErrorWidget(
                       message: message,
-                      onRetry: () => context.read<CategoriesBloc>().add(const CategoriesEvent.watchCategories()),
+                      onRetry: () => context.read<CategoriesBloc>().add(CategoriesEvent.watchCategories(storeId: storeId)),
                     ),
                     orElse: () => const AppLoadingWidget(),
                   );

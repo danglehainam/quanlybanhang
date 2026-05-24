@@ -98,6 +98,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get menuTransactions => 'Giao dịch';
 
   @override
+  String get menuOrders => 'Đơn hàng';
+
+  @override
   String get menuPartners => 'Đối tác';
 
   @override
@@ -273,4 +276,89 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get orderConfirmedSuccess => 'Đã xác nhận đơn hàng (lưu nháp)!';
+
+  @override
+  String get customer => 'Khách';
+
+  @override
+  String get retailCustomer => 'Khách lẻ';
+
+  @override
+  String get table => 'Bàn';
+
+  @override
+  String get selectTable => 'Chọn bàn';
+
+  @override
+  String get discount => 'Giảm';
+
+  @override
+  String get enterDiscount => 'Nhập giảm giá';
+
+  @override
+  String get note => 'Ghi chú';
+
+  @override
+  String get enterNote => 'Nhập ghi chú';
+
+  @override
+  String get orderCode => 'Mã ĐH';
+
+  @override
+  String get orderTime => 'Thời gian';
+
+  @override
+  String get finalAmount => 'Phải trả';
+
+  @override
+  String get actions => 'Chi tiết';
+
+  @override
+  String get emptyOrdersMessage => 'Không tìm thấy đơn hàng nào.';
+
+  @override
+  String get orderStatusPending => 'Chờ thanh toán';
+
+  @override
+  String get orderStatusCompleted => 'Đã hoàn thành';
+
+  @override
+  String get orderStatusCancelled => 'Đã huỷ';
+
+  @override
+  String get searchOrdersPlaceholder => 'Tìm đơn hàng...';
+
+  @override
+  String get searchFieldLabel => 'Nhập SĐT, Tên bàn, ID...';
+
+  @override
+  String orderDetailTitle(int id) {
+    return 'Chi tiết đơn hàng #$id';
+  }
+
+  @override
+  String get orderDetailProducts => 'Danh sách sản phẩm';
+
+  @override
+  String get orderDate => 'Ngày bán:';
+
+  @override
+  String get customerLabel => 'Khách hàng:';
+
+  @override
+  String get phoneLabel => 'Số điện thoại:';
+
+  @override
+  String get tableLabel => 'Bàn phục vụ:';
+
+  @override
+  String get statusLabel => 'Trạng thái:';
+
+  @override
+  String get noteLabel => 'Ghi chú:';
+
+  @override
+  String itemsCount(int count) {
+    return '$count món';
+  }
 }

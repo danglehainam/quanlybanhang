@@ -5,8 +5,8 @@ class CategoryLocalDataSource {
 
   CategoryLocalDataSource(this._db);
 
-  Stream<List<CategoryDriftModel>> watchCategories() {
-    return _db.select(_db.categories).watch();
+  Stream<List<CategoryDriftModel>> watchCategories(int storeId) {
+    return (_db.select(_db.categories)..where((tbl) => tbl.storeId.equals(storeId))).watch();
   }
 
   Future<void> insertCategory(CategoriesCompanion companion) async {

@@ -11,6 +11,7 @@ class PosOrderItemRow extends StatelessWidget {
   final int subtotal;
   final VoidCallback onIncrease;
   final VoidCallback onDecrease;
+  final VoidCallback onRemove;
 
   const PosOrderItemRow({
     super.key,
@@ -20,12 +21,13 @@ class PosOrderItemRow extends StatelessWidget {
     required this.subtotal,
     required this.onIncrease,
     required this.onDecrease,
+    required this.onRemove,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Row(
         children: [
           Expanded(
@@ -34,14 +36,14 @@ class PosOrderItemRow extends StatelessWidget {
               children: [
                 Text(
                   productName,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 2),
                 Text(
                   AppFormatters.formatCurrency(price),
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
                 ),
               ],
             ),
@@ -56,11 +58,11 @@ class PosOrderItemRow extends StatelessWidget {
                 onPressed: onDecrease,
               ),
               SizedBox(
-                width: 32,
+                width: 28,
                 child: Text(
                   '$quantity',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                 ),
               ),
               AppIconButton(
@@ -71,14 +73,20 @@ class PosOrderItemRow extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 8),
           SizedBox(
-            width: 90,
+            width: 70,
             child: Text(
               AppFormatters.formatCurrency(subtotal),
               textAlign: TextAlign.right,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             ),
+          ),
+          AppIconButton(
+            icon: Icons.close,
+            color: Colors.red,
+            tooltip: 'Xóa',
+            onPressed: onRemove,
           ),
         ],
       ),

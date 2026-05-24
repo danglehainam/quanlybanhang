@@ -5,7 +5,7 @@ part 'categories_event.freezed.dart';
 
 @freezed
 abstract class CategoriesEvent with _$CategoriesEvent {
-  const factory CategoriesEvent.watchCategories() = WatchCategories;
+  const factory CategoriesEvent.watchCategories({required int storeId}) = WatchCategories;
   const factory CategoriesEvent.createCategory(
     CategoryEntity category, {
     required void Function() onSuccess,

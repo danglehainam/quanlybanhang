@@ -4,6 +4,8 @@ import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
 import '../../../../core/di/dependency_injection.dart';
 import '../../bloc/settings/settings_bloc.dart';
+import '../../bloc/auth/auth_bloc.dart';
+import '../../bloc/auth/auth_state.dart';
 import '../../bloc/settings/settings_state.dart';
 import '../../bloc/sell/sell_bloc.dart';
 import '../../bloc/sell/sell_event.dart';
@@ -16,8 +18,14 @@ class SellScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
+    final storeId = authState.maybeMap(
+      authenticated: (state) => state.user.storeId,
+      orElse: () => 0,
+    );
+
     return BlocProvider(
-      create: (_) => getIt<SellBloc>()..add(const SellEvent.loadInitialData()),
+      create: (_) => getIt<SellBloc>()..add(SellEvent.loadInitialData(storeId: storeId)),
       child: BlocListener<SellBloc, SellState>(
         listenWhen: (previous, current) => previous.isActionSuccess != current.isActionSuccess || previous.error != current.error,
         listener: (context, state) {

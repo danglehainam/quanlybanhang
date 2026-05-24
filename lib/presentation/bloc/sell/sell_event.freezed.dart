@@ -55,7 +55,7 @@ extension SellEventPatterns on SellEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadInitialDataEvent value)?  loadInitialData,TResult Function( FilterProductsEvent value)?  filterProducts,TResult Function( AddOrderEvent value)?  addOrder,TResult Function( SelectOrderEvent value)?  selectOrder,TResult Function( RemoveOrderEvent value)?  removeOrder,TResult Function( AddProductToOrderEvent value)?  addProductToOrder,TResult Function( UpdateItemQuantityEvent value)?  updateItemQuantity,TResult Function( RemoveItemEvent value)?  removeItem,TResult Function( ConfirmOrderEvent value)?  confirmOrder,TResult Function( CompleteOrderEvent value)?  completeOrder,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadInitialDataEvent value)?  loadInitialData,TResult Function( FilterProductsEvent value)?  filterProducts,TResult Function( AddOrderEvent value)?  addOrder,TResult Function( SelectOrderEvent value)?  selectOrder,TResult Function( RemoveOrderEvent value)?  removeOrder,TResult Function( UpdateCustomerEvent value)?  updateCustomer,TResult Function( UpdateTableEvent value)?  updateTable,TResult Function( UpdateDiscountEvent value)?  updateDiscount,TResult Function( UpdateNoteEvent value)?  updateNote,TResult Function( AddProductToOrderEvent value)?  addProductToOrder,TResult Function( UpdateItemQuantityEvent value)?  updateItemQuantity,TResult Function( RemoveItemEvent value)?  removeItem,TResult Function( ConfirmOrderEvent value)?  confirmOrder,TResult Function( CompleteOrderEvent value)?  completeOrder,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LoadInitialDataEvent() when loadInitialData != null:
@@ -63,7 +63,11 @@ return loadInitialData(_that);case FilterProductsEvent() when filterProducts != 
 return filterProducts(_that);case AddOrderEvent() when addOrder != null:
 return addOrder(_that);case SelectOrderEvent() when selectOrder != null:
 return selectOrder(_that);case RemoveOrderEvent() when removeOrder != null:
-return removeOrder(_that);case AddProductToOrderEvent() when addProductToOrder != null:
+return removeOrder(_that);case UpdateCustomerEvent() when updateCustomer != null:
+return updateCustomer(_that);case UpdateTableEvent() when updateTable != null:
+return updateTable(_that);case UpdateDiscountEvent() when updateDiscount != null:
+return updateDiscount(_that);case UpdateNoteEvent() when updateNote != null:
+return updateNote(_that);case AddProductToOrderEvent() when addProductToOrder != null:
 return addProductToOrder(_that);case UpdateItemQuantityEvent() when updateItemQuantity != null:
 return updateItemQuantity(_that);case RemoveItemEvent() when removeItem != null:
 return removeItem(_that);case ConfirmOrderEvent() when confirmOrder != null:
@@ -86,7 +90,7 @@ return completeOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadInitialDataEvent value)  loadInitialData,required TResult Function( FilterProductsEvent value)  filterProducts,required TResult Function( AddOrderEvent value)  addOrder,required TResult Function( SelectOrderEvent value)  selectOrder,required TResult Function( RemoveOrderEvent value)  removeOrder,required TResult Function( AddProductToOrderEvent value)  addProductToOrder,required TResult Function( UpdateItemQuantityEvent value)  updateItemQuantity,required TResult Function( RemoveItemEvent value)  removeItem,required TResult Function( ConfirmOrderEvent value)  confirmOrder,required TResult Function( CompleteOrderEvent value)  completeOrder,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadInitialDataEvent value)  loadInitialData,required TResult Function( FilterProductsEvent value)  filterProducts,required TResult Function( AddOrderEvent value)  addOrder,required TResult Function( SelectOrderEvent value)  selectOrder,required TResult Function( RemoveOrderEvent value)  removeOrder,required TResult Function( UpdateCustomerEvent value)  updateCustomer,required TResult Function( UpdateTableEvent value)  updateTable,required TResult Function( UpdateDiscountEvent value)  updateDiscount,required TResult Function( UpdateNoteEvent value)  updateNote,required TResult Function( AddProductToOrderEvent value)  addProductToOrder,required TResult Function( UpdateItemQuantityEvent value)  updateItemQuantity,required TResult Function( RemoveItemEvent value)  removeItem,required TResult Function( ConfirmOrderEvent value)  confirmOrder,required TResult Function( CompleteOrderEvent value)  completeOrder,}){
 final _that = this;
 switch (_that) {
 case LoadInitialDataEvent():
@@ -94,7 +98,11 @@ return loadInitialData(_that);case FilterProductsEvent():
 return filterProducts(_that);case AddOrderEvent():
 return addOrder(_that);case SelectOrderEvent():
 return selectOrder(_that);case RemoveOrderEvent():
-return removeOrder(_that);case AddProductToOrderEvent():
+return removeOrder(_that);case UpdateCustomerEvent():
+return updateCustomer(_that);case UpdateTableEvent():
+return updateTable(_that);case UpdateDiscountEvent():
+return updateDiscount(_that);case UpdateNoteEvent():
+return updateNote(_that);case AddProductToOrderEvent():
 return addProductToOrder(_that);case UpdateItemQuantityEvent():
 return updateItemQuantity(_that);case RemoveItemEvent():
 return removeItem(_that);case ConfirmOrderEvent():
@@ -116,7 +124,7 @@ return completeOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadInitialDataEvent value)?  loadInitialData,TResult? Function( FilterProductsEvent value)?  filterProducts,TResult? Function( AddOrderEvent value)?  addOrder,TResult? Function( SelectOrderEvent value)?  selectOrder,TResult? Function( RemoveOrderEvent value)?  removeOrder,TResult? Function( AddProductToOrderEvent value)?  addProductToOrder,TResult? Function( UpdateItemQuantityEvent value)?  updateItemQuantity,TResult? Function( RemoveItemEvent value)?  removeItem,TResult? Function( ConfirmOrderEvent value)?  confirmOrder,TResult? Function( CompleteOrderEvent value)?  completeOrder,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadInitialDataEvent value)?  loadInitialData,TResult? Function( FilterProductsEvent value)?  filterProducts,TResult? Function( AddOrderEvent value)?  addOrder,TResult? Function( SelectOrderEvent value)?  selectOrder,TResult? Function( RemoveOrderEvent value)?  removeOrder,TResult? Function( UpdateCustomerEvent value)?  updateCustomer,TResult? Function( UpdateTableEvent value)?  updateTable,TResult? Function( UpdateDiscountEvent value)?  updateDiscount,TResult? Function( UpdateNoteEvent value)?  updateNote,TResult? Function( AddProductToOrderEvent value)?  addProductToOrder,TResult? Function( UpdateItemQuantityEvent value)?  updateItemQuantity,TResult? Function( RemoveItemEvent value)?  removeItem,TResult? Function( ConfirmOrderEvent value)?  confirmOrder,TResult? Function( CompleteOrderEvent value)?  completeOrder,}){
 final _that = this;
 switch (_that) {
 case LoadInitialDataEvent() when loadInitialData != null:
@@ -124,7 +132,11 @@ return loadInitialData(_that);case FilterProductsEvent() when filterProducts != 
 return filterProducts(_that);case AddOrderEvent() when addOrder != null:
 return addOrder(_that);case SelectOrderEvent() when selectOrder != null:
 return selectOrder(_that);case RemoveOrderEvent() when removeOrder != null:
-return removeOrder(_that);case AddProductToOrderEvent() when addProductToOrder != null:
+return removeOrder(_that);case UpdateCustomerEvent() when updateCustomer != null:
+return updateCustomer(_that);case UpdateTableEvent() when updateTable != null:
+return updateTable(_that);case UpdateDiscountEvent() when updateDiscount != null:
+return updateDiscount(_that);case UpdateNoteEvent() when updateNote != null:
+return updateNote(_that);case AddProductToOrderEvent() when addProductToOrder != null:
 return addProductToOrder(_that);case UpdateItemQuantityEvent() when updateItemQuantity != null:
 return updateItemQuantity(_that);case RemoveItemEvent() when removeItem != null:
 return removeItem(_that);case ConfirmOrderEvent() when confirmOrder != null:
@@ -146,14 +158,18 @@ return completeOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadInitialData,TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  filterProducts,TResult Function()?  addOrder,TResult Function( int index)?  selectOrder,TResult Function( int index)?  removeOrder,TResult Function( ProductEntity product)?  addProductToOrder,TResult Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult Function( int itemIndex)?  removeItem,TResult Function()?  confirmOrder,TResult Function()?  completeOrder,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int storeId)?  loadInitialData,TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  filterProducts,TResult Function()?  addOrder,TResult Function( int index)?  selectOrder,TResult Function( int index)?  removeOrder,TResult Function( CustomerEntity? customer)?  updateCustomer,TResult Function( CustomerTableEntity? table)?  updateTable,TResult Function( int? discountAmount,  double? discountPercent)?  updateDiscount,TResult Function( String? note)?  updateNote,TResult Function( ProductEntity product)?  addProductToOrder,TResult Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult Function( int itemIndex)?  removeItem,TResult Function()?  confirmOrder,TResult Function()?  completeOrder,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadInitialDataEvent() when loadInitialData != null:
-return loadInitialData();case FilterProductsEvent() when filterProducts != null:
+return loadInitialData(_that.storeId);case FilterProductsEvent() when filterProducts != null:
 return filterProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case AddOrderEvent() when addOrder != null:
 return addOrder();case SelectOrderEvent() when selectOrder != null:
 return selectOrder(_that.index);case RemoveOrderEvent() when removeOrder != null:
-return removeOrder(_that.index);case AddProductToOrderEvent() when addProductToOrder != null:
+return removeOrder(_that.index);case UpdateCustomerEvent() when updateCustomer != null:
+return updateCustomer(_that.customer);case UpdateTableEvent() when updateTable != null:
+return updateTable(_that.table);case UpdateDiscountEvent() when updateDiscount != null:
+return updateDiscount(_that.discountAmount,_that.discountPercent);case UpdateNoteEvent() when updateNote != null:
+return updateNote(_that.note);case AddProductToOrderEvent() when addProductToOrder != null:
 return addProductToOrder(_that.product);case UpdateItemQuantityEvent() when updateItemQuantity != null:
 return updateItemQuantity(_that.itemIndex,_that.newQuantity);case RemoveItemEvent() when removeItem != null:
 return removeItem(_that.itemIndex);case ConfirmOrderEvent() when confirmOrder != null:
@@ -176,14 +192,18 @@ return completeOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadInitialData,required TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)  filterProducts,required TResult Function()  addOrder,required TResult Function( int index)  selectOrder,required TResult Function( int index)  removeOrder,required TResult Function( ProductEntity product)  addProductToOrder,required TResult Function( int itemIndex,  int newQuantity)  updateItemQuantity,required TResult Function( int itemIndex)  removeItem,required TResult Function()  confirmOrder,required TResult Function()  completeOrder,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int storeId)  loadInitialData,required TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)  filterProducts,required TResult Function()  addOrder,required TResult Function( int index)  selectOrder,required TResult Function( int index)  removeOrder,required TResult Function( CustomerEntity? customer)  updateCustomer,required TResult Function( CustomerTableEntity? table)  updateTable,required TResult Function( int? discountAmount,  double? discountPercent)  updateDiscount,required TResult Function( String? note)  updateNote,required TResult Function( ProductEntity product)  addProductToOrder,required TResult Function( int itemIndex,  int newQuantity)  updateItemQuantity,required TResult Function( int itemIndex)  removeItem,required TResult Function()  confirmOrder,required TResult Function()  completeOrder,}) {final _that = this;
 switch (_that) {
 case LoadInitialDataEvent():
-return loadInitialData();case FilterProductsEvent():
+return loadInitialData(_that.storeId);case FilterProductsEvent():
 return filterProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case AddOrderEvent():
 return addOrder();case SelectOrderEvent():
 return selectOrder(_that.index);case RemoveOrderEvent():
-return removeOrder(_that.index);case AddProductToOrderEvent():
+return removeOrder(_that.index);case UpdateCustomerEvent():
+return updateCustomer(_that.customer);case UpdateTableEvent():
+return updateTable(_that.table);case UpdateDiscountEvent():
+return updateDiscount(_that.discountAmount,_that.discountPercent);case UpdateNoteEvent():
+return updateNote(_that.note);case AddProductToOrderEvent():
 return addProductToOrder(_that.product);case UpdateItemQuantityEvent():
 return updateItemQuantity(_that.itemIndex,_that.newQuantity);case RemoveItemEvent():
 return removeItem(_that.itemIndex);case ConfirmOrderEvent():
@@ -205,14 +225,18 @@ return completeOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadInitialData,TResult? Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  filterProducts,TResult? Function()?  addOrder,TResult? Function( int index)?  selectOrder,TResult? Function( int index)?  removeOrder,TResult? Function( ProductEntity product)?  addProductToOrder,TResult? Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult? Function( int itemIndex)?  removeItem,TResult? Function()?  confirmOrder,TResult? Function()?  completeOrder,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int storeId)?  loadInitialData,TResult? Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  filterProducts,TResult? Function()?  addOrder,TResult? Function( int index)?  selectOrder,TResult? Function( int index)?  removeOrder,TResult? Function( CustomerEntity? customer)?  updateCustomer,TResult? Function( CustomerTableEntity? table)?  updateTable,TResult? Function( int? discountAmount,  double? discountPercent)?  updateDiscount,TResult? Function( String? note)?  updateNote,TResult? Function( ProductEntity product)?  addProductToOrder,TResult? Function( int itemIndex,  int newQuantity)?  updateItemQuantity,TResult? Function( int itemIndex)?  removeItem,TResult? Function()?  confirmOrder,TResult? Function()?  completeOrder,}) {final _that = this;
 switch (_that) {
 case LoadInitialDataEvent() when loadInitialData != null:
-return loadInitialData();case FilterProductsEvent() when filterProducts != null:
+return loadInitialData(_that.storeId);case FilterProductsEvent() when filterProducts != null:
 return filterProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case AddOrderEvent() when addOrder != null:
 return addOrder();case SelectOrderEvent() when selectOrder != null:
 return selectOrder(_that.index);case RemoveOrderEvent() when removeOrder != null:
-return removeOrder(_that.index);case AddProductToOrderEvent() when addProductToOrder != null:
+return removeOrder(_that.index);case UpdateCustomerEvent() when updateCustomer != null:
+return updateCustomer(_that.customer);case UpdateTableEvent() when updateTable != null:
+return updateTable(_that.table);case UpdateDiscountEvent() when updateDiscount != null:
+return updateDiscount(_that.discountAmount,_that.discountPercent);case UpdateNoteEvent() when updateNote != null:
+return updateNote(_that.note);case AddProductToOrderEvent() when addProductToOrder != null:
 return addProductToOrder(_that.product);case UpdateItemQuantityEvent() when updateItemQuantity != null:
 return updateItemQuantity(_that.itemIndex,_that.newQuantity);case RemoveItemEvent() when removeItem != null:
 return removeItem(_that.itemIndex);case ConfirmOrderEvent() when confirmOrder != null:
@@ -229,33 +253,67 @@ return completeOrder();case _:
 
 
 class LoadInitialDataEvent implements SellEvent {
-  const LoadInitialDataEvent();
+  const LoadInitialDataEvent({required this.storeId});
   
 
+ final  int storeId;
 
-
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoadInitialDataEventCopyWith<LoadInitialDataEvent> get copyWith => _$LoadInitialDataEventCopyWithImpl<LoadInitialDataEvent>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadInitialDataEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadInitialDataEvent&&(identical(other.storeId, storeId) || other.storeId == storeId));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,storeId);
 
 @override
 String toString() {
-  return 'SellEvent.loadInitialData()';
+  return 'SellEvent.loadInitialData(storeId: $storeId)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $LoadInitialDataEventCopyWith<$Res> implements $SellEventCopyWith<$Res> {
+  factory $LoadInitialDataEventCopyWith(LoadInitialDataEvent value, $Res Function(LoadInitialDataEvent) _then) = _$LoadInitialDataEventCopyWithImpl;
+@useResult
+$Res call({
+ int storeId
+});
 
 
+
+
+}
+/// @nodoc
+class _$LoadInitialDataEventCopyWithImpl<$Res>
+    implements $LoadInitialDataEventCopyWith<$Res> {
+  _$LoadInitialDataEventCopyWithImpl(this._self, this._then);
+
+  final LoadInitialDataEvent _self;
+  final $Res Function(LoadInitialDataEvent) _then;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? storeId = null,}) {
+  return _then(LoadInitialDataEvent(
+storeId: null == storeId ? _self.storeId : storeId // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
@@ -491,6 +549,272 @@ class _$RemoveOrderEventCopyWithImpl<$Res>
   return _then(RemoveOrderEvent(
 null == index ? _self.index : index // ignore: cast_nullable_to_non_nullable
 as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UpdateCustomerEvent implements SellEvent {
+  const UpdateCustomerEvent(this.customer);
+  
+
+ final  CustomerEntity? customer;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateCustomerEventCopyWith<UpdateCustomerEvent> get copyWith => _$UpdateCustomerEventCopyWithImpl<UpdateCustomerEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateCustomerEvent&&(identical(other.customer, customer) || other.customer == customer));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,customer);
+
+@override
+String toString() {
+  return 'SellEvent.updateCustomer(customer: $customer)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateCustomerEventCopyWith<$Res> implements $SellEventCopyWith<$Res> {
+  factory $UpdateCustomerEventCopyWith(UpdateCustomerEvent value, $Res Function(UpdateCustomerEvent) _then) = _$UpdateCustomerEventCopyWithImpl;
+@useResult
+$Res call({
+ CustomerEntity? customer
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateCustomerEventCopyWithImpl<$Res>
+    implements $UpdateCustomerEventCopyWith<$Res> {
+  _$UpdateCustomerEventCopyWithImpl(this._self, this._then);
+
+  final UpdateCustomerEvent _self;
+  final $Res Function(UpdateCustomerEvent) _then;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? customer = freezed,}) {
+  return _then(UpdateCustomerEvent(
+freezed == customer ? _self.customer : customer // ignore: cast_nullable_to_non_nullable
+as CustomerEntity?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UpdateTableEvent implements SellEvent {
+  const UpdateTableEvent(this.table);
+  
+
+ final  CustomerTableEntity? table;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateTableEventCopyWith<UpdateTableEvent> get copyWith => _$UpdateTableEventCopyWithImpl<UpdateTableEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateTableEvent&&(identical(other.table, table) || other.table == table));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,table);
+
+@override
+String toString() {
+  return 'SellEvent.updateTable(table: $table)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateTableEventCopyWith<$Res> implements $SellEventCopyWith<$Res> {
+  factory $UpdateTableEventCopyWith(UpdateTableEvent value, $Res Function(UpdateTableEvent) _then) = _$UpdateTableEventCopyWithImpl;
+@useResult
+$Res call({
+ CustomerTableEntity? table
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateTableEventCopyWithImpl<$Res>
+    implements $UpdateTableEventCopyWith<$Res> {
+  _$UpdateTableEventCopyWithImpl(this._self, this._then);
+
+  final UpdateTableEvent _self;
+  final $Res Function(UpdateTableEvent) _then;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? table = freezed,}) {
+  return _then(UpdateTableEvent(
+freezed == table ? _self.table : table // ignore: cast_nullable_to_non_nullable
+as CustomerTableEntity?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UpdateDiscountEvent implements SellEvent {
+  const UpdateDiscountEvent({this.discountAmount, this.discountPercent});
+  
+
+ final  int? discountAmount;
+ final  double? discountPercent;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateDiscountEventCopyWith<UpdateDiscountEvent> get copyWith => _$UpdateDiscountEventCopyWithImpl<UpdateDiscountEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateDiscountEvent&&(identical(other.discountAmount, discountAmount) || other.discountAmount == discountAmount)&&(identical(other.discountPercent, discountPercent) || other.discountPercent == discountPercent));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,discountAmount,discountPercent);
+
+@override
+String toString() {
+  return 'SellEvent.updateDiscount(discountAmount: $discountAmount, discountPercent: $discountPercent)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateDiscountEventCopyWith<$Res> implements $SellEventCopyWith<$Res> {
+  factory $UpdateDiscountEventCopyWith(UpdateDiscountEvent value, $Res Function(UpdateDiscountEvent) _then) = _$UpdateDiscountEventCopyWithImpl;
+@useResult
+$Res call({
+ int? discountAmount, double? discountPercent
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateDiscountEventCopyWithImpl<$Res>
+    implements $UpdateDiscountEventCopyWith<$Res> {
+  _$UpdateDiscountEventCopyWithImpl(this._self, this._then);
+
+  final UpdateDiscountEvent _self;
+  final $Res Function(UpdateDiscountEvent) _then;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? discountAmount = freezed,Object? discountPercent = freezed,}) {
+  return _then(UpdateDiscountEvent(
+discountAmount: freezed == discountAmount ? _self.discountAmount : discountAmount // ignore: cast_nullable_to_non_nullable
+as int?,discountPercent: freezed == discountPercent ? _self.discountPercent : discountPercent // ignore: cast_nullable_to_non_nullable
+as double?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UpdateNoteEvent implements SellEvent {
+  const UpdateNoteEvent(this.note);
+  
+
+ final  String? note;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateNoteEventCopyWith<UpdateNoteEvent> get copyWith => _$UpdateNoteEventCopyWithImpl<UpdateNoteEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateNoteEvent&&(identical(other.note, note) || other.note == note));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,note);
+
+@override
+String toString() {
+  return 'SellEvent.updateNote(note: $note)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateNoteEventCopyWith<$Res> implements $SellEventCopyWith<$Res> {
+  factory $UpdateNoteEventCopyWith(UpdateNoteEvent value, $Res Function(UpdateNoteEvent) _then) = _$UpdateNoteEventCopyWithImpl;
+@useResult
+$Res call({
+ String? note
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateNoteEventCopyWithImpl<$Res>
+    implements $UpdateNoteEventCopyWith<$Res> {
+  _$UpdateNoteEventCopyWithImpl(this._self, this._then);
+
+  final UpdateNoteEvent _self;
+  final $Res Function(UpdateNoteEvent) _then;
+
+/// Create a copy of SellEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? note = freezed,}) {
+  return _then(UpdateNoteEvent(
+freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

@@ -8,7 +8,7 @@ class GetCategoriesUseCase {
 
   GetCategoriesUseCase(this._repository);
 
-  Stream<Either<Failure, List<CategoryEntity>>> call() {
-    return _repository.watchCategories();
+  Stream<Either<Failure, List<CategoryEntity>>> call(int storeId) {
+    return _repository.watchCategories(storeId);
   }
 }

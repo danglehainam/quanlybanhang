@@ -45,6 +45,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     _productSubscription?.cancel();
     
     _productSubscription = _getProductsUseCase(
+      storeId: event.storeId,
       query: event.query,
       categoryId: event.categoryId,
       minPrice: event.minPrice,

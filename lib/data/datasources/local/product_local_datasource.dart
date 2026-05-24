@@ -7,6 +7,7 @@ class ProductLocalDataSource {
   ProductLocalDataSource(this._db);
 
   Stream<List<ProductDriftModel>> watchProducts({
+    required int storeId,
     String? query,
     int? categoryId,
     int? minPrice,
@@ -18,7 +19,7 @@ class ProductLocalDataSource {
 
     // Apply where clauses
     stmt.where((tbl) {
-      var predicate = const Constant(true) as Expression<bool>;
+      var predicate = tbl.storeId.equals(storeId);
       if (query != null && query.isNotEmpty) {
         predicate = predicate & tbl.name.like('%$query%');
       }

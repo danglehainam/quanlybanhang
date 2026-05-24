@@ -41,6 +41,7 @@
   "menuProducts": "Products",
   "menuCategories": "Categories",
   "menuTransactions": "Transactions",
+  "menuOrders": "Orders",
   "menuPartners": "Partners",
   "menuCashbook": "Cashbook",
   "menuReports": "Reports",
@@ -103,5 +104,46 @@
   "checkout": "Checkout",
   "draftOrders": "Active Orders",
   "orderCompletedSuccess": "Order completed successfully!",
-  "orderConfirmedSuccess": "Order saved as pending!"
+  "orderConfirmedSuccess": "Order confirmed (saved as draft)!",
+  "customer": "Customer",
+  "retailCustomer": "Walk-in",
+  "table": "Table",
+  "selectTable": "Select Table",
+  "discount": "Discount",
+  "enterDiscount": "Enter discount amount",
+  "note": "Note",
+  "enterNote": "Enter order note",
+  "orderCode": "Order ID",
+  "orderTime": "Time",
+  "finalAmount": "Due",
+  "actions": "Details",
+  "emptyOrdersMessage": "No orders found.",
+  "orderStatusPending": "Pending",
+  "orderStatusCompleted": "Completed",
+  "orderStatusCancelled": "Cancelled",
+  "searchOrdersPlaceholder": "Search orders...",
+  "searchFieldLabel": "Search phone, table, ID...",
+  "orderDetailTitle": "Order Details #{id}",
+  "@orderDetailTitle": {
+    "placeholders": {
+      "id": { "type": "int" }
+    }
+  },
+  "orderDetailProducts": "Product List",
+  "orderDate": "Date:",
+  "customerLabel": "Customer:",
+  "phoneLabel": "Phone:",
+  "tableLabel": "Table:",
+  "statusLabel": "Status:",
+  "noteLabel": "Note:",
+  "itemsCount": "{count} items",
+  "@itemsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "all": "All",
+  "highestValue": "Highest Value",
+  "lowestValue": "Lowest Value",
+  "searchLabel": "Search"
 }

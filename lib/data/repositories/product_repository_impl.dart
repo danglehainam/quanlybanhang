@@ -15,6 +15,7 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Stream<Either<Failure, List<ProductEntity>>> watchProducts({
+    required int storeId,
     String? query,
     int? categoryId,
     int? minPrice,
@@ -23,6 +24,7 @@ class ProductRepositoryImpl implements ProductRepository {
     int? sortOption,
   }) {
     return _localDataSource.watchProducts(
+      storeId: storeId,
       query: query,
       categoryId: categoryId,
       minPrice: minPrice,
@@ -52,6 +54,7 @@ class ProductRepositoryImpl implements ProductRepository {
         imageUrl: drift.Value(product.imageUrl),
         description: drift.Value(product.description),
         status: drift.Value(product.status),
+        stock: drift.Value(product.stock),
         createdAt: drift.Value(product.createdAt.millisecondsSinceEpoch),
         updatedAt: drift.Value(product.updatedAt.millisecondsSinceEpoch),
       );
@@ -74,6 +77,7 @@ class ProductRepositoryImpl implements ProductRepository {
         imageUrl: drift.Value(product.imageUrl),
         description: drift.Value(product.description),
         status: drift.Value(product.status),
+        stock: drift.Value(product.stock),
         createdAt: drift.Value(product.createdAt.millisecondsSinceEpoch),
         updatedAt: drift.Value(product.updatedAt.millisecondsSinceEpoch),
       );

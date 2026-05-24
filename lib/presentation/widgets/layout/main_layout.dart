@@ -56,12 +56,8 @@ class _MainLayoutState extends State<MainLayout> {
           currentTitle = l10n.menuCategories;
         } else if (currentRoute.startsWith(AppRoutes.transactions)) {
           currentTitle = l10n.menuTransactions;
-        } else if (currentRoute.startsWith(AppRoutes.partners)) {
-          currentTitle = l10n.menuPartners;
-        } else if (currentRoute.startsWith(AppRoutes.cashbook)) {
-          currentTitle = l10n.menuCashbook;
-        } else if (currentRoute.startsWith(AppRoutes.reports)) {
-          currentTitle = l10n.menuReports;
+        } else if (currentRoute.startsWith(AppRoutes.orders)) {
+          currentTitle = l10n.menuOrders;
         } else if (currentRoute.startsWith(AppRoutes.home)) {
           currentTitle = l10n.menuOverview;
         }

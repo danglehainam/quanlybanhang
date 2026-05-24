@@ -18,6 +18,7 @@ import '../../../widgets/app_text_field.dart';
 import '../widgets/product_filter_sidebar.dart';
 
 class ProductsMobileView extends StatelessWidget {
+  final int storeId;
   final List<ProductEntity> products;
   final List<CategoryEntity> categories;
   final String searchQuery;
@@ -29,6 +30,7 @@ class ProductsMobileView extends StatelessWidget {
 
   const ProductsMobileView({
     super.key,
+    required this.storeId,
     required this.products,
     required this.categories,
     required this.searchQuery,
@@ -59,6 +61,7 @@ class ProductsMobileView extends StatelessWidget {
                   controller: TextEditingController(text: searchQuery)..selection = TextSelection.fromPosition(TextPosition(offset: searchQuery.length)),
                   onChanged: (val) {
                     context.read<ProductsBloc>().add(ProductsEvent.watchProducts(
+                      storeId: storeId,
                       query: val,
                       categoryId: selectedCategoryId,
                       minPrice: minPrice,
@@ -184,6 +187,7 @@ class ProductsMobileView extends StatelessWidget {
                         categories: categories,
                         onFilterChanged: ({categoryId, maxPrice, minPrice, productStatus, query, sortOption}) {
                           context.read<ProductsBloc>().add(ProductsEvent.watchProducts(
+                            storeId: storeId,
                             query: query,
                             categoryId: categoryId,
                             minPrice: minPrice,

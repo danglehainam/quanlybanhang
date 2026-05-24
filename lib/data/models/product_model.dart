@@ -10,6 +10,7 @@ class ProductModel {
   final String? imageUrl;
   final String? description;
   final int status;
+  final int? stock;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -22,6 +23,7 @@ class ProductModel {
     this.imageUrl,
     this.description,
     required this.status,
+    this.stock,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -37,6 +39,7 @@ class ProductModel {
       imageUrl: driftModel.imageUrl,
       description: driftModel.description,
       status: driftModel.status,
+      stock: driftModel.stock,
       createdAt: DateTime.fromMillisecondsSinceEpoch(driftModel.createdAt),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(driftModel.updatedAt),
     );
@@ -53,6 +56,7 @@ class ProductModel {
       imageUrl: json['image_url'] as String?,
       description: json['description'] as String?,
       status: json['status'] as int? ?? 1,
+      stock: json['stock'] as int?,
       createdAt: DateTime.fromMillisecondsSinceEpoch(json['created_at'] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(json['updated_at'] as int),
     );
@@ -69,6 +73,7 @@ class ProductModel {
       'image_url': imageUrl,
       'description': description,
       'status': status,
+      'stock': stock,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt.millisecondsSinceEpoch,
     };
@@ -85,6 +90,7 @@ class ProductModel {
       imageUrl: imageUrl,
       description: description,
       status: status,
+      stock: stock,
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
@@ -101,6 +107,7 @@ class ProductModel {
       imageUrl: entity.imageUrl,
       description: entity.description,
       status: entity.status,
+      stock: entity.stock,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     );

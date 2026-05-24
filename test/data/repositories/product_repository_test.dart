@@ -10,6 +10,7 @@ class MockProductLocalDataSource implements ProductLocalDataSource {
 
   @override
   Stream<List<ProductDriftModel>> watchProducts({
+    required int storeId,
     String? query,
     int? categoryId,
     int? minPrice,

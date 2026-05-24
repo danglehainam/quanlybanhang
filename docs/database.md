@@ -117,6 +117,7 @@ Quản lý thông tin chi tiết của từng mặt hàng.
 | `image_url` | TEXT | NULLABLE | Đường dẫn ảnh sản phẩm |
 | `description` | TEXT | NULLABLE | Mô tả sản phẩm |
 | `status` | INTEGER | NOT NULL, DEFAULT 1 | Trạng thái (0: hết hàng, 1: còn hàng) |
+| `stock` | INTEGER | NULLABLE | Số lượng tồn kho (null = không giới hạn/đồ chế biến) |
 | `created_at` | INTEGER | NOT NULL | Ngày tạo (UTC) |
 | `updated_at` | INTEGER | NOT NULL | Ngày cập nhật (UTC) |
 
@@ -148,6 +149,7 @@ Quản lý các hóa đơn bán hàng (Đại diện cho các khoản Thu chính
 | `customer_id` | INTEGER | NULL, FOREIGN KEY (`customers.id`) | Đơn hàng của khách nào (nếu có) |
 | `table_id` | INTEGER | NULL, FOREIGN KEY (`customer_tables.id`) | ID bàn khách ngồi (NULL nếu mang đi) |
 | `total_amount` | INTEGER | NOT NULL | Tổng tiền trước giảm giá (VND) |
+| `discount_percent` | REAL | NULLABLE | Mức giảm giá theo phần trăm (VD: 10.5) |
 | `discount` | INTEGER | NOT NULL, DEFAULT 0 | Số tiền giảm giá (VND) |
 | `final_amount` | INTEGER | NOT NULL | Tổng tiền khách phải trả (VND) |
 | `status` | INTEGER | NOT NULL | Trạng thái Enum (0: pending, 1: completed, 2: cancelled) |

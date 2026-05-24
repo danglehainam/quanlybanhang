@@ -7,6 +7,9 @@ abstract class OrderRepository {
   /// Create a new order with its items in the local database.
   Future<Either<Failure, OrderEntity>> createOrder(OrderEntity order);
 
+  /// Update an existing order with its items in the local database.
+  Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity order);
+
   /// Fetch all completed/pending orders (if needed later)
   Future<Either<Failure, List<OrderEntity>>> getOrders({int? status});
 }

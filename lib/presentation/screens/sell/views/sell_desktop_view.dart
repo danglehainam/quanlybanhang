@@ -6,11 +6,13 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../bloc/sell/sell_bloc.dart';
 import '../../../bloc/sell/sell_event.dart';
 import '../../../bloc/sell/sell_state.dart';
-import '../../../widgets/buttons/app_icon_button.dart';
 import '../../../widgets/empty_data_widget.dart';
-import '../widgets/pos_order_card.dart';
+import '../widgets/pos_cart_summary.dart';
+import '../widgets/pos_cart_tabs.dart';
+import '../widgets/pos_order_item_row.dart';
 import '../widgets/product_grouped_grid.dart';
 import '../../products/widgets/product_filter_sidebar.dart';
+import '../widgets/pos_desktop_order_header.dart';
 
 class SellDesktopView extends StatelessWidget {
   const SellDesktopView({super.key});
@@ -100,59 +102,58 @@ class SellDesktopView extends StatelessWidget {
   }
 
   Widget _buildRightColumn(BuildContext context, SellState state, AppLocalizations l10n) {
+    final activeOrder = (state.draftOrders.isNotEmpty && state.selectedOrderIndex >= 0 && state.selectedOrderIndex < state.draftOrders.length)
+        ? state.draftOrders[state.selectedOrderIndex]
+        : null;
+
     return Container(
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  l10n.draftOrders,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                AppIconButton(
-                  icon: Icons.add,
-                  tooltip: l10n.addOrder,
-                  color: AppColors.primary,
-                  onPressed: () {
-                    context.read<SellBloc>().add(const SellEvent.addOrder());
-                  },
-                )
-              ],
-            ),
+          PosCartTabs(
+            orders: state.draftOrders,
+            selectedIndex: state.selectedOrderIndex,
           ),
-          const Divider(height: 1),
+          if (activeOrder != null)
+            PosDesktopOrderHeader(activeOrder: activeOrder),
           Expanded(
-            child: state.draftOrders.isEmpty
+            child: activeOrder == null
                 ? Center(
                     child: Text(
                       'Chưa có đơn hàng nào.',
                       style: TextStyle(color: AppColors.textSecondary),
                     ),
                   )
-                : ListView.separated(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: state.draftOrders.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 16),
-                    itemBuilder: (context, index) {
-                      final order = state.draftOrders[index];
-                      final isExpanded = index == state.selectedOrderIndex;
-                      
-                      return PosOrderCard(
-                        order: order,
-                        orderIndex: index,
-                        isExpanded: isExpanded,
-                        onExpand: () {
-                          context.read<SellBloc>().add(SellEvent.selectOrder(index));
+                : activeOrder.items.isEmpty
+                    ? Center(
+                        child: Text(
+                          l10n.emptyOrderMessage,
+                          style: TextStyle(color: AppColors.textSecondary, fontStyle: FontStyle.italic),
+                        ),
+                      )
+                    : ListView.separated(
+                        itemCount: activeOrder.items.length,
+                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        itemBuilder: (context, index) {
+                          final item = activeOrder.items[index];
+                          return PosOrderItemRow(
+                            productName: item.productName,
+                            price: item.priceAtPurchase,
+                            quantity: item.quantity,
+                            subtotal: item.subtotal,
+                            onIncrease: () => context.read<SellBloc>().add(SellEvent.updateItemQuantity(index, item.quantity + 1)),
+                            onDecrease: () {
+                              context.read<SellBloc>().add(SellEvent.updateItemQuantity(index, item.quantity - 1));
+                            },
+                            onRemove: () {
+                              context.read<SellBloc>().add(SellEvent.removeItem(index));
+                            },
+                          );
                         },
-                      );
-                    },
-                  ),
+                      ),
           ),
+          if (activeOrder != null) PosCartSummary(activeOrder: activeOrder),
         ],
       ),
     );

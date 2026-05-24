@@ -10,11 +10,9 @@ import '../../presentation/screens/register/register_screen.dart';
 import '../../presentation/screens/products/products_screen.dart';
 import '../../presentation/screens/transactions/transactions_screen.dart';
 import '../../presentation/screens/tables/customer_tables_screen.dart';
-import '../../presentation/screens/partners/partners_screen.dart';
 import '../../presentation/screens/categories/categories_screen.dart';
-import '../../presentation/screens/cashbook/cashbook_screen.dart';
-import '../../presentation/screens/reports/reports_screen.dart';
 import '../../presentation/screens/sell/sell_screen.dart';
+import '../../presentation/screens/orders/orders_screen.dart';
 import '../../presentation/widgets/layout/main_layout.dart';
 
 class AppRouter {
@@ -77,20 +75,12 @@ class AppRouter {
             builder: (context, state) => const CustomerTablesScreen(),
           ),
           GoRoute(
-            path: AppRoutes.partners,
-            builder: (context, state) => const PartnersScreen(),
-          ),
-          GoRoute(
             path: AppRoutes.categories,
             builder: (context, state) => const CategoriesScreen(),
           ),
           GoRoute(
-            path: AppRoutes.cashbook,
-            builder: (context, state) => const CashbookScreen(),
-          ),
-          GoRoute(
-            path: AppRoutes.reports,
-            builder: (context, state) => const ReportsScreen(),
+            path: AppRoutes.orders,
+            builder: (context, state) => const OrdersScreen(),
           ),
         ],
       ),

@@ -9,6 +9,8 @@ import '../../../widgets/app_text_field.dart';
 import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../../../bloc/categories/categories_event.dart';
+import '../../../bloc/auth/auth_bloc.dart';
+import '../../../bloc/auth/auth_state.dart';
 import '../../../widgets/buttons/app_text_button.dart';
 
 class CategoryFormDialog extends StatefulWidget {
@@ -50,10 +52,15 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
       setState(() => _isLoading = true);
 
       final l10n = AppLocalizations.of(context)!;
+      final authState = context.read<AuthBloc>().state;
+      final storeId = authState.maybeMap(
+        authenticated: (state) => state.user.storeId,
+        orElse: () => 1,
+      );
 
       final categoryData = CategoryEntity(
         id: _isEditMode ? widget.categoryToEdit!.id : 0,
-        storeId: _isEditMode ? widget.categoryToEdit!.storeId : 1, // Dummy storeId for now
+        storeId: _isEditMode ? widget.categoryToEdit!.storeId : storeId,
         name: _nameController.text.trim(),
         description: _descriptionController.text.trim(),
         createdAt: _isEditMode ? widget.categoryToEdit!.createdAt : DateTime.now().toUtc(),

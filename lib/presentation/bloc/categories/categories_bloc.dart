@@ -35,7 +35,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     emit(const CategoriesState.loading());
     
     await emit.forEach(
-      _getCategoriesUseCase(),
+      _getCategoriesUseCase(event.storeId),
       onData: (result) => result.fold(
         (failure) => CategoriesState.error(failure.message),
         (categories) => CategoriesState.loaded(categories),

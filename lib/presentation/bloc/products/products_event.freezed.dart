@@ -131,10 +131,10 @@ return deleteProduct(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  watchProducts,TResult Function( Either<Failure, List<ProductEntity>> result,  String? searchQuery,  int? selectedCategoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  productsUpdated,TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  createProduct,TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  updateProduct,TResult Function( int id,  void Function() onSuccess,  void Function(String) onError)?  deleteProduct,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int storeId,  String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  watchProducts,TResult Function( Either<Failure, List<ProductEntity>> result,  String? searchQuery,  int? selectedCategoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  productsUpdated,TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  createProduct,TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  updateProduct,TResult Function( int id,  void Function() onSuccess,  void Function(String) onError)?  deleteProduct,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case WatchProducts() when watchProducts != null:
-return watchProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case ProductsUpdated() when productsUpdated != null:
+return watchProducts(_that.storeId,_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case ProductsUpdated() when productsUpdated != null:
 return productsUpdated(_that.result,_that.searchQuery,_that.selectedCategoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case CreateProduct() when createProduct != null:
 return createProduct(_that.product,_that.onSuccess,_that.onError);case UpdateProduct() when updateProduct != null:
 return updateProduct(_that.product,_that.onSuccess,_that.onError);case DeleteProduct() when deleteProduct != null:
@@ -156,10 +156,10 @@ return deleteProduct(_that.id,_that.onSuccess,_that.onError);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)  watchProducts,required TResult Function( Either<Failure, List<ProductEntity>> result,  String? searchQuery,  int? selectedCategoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)  productsUpdated,required TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)  createProduct,required TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)  updateProduct,required TResult Function( int id,  void Function() onSuccess,  void Function(String) onError)  deleteProduct,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int storeId,  String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)  watchProducts,required TResult Function( Either<Failure, List<ProductEntity>> result,  String? searchQuery,  int? selectedCategoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)  productsUpdated,required TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)  createProduct,required TResult Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)  updateProduct,required TResult Function( int id,  void Function() onSuccess,  void Function(String) onError)  deleteProduct,}) {final _that = this;
 switch (_that) {
 case WatchProducts():
-return watchProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case ProductsUpdated():
+return watchProducts(_that.storeId,_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case ProductsUpdated():
 return productsUpdated(_that.result,_that.searchQuery,_that.selectedCategoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case CreateProduct():
 return createProduct(_that.product,_that.onSuccess,_that.onError);case UpdateProduct():
 return updateProduct(_that.product,_that.onSuccess,_that.onError);case DeleteProduct():
@@ -180,10 +180,10 @@ return deleteProduct(_that.id,_that.onSuccess,_that.onError);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  watchProducts,TResult? Function( Either<Failure, List<ProductEntity>> result,  String? searchQuery,  int? selectedCategoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  productsUpdated,TResult? Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  createProduct,TResult? Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  updateProduct,TResult? Function( int id,  void Function() onSuccess,  void Function(String) onError)?  deleteProduct,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int storeId,  String? query,  int? categoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  watchProducts,TResult? Function( Either<Failure, List<ProductEntity>> result,  String? searchQuery,  int? selectedCategoryId,  int? minPrice,  int? maxPrice,  int? productStatus,  int? sortOption)?  productsUpdated,TResult? Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  createProduct,TResult? Function( ProductEntity product,  void Function() onSuccess,  void Function(String) onError)?  updateProduct,TResult? Function( int id,  void Function() onSuccess,  void Function(String) onError)?  deleteProduct,}) {final _that = this;
 switch (_that) {
 case WatchProducts() when watchProducts != null:
-return watchProducts(_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case ProductsUpdated() when productsUpdated != null:
+return watchProducts(_that.storeId,_that.query,_that.categoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case ProductsUpdated() when productsUpdated != null:
 return productsUpdated(_that.result,_that.searchQuery,_that.selectedCategoryId,_that.minPrice,_that.maxPrice,_that.productStatus,_that.sortOption);case CreateProduct() when createProduct != null:
 return createProduct(_that.product,_that.onSuccess,_that.onError);case UpdateProduct() when updateProduct != null:
 return updateProduct(_that.product,_that.onSuccess,_that.onError);case DeleteProduct() when deleteProduct != null:
@@ -199,9 +199,10 @@ return deleteProduct(_that.id,_that.onSuccess,_that.onError);case _:
 
 
 class WatchProducts implements ProductsEvent {
-  const WatchProducts({this.query, this.categoryId, this.minPrice, this.maxPrice, this.productStatus, this.sortOption});
+  const WatchProducts({required this.storeId, this.query, this.categoryId, this.minPrice, this.maxPrice, this.productStatus, this.sortOption});
   
 
+ final  int storeId;
  final  String? query;
  final  int? categoryId;
  final  int? minPrice;
@@ -219,16 +220,16 @@ $WatchProductsCopyWith<WatchProducts> get copyWith => _$WatchProductsCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WatchProducts&&(identical(other.query, query) || other.query == query)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.productStatus, productStatus) || other.productStatus == productStatus)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WatchProducts&&(identical(other.storeId, storeId) || other.storeId == storeId)&&(identical(other.query, query) || other.query == query)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.productStatus, productStatus) || other.productStatus == productStatus)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,query,categoryId,minPrice,maxPrice,productStatus,sortOption);
+int get hashCode => Object.hash(runtimeType,storeId,query,categoryId,minPrice,maxPrice,productStatus,sortOption);
 
 @override
 String toString() {
-  return 'ProductsEvent.watchProducts(query: $query, categoryId: $categoryId, minPrice: $minPrice, maxPrice: $maxPrice, productStatus: $productStatus, sortOption: $sortOption)';
+  return 'ProductsEvent.watchProducts(storeId: $storeId, query: $query, categoryId: $categoryId, minPrice: $minPrice, maxPrice: $maxPrice, productStatus: $productStatus, sortOption: $sortOption)';
 }
 
 
@@ -239,7 +240,7 @@ abstract mixin class $WatchProductsCopyWith<$Res> implements $ProductsEventCopyW
   factory $WatchProductsCopyWith(WatchProducts value, $Res Function(WatchProducts) _then) = _$WatchProductsCopyWithImpl;
 @useResult
 $Res call({
- String? query, int? categoryId, int? minPrice, int? maxPrice, int? productStatus, int? sortOption
+ int storeId, String? query, int? categoryId, int? minPrice, int? maxPrice, int? productStatus, int? sortOption
 });
 
 
@@ -256,9 +257,10 @@ class _$WatchProductsCopyWithImpl<$Res>
 
 /// Create a copy of ProductsEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? query = freezed,Object? categoryId = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? productStatus = freezed,Object? sortOption = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? storeId = null,Object? query = freezed,Object? categoryId = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? productStatus = freezed,Object? sortOption = freezed,}) {
   return _then(WatchProducts(
-query: freezed == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+storeId: null == storeId ? _self.storeId : storeId // ignore: cast_nullable_to_non_nullable
+as int,query: freezed == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int?,minPrice: freezed == minPrice ? _self.minPrice : minPrice // ignore: cast_nullable_to_non_nullable
 as int?,maxPrice: freezed == maxPrice ? _self.maxPrice : maxPrice // ignore: cast_nullable_to_non_nullable

@@ -8,6 +8,7 @@ part 'products_event.freezed.dart';
 @freezed
 class ProductsEvent with _$ProductsEvent {
   const factory ProductsEvent.watchProducts({
+    required int storeId,
     String? query,
     int? categoryId,
     int? minPrice,

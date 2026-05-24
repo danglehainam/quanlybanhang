@@ -13,8 +13,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl(this._localDataSource);
 
   @override
-  Stream<Either<Failure, List<CategoryEntity>>> watchCategories() {
-    return _localDataSource.watchCategories().map<Either<Failure, List<CategoryEntity>>>((driftModels) {
+  Stream<Either<Failure, List<CategoryEntity>>> watchCategories(int storeId) {
+    return _localDataSource.watchCategories(storeId).map<Either<Failure, List<CategoryEntity>>>((driftModels) {
       try {
         final entities = driftModels
             .map((model) => CategoryModel.fromDrift(model).toEntity())

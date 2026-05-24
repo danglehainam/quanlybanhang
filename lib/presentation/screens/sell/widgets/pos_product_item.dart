@@ -55,13 +55,27 @@ class PosProductItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 2),
-                  Text(
-                    AppFormatters.formatCurrency(product.price),
-                    style: const TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 11,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppFormatters.formatCurrency(product.price),
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                        ),
+                      ),
+                      if (product.stock != null)
+                        Text(
+                          'Tồn: ${product.stock}',
+                          style: TextStyle(
+                            color: product.stock! <= 0 ? Colors.red : AppColors.textSecondary,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),

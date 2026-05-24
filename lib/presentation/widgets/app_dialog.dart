@@ -14,22 +14,40 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      content: Material(
-        color: Colors.transparent,
-        child: SizedBox(
-          width: 500, // Đảm bảo chiều rộng cố định trên Desktop, tự động thu nhỏ trên Mobile
-          child: SingleChildScrollView(
-            child: content,
-          ),
-        ),
-      ),
-      actions: actions,
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    
+    return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+      insetPadding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.1, 
+        vertical: 24,
+      ),
+      child: Container(
+        width: screenWidth * 0.8, // Buộc chiều rộng bằng 80% màn hình
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            const SizedBox(height: 16),
+            Flexible(
+              child: SingleChildScrollView(
+                child: content,
+              ),
+            ),
+            if (actions != null) ...[
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: actions!,
+              ),
+            ]
+          ],
+        ),
+      ),
     );
   }
 }

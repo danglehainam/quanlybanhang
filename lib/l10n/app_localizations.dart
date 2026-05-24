@@ -272,6 +272,12 @@ abstract class AppLocalizations {
   /// **'Giao dịch'**
   String get menuTransactions;
 
+  /// No description provided for @menuOrders.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đơn hàng'**
+  String get menuOrders;
+
   /// No description provided for @menuPartners.
   ///
   /// In vi, this message translates to:
@@ -613,6 +619,168 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đã xác nhận đơn hàng (lưu nháp)!'**
   String get orderConfirmedSuccess;
+
+  /// No description provided for @customer.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khách'**
+  String get customer;
+
+  /// No description provided for @retailCustomer.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khách lẻ'**
+  String get retailCustomer;
+
+  /// No description provided for @table.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bàn'**
+  String get table;
+
+  /// No description provided for @selectTable.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn bàn'**
+  String get selectTable;
+
+  /// No description provided for @discount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giảm'**
+  String get discount;
+
+  /// No description provided for @enterDiscount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập giảm giá'**
+  String get enterDiscount;
+
+  /// No description provided for @note.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi chú'**
+  String get note;
+
+  /// No description provided for @enterNote.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập ghi chú'**
+  String get enterNote;
+
+  /// No description provided for @orderCode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã ĐH'**
+  String get orderCode;
+
+  /// No description provided for @orderTime.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thời gian'**
+  String get orderTime;
+
+  /// No description provided for @finalAmount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phải trả'**
+  String get finalAmount;
+
+  /// No description provided for @actions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi tiết'**
+  String get actions;
+
+  /// No description provided for @emptyOrdersMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy đơn hàng nào.'**
+  String get emptyOrdersMessage;
+
+  /// No description provided for @orderStatusPending.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chờ thanh toán'**
+  String get orderStatusPending;
+
+  /// No description provided for @orderStatusCompleted.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã hoàn thành'**
+  String get orderStatusCompleted;
+
+  /// No description provided for @orderStatusCancelled.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã huỷ'**
+  String get orderStatusCancelled;
+
+  /// No description provided for @searchOrdersPlaceholder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm đơn hàng...'**
+  String get searchOrdersPlaceholder;
+
+  /// No description provided for @searchFieldLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập SĐT, Tên bàn, ID...'**
+  String get searchFieldLabel;
+
+  /// No description provided for @orderDetailTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi tiết đơn hàng #{id}'**
+  String orderDetailTitle(int id);
+
+  /// No description provided for @orderDetailProducts.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh sách sản phẩm'**
+  String get orderDetailProducts;
+
+  /// No description provided for @orderDate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày bán:'**
+  String get orderDate;
+
+  /// No description provided for @customerLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khách hàng:'**
+  String get customerLabel;
+
+  /// No description provided for @phoneLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số điện thoại:'**
+  String get phoneLabel;
+
+  /// No description provided for @tableLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bàn phục vụ:'**
+  String get tableLabel;
+
+  /// No description provided for @statusLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trạng thái:'**
+  String get statusLabel;
+
+  /// No description provided for @noteLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi chú:'**
+  String get noteLabel;
+
+  /// No description provided for @itemsCount.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} món'**
+  String itemsCount(int count);
 }
 
 class _AppLocalizationsDelegate

@@ -12,6 +12,7 @@ class Products extends Table {
   TextColumn get imageUrl => text().nullable()();
   TextColumn get description => text().nullable()();
   IntColumn get status => integer().withDefault(const Constant(1))();
+  IntColumn get stock => integer().nullable()();
   IntColumn get createdAt => integer()();
   IntColumn get updatedAt => integer()();
 }

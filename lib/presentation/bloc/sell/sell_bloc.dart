@@ -6,6 +6,7 @@ import '../../../domain/entities/order_item_entity.dart';
 import '../../../domain/repositories/category_repository.dart';
 import '../../../domain/repositories/order_repository.dart';
 import '../../../domain/repositories/product_repository.dart';
+import '../../../domain/usecases/update_order_usecase.dart';
 import 'sell_event.dart';
 import 'sell_state.dart';
 
@@ -13,12 +14,14 @@ class SellBloc extends Bloc<SellEvent, SellState> {
   final ProductRepository productRepository;
   final CategoryRepository categoryRepository;
   final OrderRepository orderRepository;
+  final UpdateOrderUseCase updateOrderUseCase;
   final SharedPreferences prefs;
 
   SellBloc({
     required this.productRepository,
     required this.categoryRepository,
     required this.orderRepository,
+    required this.updateOrderUseCase,
     required this.prefs,
   }) : super(const SellState()) {
     on<LoadInitialDataEvent>(_onLoadInitialData);
@@ -26,6 +29,10 @@ class SellBloc extends Bloc<SellEvent, SellState> {
     on<AddOrderEvent>(_onAddOrder);
     on<SelectOrderEvent>(_onSelectOrder);
     on<RemoveOrderEvent>(_onRemoveOrder);
+    on<UpdateCustomerEvent>(_onUpdateCustomer);
+    on<UpdateTableEvent>(_onUpdateTable);
+    on<UpdateDiscountEvent>(_onUpdateDiscount);
+    on<UpdateNoteEvent>(_onUpdateNote);
     on<AddProductToOrderEvent>(_onAddProductToOrder);
     on<UpdateItemQuantityEvent>(_onUpdateItemQuantity);
     on<RemoveItemEvent>(_onRemoveItem);
@@ -36,8 +43,8 @@ class SellBloc extends Bloc<SellEvent, SellState> {
   Future<void> _onLoadInitialData(LoadInitialDataEvent event, Emitter<SellState> emit) async {
     emit(state.copyWith(isLoading: true, error: null));
 
-    final productsResult = await productRepository.watchProducts().first;
-    final categoriesResult = await categoryRepository.watchCategories().first;
+    final productsResult = await productRepository.watchProducts(storeId: event.storeId).first;
+    final categoriesResult = await categoryRepository.watchCategories(event.storeId).first;
 
     productsResult.fold(
       (failure) => emit(state.copyWith(isLoading: false, error: failure.message)),
@@ -161,6 +168,81 @@ class SellBloc extends Bloc<SellEvent, SellState> {
     }
   }
 
+  void _onUpdateCustomer(UpdateCustomerEvent event, Emitter<SellState> emit) {
+    if (state.draftOrders.isEmpty) return;
+    final orderIndex = state.selectedOrderIndex;
+    final order = state.draftOrders[orderIndex];
+
+    final updatedOrder = order.copyWith(
+      customer: event.customer,
+      customerId: event.customer?.id,
+    );
+
+    final updatedDrafts = List<OrderEntity>.from(state.draftOrders);
+    updatedDrafts[orderIndex] = updatedOrder;
+
+    emit(state.copyWith(draftOrders: updatedDrafts));
+  }
+
+  void _onUpdateTable(UpdateTableEvent event, Emitter<SellState> emit) {
+    if (state.draftOrders.isEmpty) return;
+    final orderIndex = state.selectedOrderIndex;
+    final order = state.draftOrders[orderIndex];
+
+    final updatedOrder = order.copyWith(
+      table: event.table,
+      tableId: event.table?.id,
+    );
+
+    final updatedDrafts = List<OrderEntity>.from(state.draftOrders);
+    updatedDrafts[orderIndex] = updatedOrder;
+
+    emit(state.copyWith(draftOrders: updatedDrafts));
+  }
+
+  void _onUpdateDiscount(UpdateDiscountEvent event, Emitter<SellState> emit) {
+    if (state.draftOrders.isEmpty) return;
+    final orderIndex = state.selectedOrderIndex;
+    final order = state.draftOrders[orderIndex];
+
+    int newDiscountAmount = event.discountAmount ?? 0;
+    
+    // Auto-calculate if percent is provided but amount is missing
+    if (event.discountPercent != null && event.discountAmount == null) {
+      newDiscountAmount = (order.totalAmount * (event.discountPercent! / 100)).round();
+    }
+
+    int finalAmount = order.totalAmount - newDiscountAmount;
+    if (finalAmount < 0) finalAmount = 0;
+
+    final updatedOrder = order.copyWith(
+      discount: newDiscountAmount,
+      finalAmount: finalAmount,
+      discountPercent: event.discountPercent,
+      clearDiscountPercent: event.discountPercent == null, // clear it if null
+    );
+
+    final updatedDrafts = List<OrderEntity>.from(state.draftOrders);
+    updatedDrafts[orderIndex] = updatedOrder;
+
+    emit(state.copyWith(draftOrders: updatedDrafts));
+  }
+
+  void _onUpdateNote(UpdateNoteEvent event, Emitter<SellState> emit) {
+    if (state.draftOrders.isEmpty) return;
+    final orderIndex = state.selectedOrderIndex;
+    final order = state.draftOrders[orderIndex];
+
+    final updatedOrder = order.copyWith(
+      note: event.note,
+    );
+
+    final updatedDrafts = List<OrderEntity>.from(state.draftOrders);
+    updatedDrafts[orderIndex] = updatedOrder;
+
+    emit(state.copyWith(draftOrders: updatedDrafts));
+  }
+
   void _onAddProductToOrder(AddProductToOrderEvent event, Emitter<SellState> emit) {
     if (state.draftOrders.isEmpty) return;
     
@@ -169,6 +251,17 @@ class SellBloc extends Bloc<SellEvent, SellState> {
     final product = event.product;
 
     final existingItemIndex = order.items.indexWhere((item) => item.productId == product.id);
+
+    // Validate stock limit
+    if (product.stock != null) {
+      final currentQtyInCart = existingItemIndex >= 0 ? order.items[existingItemIndex].quantity : 0;
+      if (currentQtyInCart >= product.stock!) {
+        emit(state.copyWith(error: 'Sản phẩm ${product.name} đã đạt số lượng tồn kho tối đa (${product.stock}).'));
+        emit(state.copyWith(error: null));
+        return;
+      }
+    }
+
     List<OrderItemEntity> updatedItems = List.from(order.items);
 
     if (existingItemIndex >= 0) {
@@ -204,9 +297,18 @@ class SellBloc extends Bloc<SellEvent, SellState> {
         add(SellEvent.removeItem(event.itemIndex));
         return;
       }
+
+      final item = order.items[event.itemIndex];
+
+      // Validate stock limit
+      final product = state.allProducts.firstWhere((p) => p.id == item.productId, orElse: () => state.allProducts.first);
+      if (product.stock != null && event.newQuantity > product.stock!) {
+        emit(state.copyWith(error: 'Sản phẩm ${product.name} chỉ còn ${product.stock} sản phẩm trong kho.'));
+        emit(state.copyWith(error: null));
+        return;
+      }
       
       List<OrderItemEntity> updatedItems = List.from(order.items);
-      final item = updatedItems[event.itemIndex];
       updatedItems[event.itemIndex] = item.copyWith(
         quantity: event.newQuantity,
         subtotal: event.newQuantity * item.priceAtPurchase,
@@ -230,13 +332,22 @@ class SellBloc extends Bloc<SellEvent, SellState> {
   void _updateOrderInDrafts(Emitter<SellState> emit, int orderIndex, List<OrderItemEntity> updatedItems) {
     final order = state.draftOrders[orderIndex];
     final int totalAmount = updatedItems.fold(0, (sum, item) => sum + item.subtotal);
-    final int finalAmount = totalAmount - order.discount;
+    
+    int newDiscountAmount = order.discount;
+    
+    // Auto recalculate discount amount if it's based on percentage
+    if (order.discountPercent != null) {
+      newDiscountAmount = (totalAmount * (order.discountPercent! / 100)).round();
+    }
+    
+    int finalAmount = totalAmount - newDiscountAmount;
+    if (finalAmount < 0) finalAmount = 0;
 
     final updatedOrder = order.copyWith(
       items: updatedItems,
       totalAmount: totalAmount,
-      finalAmount: finalAmount > 0 ? finalAmount : 0,
-      updatedAt: DateTime.now(),
+      discount: newDiscountAmount,
+      finalAmount: finalAmount,
     );
 
     final updatedDrafts = List<OrderEntity>.from(state.draftOrders);
@@ -257,46 +368,101 @@ class SellBloc extends Bloc<SellEvent, SellState> {
     if (state.draftOrders.isEmpty) return;
     final orderIndex = state.selectedOrderIndex;
     final orderToSave = state.draftOrders[orderIndex];
-
+ 
     if (orderToSave.items.isEmpty) {
       emit(state.copyWith(error: 'Đơn hàng trống, không thể lưu.'));
       return;
     }
-
+ 
     emit(state.copyWith(isLoading: true, error: null, isActionSuccess: false));
-
+ 
     // Update status before saving
     final updatedOrder = orderToSave.copyWith(status: status, updatedAt: DateTime.now());
-
-    final result = await orderRepository.createOrder(updatedOrder);
-
+ 
+    // Check if the order has a temporary timestamp ID (new draft) or real DB ID
+    final isNewOrder = orderToSave.id > 1000000000;
+    
+    final result = isNewOrder 
+        ? await orderRepository.createOrder(updatedOrder)
+        : await updateOrderUseCase(updatedOrder);
+ 
     result.fold(
       (failure) => emit(state.copyWith(isLoading: false, error: failure.message)),
       (savedOrder) {
-        // Remove the saved order from drafts
-        final updatedDrafts = List<OrderEntity>.from(state.draftOrders)..removeAt(orderIndex);
-        
-        int newSelectedIndex = state.selectedOrderIndex;
-        if (newSelectedIndex >= updatedDrafts.length) {
-          newSelectedIndex = updatedDrafts.length - 1;
-        }
-        if (newSelectedIndex < 0) {
-          newSelectedIndex = 0;
-        }
+        if (status == 1) {
+          // Status 1: Completed -> Remove the saved order from drafts
+          final updatedDrafts = List<OrderEntity>.from(state.draftOrders)..removeAt(orderIndex);
+          
+          int newSelectedIndex = state.selectedOrderIndex;
+          if (newSelectedIndex >= updatedDrafts.length) {
+            newSelectedIndex = updatedDrafts.length - 1;
+          }
+          if (newSelectedIndex < 0) {
+            newSelectedIndex = 0;
+          }
+ 
+          emit(state.copyWith(
+            isLoading: false,
+            isActionSuccess: true,
+            draftOrders: updatedDrafts,
+            selectedOrderIndex: newSelectedIndex,
+          ));
+          
+          // Reset success flag
+          emit(state.copyWith(isActionSuccess: false));
+ 
+          // If no more drafts, create a new empty one
+          if (updatedDrafts.isEmpty) {
+            add(const SellEvent.addOrder());
+          }
 
-        emit(state.copyWith(
-          isLoading: false,
-          isActionSuccess: true,
-          draftOrders: updatedDrafts,
-          selectedOrderIndex: newSelectedIndex,
-        ));
-        
-        // Reset success flag
-        emit(state.copyWith(isActionSuccess: false));
+          // Reload products list to reflect updated stock in state
+          productRepository.watchProducts(storeId: orderToSave.storeId).first.then((productsResult) {
+            productsResult.fold(
+              (failure) {}, // ignore
+              (products) {
+                final activeProducts = products.where((p) => p.status == 1).toList();
+                
+                // Re-apply filter based on current search and category filters
+                var filtered = activeProducts.where((p) {
+                  final matchesSearch = state.searchQuery.isEmpty || p.name.toLowerCase().contains(state.searchQuery.toLowerCase());
+                  final matchesCategory = state.selectedCategoryId == null || state.selectedCategoryId == 0 || p.categoryId == state.selectedCategoryId;
+                  final matchesMinPrice = state.minPrice == null || p.price >= state.minPrice!;
+                  final matchesMaxPrice = state.maxPrice == null || p.price <= state.maxPrice!;
+                  final matchesStatus = state.productStatus == null || p.status == state.productStatus!;
+                  return matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStatus;
+                }).toList();
 
-        // If no more drafts, create a new empty one
-        if (updatedDrafts.isEmpty) {
-          add(const SellEvent.addOrder());
+                if (state.sortOption != null) {
+                  filtered.sort((a, b) {
+                    if (state.sortOption == 0) {
+                      return a.price.compareTo(b.price);
+                    } else {
+                      return b.price.compareTo(a.price);
+                    }
+                  });
+                }
+
+                emit(state.copyWith(
+                  allProducts: activeProducts,
+                  filteredProducts: filtered,
+                ));
+              },
+            );
+          });
+        } else {
+          // Status 0: Pending -> Keep the order active in the drafts, update its ID/status
+          final updatedDrafts = List<OrderEntity>.from(state.draftOrders);
+          updatedDrafts[orderIndex] = savedOrder;
+ 
+          emit(state.copyWith(
+            isLoading: false,
+            isActionSuccess: true,
+            draftOrders: updatedDrafts,
+          ));
+ 
+          // Reset success flag
+          emit(state.copyWith(isActionSuccess: false));
         }
       },
     );

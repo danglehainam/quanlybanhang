@@ -9,6 +9,7 @@ class GetProductsUseCase {
   GetProductsUseCase(this._repository);
 
   Stream<Either<Failure, List<ProductEntity>>> call({
+    required int storeId,
     String? query,
     int? categoryId,
     int? minPrice,
@@ -17,6 +18,7 @@ class GetProductsUseCase {
     int? sortOption,
   }) {
     return _repository.watchProducts(
+      storeId: storeId,
       query: query,
       categoryId: categoryId,
       minPrice: minPrice,

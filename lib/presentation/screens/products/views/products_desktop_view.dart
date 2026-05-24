@@ -19,6 +19,7 @@ import '../../../widgets/buttons/app_icon_button.dart';
 import '../widgets/product_filter_sidebar.dart';
 
 class ProductsDesktopView extends StatelessWidget {
+  final int storeId;
   final List<ProductEntity> products;
   final List<CategoryEntity> categories;
   final String searchQuery;
@@ -30,6 +31,7 @@ class ProductsDesktopView extends StatelessWidget {
 
   const ProductsDesktopView({
     super.key,
+    required this.storeId,
     required this.products,
     required this.categories,
     required this.searchQuery,
@@ -60,6 +62,7 @@ class ProductsDesktopView extends StatelessWidget {
               categories: categories,
               onFilterChanged: ({categoryId, maxPrice, minPrice, productStatus, query, sortOption}) {
                 context.read<ProductsBloc>().add(ProductsEvent.watchProducts(
+                  storeId: storeId,
                   query: query,
                   categoryId: categoryId,
                   minPrice: minPrice,

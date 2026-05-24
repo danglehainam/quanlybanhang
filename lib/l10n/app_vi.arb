@@ -41,6 +41,7 @@
   "menuProducts": "Sản phẩm",
   "menuCategories": "Danh mục",
   "menuTransactions": "Giao dịch",
+  "menuOrders": "Đơn hàng",
   "menuPartners": "Đối tác",
   "menuCashbook": "Sổ quỹ",
   "menuReports": "Báo cáo",
@@ -103,5 +104,42 @@
   "checkout": "Thanh toán",
   "draftOrders": "Đơn hàng đang phục vụ",
   "orderCompletedSuccess": "Đã hoàn thành đơn hàng!",
-  "orderConfirmedSuccess": "Đã xác nhận đơn hàng (lưu nháp)!"
+  "orderConfirmedSuccess": "Đã xác nhận đơn hàng (lưu nháp)!",
+  "customer": "Khách",
+  "retailCustomer": "Khách lẻ",
+  "table": "Bàn",
+  "selectTable": "Chọn bàn",
+  "discount": "Giảm",
+  "enterDiscount": "Nhập giảm giá",
+  "note": "Ghi chú",
+  "enterNote": "Nhập ghi chú",
+  "orderCode": "Mã ĐH",
+  "orderTime": "Thời gian",
+  "finalAmount": "Phải trả",
+  "actions": "Chi tiết",
+  "emptyOrdersMessage": "Không tìm thấy đơn hàng nào.",
+  "orderStatusPending": "Chờ thanh toán",
+  "orderStatusCompleted": "Đã hoàn thành",
+  "orderStatusCancelled": "Đã huỷ",
+  "searchOrdersPlaceholder": "Tìm đơn hàng...",
+  "searchFieldLabel": "Nhập SĐT, Tên bàn, ID...",
+  "orderDetailTitle": "Chi tiết đơn hàng #{id}",
+  "@orderDetailTitle": {
+    "placeholders": {
+      "id": { "type": "int" }
+    }
+  },
+  "orderDetailProducts": "Danh sách sản phẩm",
+  "orderDate": "Ngày bán:",
+  "customerLabel": "Khách hàng:",
+  "phoneLabel": "Số điện thoại:",
+  "tableLabel": "Bàn phục vụ:",
+  "statusLabel": "Trạng thái:",
+  "noteLabel": "Ghi chú:",
+  "itemsCount": "{count} món",
+  "@itemsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  }
 }

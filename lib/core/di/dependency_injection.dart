@@ -51,7 +51,14 @@ import '../../domain/usecases/create_customer_table_usecase.dart';
 import '../../domain/usecases/update_customer_table_usecase.dart';
 import '../../domain/usecases/delete_customer_table_usecase.dart';
 import '../../presentation/screens/tables/bloc/customer_tables_bloc.dart';
-
+import '../../data/datasources/local/customer_local_datasource.dart';
+import '../../data/repositories/customer_repository_impl.dart';
+import '../../domain/repositories/customer_repository.dart';
+import '../../domain/usecases/find_customer_by_phone_usecase.dart';
+import '../../domain/usecases/create_customer_usecase.dart';
+import '../../domain/usecases/update_order_usecase.dart';
+import '../../domain/usecases/get_orders_usecase.dart';
+import '../../presentation/screens/orders/bloc/orders_bloc.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
@@ -82,6 +89,9 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<CustomerTableLocalDataSource>(
     () => CustomerTableLocalDataSource(getIt<AppDatabase>()),
   );
+  getIt.registerLazySingleton<CustomerLocalDataSource>(
+    () => CustomerLocalDataSourceImpl(getIt<AppDatabase>()),
+  );
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -104,6 +114,9 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<CustomerTableRepository>(
     () => CustomerTableRepositoryImpl(getIt<CustomerTableLocalDataSource>()),
+  );
+  getIt.registerLazySingleton<CustomerRepository>(
+    () => CustomerRepositoryImpl(getIt<CustomerLocalDataSource>()),
   );
 
   // UseCase
@@ -173,6 +186,18 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<DeleteCustomerTableUseCase>(
     () => DeleteCustomerTableUseCase(getIt<CustomerTableRepository>()),
   );
+  getIt.registerLazySingleton<FindCustomerByPhoneUseCase>(
+    () => FindCustomerByPhoneUseCase(getIt<CustomerRepository>()),
+  );
+  getIt.registerLazySingleton<CreateCustomerUseCase>(
+    () => CreateCustomerUseCase(getIt<CustomerRepository>()),
+  );
+  getIt.registerLazySingleton<UpdateOrderUseCase>(
+    () => UpdateOrderUseCase(getIt<OrderRepository>()),
+  );
+  getIt.registerLazySingleton<GetOrdersUseCase>(
+    () => GetOrdersUseCase(getIt<OrderRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthBloc>(
@@ -212,8 +237,12 @@ Future<void> setupDependencies() async {
       productRepository: getIt<ProductRepository>(),
       categoryRepository: getIt<CategoryRepository>(),
       orderRepository: getIt<OrderRepository>(),
+      updateOrderUseCase: getIt<UpdateOrderUseCase>(),
       prefs: getIt<SharedPreferences>(),
     ),
+  );
+  getIt.registerFactory<OrdersBloc>(
+    () => OrdersBloc(getIt<GetOrdersUseCase>()),
   );
   getIt.registerFactory<TransactionsBloc>(
     () => TransactionsBloc(
