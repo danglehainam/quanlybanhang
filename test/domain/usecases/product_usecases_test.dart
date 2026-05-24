@@ -13,7 +13,14 @@ class MockProductRepository implements ProductRepository {
   bool shouldFail = false;
 
   @override
-  Stream<Either<Failure, List<ProductEntity>>> watchProducts() {
+  Stream<Either<Failure, List<ProductEntity>>> watchProducts({
+    String? query,
+    int? categoryId,
+    int? minPrice,
+    int? maxPrice,
+    int? status,
+    int? sortOption,
+  }) {
     if (shouldFail) {
       return Stream.value(const Left(DatabaseFailure('Database Error')));
     }

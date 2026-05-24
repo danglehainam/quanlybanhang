@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'buttons/app_icon_button.dart';
 
 /// Reusable password input with toggle visibility.
 /// Use this for all password fields across the app.
@@ -37,17 +36,31 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
           : null,
       decoration: InputDecoration(
         labelText: widget.labelText,
-        prefixIcon: const Icon(Icons.lock_outlined),
-        border: const OutlineInputBorder(),
-        suffixIcon: AppIconButton(
-          icon: _obscureText ? Icons.visibility_off : Icons.visibility,
-          tooltip: _obscureText ? 'Hiện mật khẩu' : 'Ẩn mật khẩu',
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
+        prefixIcon: const Icon(Icons.lock_outlined, size: 20),
+        suffixIcon: IconButton(
+          icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility, size: 20),
+          onPressed: () => setState(() => _obscureText = !_obscureText),
         ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Color(0xFF007AFF), width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Color(0xFFFF3B30), width: 1.0),
+        ),
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        filled: true,
+        fillColor: const Color(0xFFEFEFF4), // iOS text field background
       ),
       validator: widget.validator,
     );

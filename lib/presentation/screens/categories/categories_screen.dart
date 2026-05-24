@@ -11,6 +11,7 @@ import '../../bloc/settings/settings_bloc.dart';
 import '../../widgets/app_loading_widget.dart';
 import '../../widgets/app_error_widget.dart';
 import '../../widgets/buttons/app_floating_action_button.dart';
+import '../../widgets/app_form_modal.dart';
 import 'widgets/categories_desktop_view.dart';
 import 'widgets/categories_mobile_view.dart';
 import 'widgets/category_form_dialog.dart';
@@ -52,19 +53,10 @@ class _CategoriesViewState extends State<CategoriesView> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final isMobileView = context.select((SettingsBloc bloc) => bloc.state.isMobileView);
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: isMobileView
-          ? AppBar(
-              title: Text(l10n.menuCategories),
-              backgroundColor: AppColors.headerBackground,
-              foregroundColor: AppColors.primary,
-              elevation: 1,
-            )
-          : null, // Desktop view uses AppHeader handled by MainLayout
       body: BlocBuilder<CategoriesBloc, CategoriesState>(
         builder: (context, state) {
           return state.when(
@@ -94,8 +86,9 @@ class _CategoriesViewState extends State<CategoriesView> {
           ? AppFloatingActionButton(
               icon: Icons.add,
               onPressed: () {
-                showAdaptiveDialog(
+                showAppFormModal(
                   context: context,
+                  isMobileView: isMobileView,
                   builder: (_) => BlocProvider.value(
                     value: context.read<CategoriesBloc>(),
                     child: const CategoryFormDialog(),

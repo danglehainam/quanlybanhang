@@ -18,6 +18,10 @@ class AppPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = FilledButton.styleFrom(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
     );
 
     if (icon != null) {
@@ -31,7 +35,7 @@ class AppPrimaryButton extends StatelessWidget {
                 child: CircularProgressIndicator.adaptive(strokeWidth: 2, backgroundColor: Colors.white),
               )
             : Icon(icon),
-        label: Text(label, style: const TextStyle(fontSize: 16)),
+        label: Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       );
     }
 
@@ -44,7 +48,7 @@ class AppPrimaryButton extends StatelessWidget {
               width: 20,
               child: CircularProgressIndicator.adaptive(strokeWidth: 2, backgroundColor: Colors.white),
             )
-          : Text(label, style: const TextStyle(fontSize: 16)),
+          : Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
     );
   }
 }

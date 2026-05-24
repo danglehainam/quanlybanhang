@@ -10,7 +10,7 @@ import '../../../widgets/buttons/app_icon_button.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../widgets/pos_order_card.dart';
 import '../widgets/product_grouped_grid.dart';
-import '../widgets/sell_filter_sidebar.dart';
+import '../../products/widgets/product_filter_sidebar.dart';
 
 class SellDesktopView extends StatelessWidget {
   const SellDesktopView({super.key});
@@ -56,7 +56,25 @@ class SellDesktopView extends StatelessWidget {
   }
 
   Widget _buildLeftColumn(BuildContext context, SellState state, AppLocalizations l10n) {
-    return const SellFilterSidebar();
+    return ProductFilterSidebar(
+      searchQuery: state.searchQuery,
+      selectedCategoryId: state.selectedCategoryId,
+      minPrice: state.minPrice,
+      maxPrice: state.maxPrice,
+      productStatus: state.productStatus,
+      sortOption: state.sortOption,
+      categories: state.categories,
+      onFilterChanged: ({categoryId, maxPrice, minPrice, productStatus, query, sortOption}) {
+        context.read<SellBloc>().add(SellEvent.filterProducts(
+          query: query,
+          categoryId: categoryId,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
+          productStatus: productStatus,
+          sortOption: sortOption,
+        ));
+      },
+    );
   }
 
   Widget _buildMiddleColumn(BuildContext context, SellState state, AppLocalizations l10n) {

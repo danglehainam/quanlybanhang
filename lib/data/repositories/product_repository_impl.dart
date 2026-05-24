@@ -14,8 +14,22 @@ class ProductRepositoryImpl implements ProductRepository {
   ProductRepositoryImpl(this._localDataSource);
 
   @override
-  Stream<Either<Failure, List<ProductEntity>>> watchProducts() {
-    return _localDataSource.watchProducts().map((driftModels) {
+  Stream<Either<Failure, List<ProductEntity>>> watchProducts({
+    String? query,
+    int? categoryId,
+    int? minPrice,
+    int? maxPrice,
+    int? status,
+    int? sortOption,
+  }) {
+    return _localDataSource.watchProducts(
+      query: query,
+      categoryId: categoryId,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      status: status,
+      sortOption: sortOption,
+    ).map((driftModels) {
       try {
         final entities = driftModels
             .map((model) => ProductModel.fromDrift(model).toEntity())

@@ -8,7 +8,21 @@ class GetProductsUseCase {
 
   GetProductsUseCase(this._repository);
 
-  Stream<Either<Failure, List<ProductEntity>>> call() {
-    return _repository.watchProducts();
+  Stream<Either<Failure, List<ProductEntity>>> call({
+    String? query,
+    int? categoryId,
+    int? minPrice,
+    int? maxPrice,
+    int? status,
+    int? sortOption,
+  }) {
+    return _repository.watchProducts(
+      query: query,
+      categoryId: categoryId,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      status: status,
+      sortOption: sortOption,
+    );
   }
 }

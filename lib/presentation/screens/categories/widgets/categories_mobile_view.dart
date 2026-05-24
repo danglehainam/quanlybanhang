@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/category_entity.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/app_confirm_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../../../bloc/categories/categories_event.dart';
+import '../../../widgets/app_form_modal.dart';
+import 'category_filter_sidebar.dart';
 import 'category_form_dialog.dart';
 import 'category_mobile_item.dart';
 
@@ -26,41 +29,38 @@ class CategoriesMobileView extends StatelessWidget {
 
     return Column(
       children: [
-        ExpansionTile(
-          title: Text(l10n.filterAndSearch, style: const TextStyle(fontWeight: FontWeight.bold)),
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  DropdownButtonFormField<String>(
-                    value: 'newest',
-                    decoration: InputDecoration(
-                      labelText: l10n.sortBy,
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                    items: [
-                      DropdownMenuItem(value: 'newest', child: Text(l10n.newest)),
-                      DropdownMenuItem(value: 'oldest', child: Text(l10n.oldest)),
-                    ],
-                    onChanged: (value) {},
-                  ),
-                ],
+        // Top Filter Bar
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          color: Theme.of(context).cardColor,
+          child: Row(
+            children: [
+              Expanded(
+                child: AppTextField(
+                  labelText: l10n.searchByName,
+                  prefixIcon: Icons.search,
+                  controller: searchController,
+                ),
               ),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: AppTextField(
-            controller: searchController,
-            labelText: l10n.searchByName,
-            prefixIcon: Icons.search,
+              const SizedBox(width: 12),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.primaryLight.withAlpha(20),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.filter_list, color: AppColors.primary),
+                  onPressed: () => _showFilterBottomSheet(context, l10n),
+                ),
+              ),
+            ],
           ),
         ),
+        const SizedBox(height: 8),
         Expanded(
-          child: categories.isEmpty
+          child: Container(
+            color: Theme.of(context).cardColor,
+            child: categories.isEmpty
               ? EmptyDataWidget(
                   message: l10n.emptyCategoryMessage,
                   icon: Icons.category_outlined,
@@ -74,8 +74,9 @@ class CategoriesMobileView extends StatelessWidget {
                     return CategoryMobileItem(
                       category: category,
                       onEdit: () {
-                        showAdaptiveDialog(
+                        showAppFormModal(
                           context: context,
+                          isMobileView: true,
                           builder: (_) => BlocProvider.value(
                             value: context.read<CategoriesBloc>(),
                             child: CategoryFormDialog(categoryToEdit: category),
@@ -114,8 +115,38 @@ class CategoriesMobileView extends StatelessWidget {
                     );
                   },
                 ),
+            ),
         ),
       ],
+    );
+  }
+
+  void _showFilterBottomSheet(BuildContext parentContext, AppLocalizations l10n) {
+    showModalBottomSheet(
+      context: parentContext,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.85,
+          decoration: const BoxDecoration(
+            color: AppColors.background,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+            child: CategoryFilterSidebar(
+              showCloseButton: true,
+              showSearchField: false,
+              searchController: searchController,
+              sortOption: null,
+              onFilterChanged: ({sortOption}) {
+                // TODO: Implement sorting in CategoriesBloc
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -11,7 +11,7 @@ import '../../../widgets/app_text_field.dart';
 import '../../../widgets/empty_data_widget.dart';
 import '../widgets/pos_order_card.dart';
 import '../widgets/product_grouped_grid.dart';
-import '../widgets/sell_filter_sidebar.dart';
+import '../../products/widgets/product_filter_sidebar.dart';
 
 class SellMobileView extends StatelessWidget {
   const SellMobileView({super.key});
@@ -32,7 +32,7 @@ class SellMobileView extends StatelessWidget {
               children: [
                 // Top Search & Filter Bar
                 Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   color: Colors.white,
                   child: Row(
                     children: [
@@ -208,9 +208,30 @@ class SellMobileView extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-              child: const SellFilterSidebar(
-                showCloseButton: true,
-                showSearchField: false,
+              child: BlocBuilder<SellBloc, SellState>(
+                builder: (context, modalState) {
+                  return ProductFilterSidebar(
+                    showCloseButton: true,
+                    showSearchField: false,
+                    searchQuery: modalState.searchQuery,
+                    selectedCategoryId: modalState.selectedCategoryId,
+                    minPrice: modalState.minPrice,
+                    maxPrice: modalState.maxPrice,
+                    productStatus: modalState.productStatus,
+                    sortOption: modalState.sortOption,
+                    categories: modalState.categories,
+                    onFilterChanged: ({categoryId, maxPrice, minPrice, productStatus, query, sortOption}) {
+                      context.read<SellBloc>().add(SellEvent.filterProducts(
+                        query: query,
+                        categoryId: categoryId,
+                        minPrice: minPrice,
+                        maxPrice: maxPrice,
+                        productStatus: productStatus,
+                        sortOption: sortOption,
+                      ));
+                    },
+                  );
+                },
               ),
             ),
           ),

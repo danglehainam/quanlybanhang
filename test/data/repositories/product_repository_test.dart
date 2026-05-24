@@ -9,7 +9,14 @@ class MockProductLocalDataSource implements ProductLocalDataSource {
   bool shouldThrow = false;
 
   @override
-  Stream<List<ProductDriftModel>> watchProducts() {
+  Stream<List<ProductDriftModel>> watchProducts({
+    String? query,
+    int? categoryId,
+    int? minPrice,
+    int? maxPrice,
+    int? status,
+    int? sortOption,
+  }) {
     if (shouldThrow) return Stream.error(Exception('Database Error'));
     return Stream.value(_products);
   }

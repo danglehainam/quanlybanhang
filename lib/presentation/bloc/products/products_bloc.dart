@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../domain/usecases/get_products_usecase.dart';
 import '../../../domain/usecases/create_product_usecase.dart';
 import '../../../domain/usecases/update_product_usecase.dart';
@@ -12,6 +14,8 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final UpdateProductUseCase _updateProductUseCase;
   final DeleteProductUseCase _deleteProductUseCase;
 
+  StreamSubscription? _productSubscription;
+
   ProductsBloc({
     required GetProductsUseCase getProductsUseCase,
     required CreateProductUseCase createProductUseCase,
@@ -23,24 +27,60 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         _deleteProductUseCase = deleteProductUseCase,
         super(const ProductsState.initial()) {
     on<WatchProducts>(_onWatchProducts);
+    on<ProductsUpdated>(_onProductsUpdated);
     on<CreateProduct>(_onCreateProduct);
     on<UpdateProduct>(_onUpdateProduct);
     on<DeleteProduct>(_onDeleteProduct);
   }
 
-  Future<void> _onWatchProducts(
-    WatchProducts event,
-    Emitter<ProductsState> emit,
-  ) async {
+  @override
+  Future<void> close() {
+    _productSubscription?.cancel();
+    return super.close();
+  }
+
+  void _onWatchProducts(WatchProducts event, Emitter<ProductsState> emit) {
     emit(const ProductsState.loading());
     
-    await emit.forEach(
-      _getProductsUseCase(),
-      onData: (result) => result.fold(
-        (failure) => ProductsState.error(failure.message),
-        (products) => ProductsState.loaded(products),
-      ),
-      onError: (error, stackTrace) => ProductsState.error(error.toString()),
+    _productSubscription?.cancel();
+    
+    _productSubscription = _getProductsUseCase(
+      query: event.query,
+      categoryId: event.categoryId,
+      minPrice: event.minPrice,
+      maxPrice: event.maxPrice,
+      status: event.productStatus,
+      sortOption: event.sortOption,
+    ).listen(
+      (result) {
+        add(ProductsEvent.productsUpdated(
+          result,
+          searchQuery: event.query,
+          selectedCategoryId: event.categoryId,
+          minPrice: event.minPrice,
+          maxPrice: event.maxPrice,
+          productStatus: event.productStatus,
+          sortOption: event.sortOption,
+        ));
+      }
+    );
+  }
+
+  void _onProductsUpdated(ProductsUpdated event, Emitter<ProductsState> emit) {
+    event.result.fold(
+      (failure) => emit(ProductsState.error(failure.message)),
+      (products) {
+        emit(ProductsState.loaded(
+          allProducts: products, // With DB filtering, allProducts is the filtered list
+          filteredProducts: products, // Same as allProducts
+          searchQuery: event.searchQuery ?? '',
+          selectedCategoryId: event.selectedCategoryId,
+          minPrice: event.minPrice,
+          maxPrice: event.maxPrice,
+          productStatus: event.productStatus,
+          sortOption: event.sortOption,
+        ));
+      }
     );
   }
 

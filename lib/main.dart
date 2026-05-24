@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import 'core/constants/app_colors.dart';
 
 import 'core/di/dependency_injection.dart';
 import 'core/routes/app_router.dart';
@@ -35,18 +36,43 @@ class MyApp extends StatelessWidget {
           final appRouter = AppRouter(context.read<AuthBloc>());
           return BlocBuilder<SettingsBloc, SettingsState>(
             builder: (context, settingsState) {
-              return MaterialApp.router(
-                title: 'Quản Lý Bán Hàng',
+              return GestureDetector(
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: MaterialApp.router(
+                  title: 'Quản Lý Bán Hàng',
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
                 locale: Locale(settingsState.languageCode),
                 theme: ThemeData(
-                  colorSchemeSeed: Colors.blue,
+                  colorSchemeSeed: AppColors.primary,
                   useMaterial3: true,
                   brightness: Brightness.light,
+                  scaffoldBackgroundColor: AppColors.background,
+                  appBarTheme: const AppBarTheme(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0,
+                    centerTitle: true,
+                    surfaceTintColor: Colors.transparent,
+                  ),
+                  cardTheme: const CardThemeData(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(14)),
+                    ),
+                    color: Colors.white,
+                  ),
+                  dividerTheme: const DividerThemeData(
+                    color: AppColors.divider,
+                    space: 1,
+                    thickness: 1,
+                  ),
                 ),
                 routerConfig: appRouter.router,
+                ),
               );
             },
           );

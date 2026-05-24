@@ -12,18 +12,32 @@ import '../../../widgets/empty_data_widget.dart';
 import '../../../bloc/products/products_bloc.dart';
 import '../../../bloc/products/products_event.dart';
 import '../../../bloc/categories/categories_bloc.dart';
+import '../../../widgets/app_form_modal.dart';
 import '../widgets/product_form_dialog.dart';
 import '../../../widgets/layout/two_column_desktop_layout.dart';
 import '../../../widgets/buttons/app_icon_button.dart';
+import '../widgets/product_filter_sidebar.dart';
 
 class ProductsDesktopView extends StatelessWidget {
   final List<ProductEntity> products;
   final List<CategoryEntity> categories;
+  final String searchQuery;
+  final int? selectedCategoryId;
+  final int? sortOption;
+  final int? minPrice;
+  final int? maxPrice;
+  final int? productStatus;
 
   const ProductsDesktopView({
     super.key,
     required this.products,
     required this.categories,
+    required this.searchQuery,
+    this.selectedCategoryId,
+    this.sortOption,
+    this.minPrice,
+    this.maxPrice,
+    this.productStatus,
   });
 
   @override
@@ -35,33 +49,45 @@ class ProductsDesktopView extends StatelessWidget {
       leftContent: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            l10n.searchProduct,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            decoration: InputDecoration(
-              hintText: l10n.searchProduct,
-              prefixIcon: const Icon(Icons.search),
-              border: const OutlineInputBorder(),
+          Expanded(
+            child: ProductFilterSidebar(
+              searchQuery: searchQuery,
+              selectedCategoryId: selectedCategoryId,
+              minPrice: minPrice,
+              maxPrice: maxPrice,
+              productStatus: productStatus,
+              sortOption: sortOption,
+              categories: categories,
+              onFilterChanged: ({categoryId, maxPrice, minPrice, productStatus, query, sortOption}) {
+                context.read<ProductsBloc>().add(ProductsEvent.watchProducts(
+                  query: query,
+                  categoryId: categoryId,
+                  minPrice: minPrice,
+                  maxPrice: maxPrice,
+                  productStatus: productStatus,
+                  sortOption: sortOption,
+                ));
+              },
             ),
           ),
-          const SizedBox(height: 24),
-          AppPrimaryButton(
-            label: l10n.addProduct,
-            onPressed: () {
-              showAdaptiveDialog(
-                context: context,
-                builder: (_) => MultiBlocProvider(
-                  providers: [
-                    BlocProvider.value(value: context.read<ProductsBloc>()),
-                    BlocProvider.value(value: context.read<CategoriesBloc>()),
-                  ],
-                  child: const ProductFormDialog(),
-                ),
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: AppPrimaryButton(
+              label: l10n.addProduct,
+              onPressed: () {
+                showAppFormModal(
+                  context: context,
+                  isMobileView: false,
+                  builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(value: context.read<ProductsBloc>()),
+                      BlocProvider.value(value: context.read<CategoriesBloc>()),
+                    ],
+                    child: const ProductFormDialog(),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -156,8 +182,9 @@ class ProductsDesktopView extends StatelessWidget {
                                     color: AppColors.primary,
                                     tooltip: l10n.editProduct,
                                     onPressed: () {
-                                      showAdaptiveDialog(
+                                      showAppFormModal(
                                         context: context,
+                                        isMobileView: false,
                                         builder: (_) => MultiBlocProvider(
                                           providers: [
                                             BlocProvider.value(value: context.read<ProductsBloc>()),

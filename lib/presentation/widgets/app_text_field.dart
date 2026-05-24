@@ -13,6 +13,7 @@ class AppTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final VoidCallback? onFieldSubmitted;
   final List<TextInputFormatter>? inputFormatters;
+  final int? maxLines;
 
   const AppTextField({
     super.key,
@@ -25,6 +26,7 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
     this.onFieldSubmitted,
     this.inputFormatters,
+    this.maxLines = 1,
   });
 
   @override
@@ -35,11 +37,31 @@ class AppTextField extends StatelessWidget {
       textInputAction: textInputAction,
       onChanged: onChanged,
       inputFormatters: inputFormatters,
+      maxLines: maxLines,
       onFieldSubmitted: onFieldSubmitted != null ? (_) => onFieldSubmitted!() : null,
       decoration: InputDecoration(
         labelText: labelText,
-        prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
-        border: const OutlineInputBorder(),
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 20) : null,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Color(0xFF007AFF), width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Color(0xFFFF3B30), width: 1.0),
+        ),
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        filled: true,
+        fillColor: const Color(0xFFEFEFF4), // iOS text field background
       ),
       validator: validator,
     );

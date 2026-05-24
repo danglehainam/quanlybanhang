@@ -9,6 +9,8 @@ import '../../../../core/utils/file_utils.dart';
 import '../../../../core/utils/currency_utils.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../widgets/app_dialog.dart';
+import '../../../widgets/app_form_modal.dart';
+import '../../../bloc/settings/settings_bloc.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../bloc/products/products_bloc.dart';
@@ -153,10 +155,10 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isMobileView = context.select((SettingsBloc bloc) => bloc.state.isMobileView);
 
-    return AppDialog(
-      title: _isEditMode ? l10n.editProduct : l10n.addProduct,
-      content: Form(
+    final title = _isEditMode ? l10n.editProduct : l10n.addProduct;
+    final content = Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -200,12 +202,9 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
               },
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _priceController,
-              decoration: InputDecoration(
-                labelText: l10n.price,
-                border: const OutlineInputBorder(),
-              ),
+              labelText: l10n.price,
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
@@ -258,29 +257,39 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
               },
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: l10n.description,
-                border: const OutlineInputBorder(),
-              ),
+              labelText: l10n.description,
               maxLines: 3,
             ),
           ],
         ),
+      );
+    final actions = [
+      AppTextButton(
+        onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
+        label: l10n.cancel,
       ),
-      actions: [
-        AppTextButton(
-          onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          label: l10n.cancel,
-        ),
-        const SizedBox(width: 8),
-        AppPrimaryButton(
-          label: l10n.save,
-          isLoading: _isLoading,
-          onPressed: _onSave,
-        ),
-      ],
+      const SizedBox(width: 8),
+      AppPrimaryButton(
+        label: l10n.save,
+        isLoading: _isLoading,
+        onPressed: _onSave,
+      ),
+    ];
+
+    if (isMobileView) {
+      return AppBottomSheet(
+        title: title,
+        content: content,
+        actions: actions,
+      );
+    }
+
+    return AppDialog(
+      title: title,
+      content: content,
+      actions: actions,
     );
   }
 }

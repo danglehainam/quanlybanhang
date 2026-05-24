@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<ProductEntity> products)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<ProductEntity> allProducts,  List<ProductEntity> filteredProducts,  String searchQuery,  int? selectedCategoryId,  int? sortOption,  int? minPrice,  int? maxPrice,  int? productStatus)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.products);case _Error() when error != null:
+return loaded(_that.allProducts,_that.filteredProducts,_that.searchQuery,_that.selectedCategoryId,_that.sortOption,_that.minPrice,_that.maxPrice,_that.productStatus);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<ProductEntity> products)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<ProductEntity> allProducts,  List<ProductEntity> filteredProducts,  String searchQuery,  int? selectedCategoryId,  int? sortOption,  int? minPrice,  int? maxPrice,  int? productStatus)  loaded,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Loaded():
-return loaded(_that.products);case _Error():
+return loaded(_that.allProducts,_that.filteredProducts,_that.searchQuery,_that.selectedCategoryId,_that.sortOption,_that.minPrice,_that.maxPrice,_that.productStatus);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<ProductEntity> products)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<ProductEntity> allProducts,  List<ProductEntity> filteredProducts,  String searchQuery,  int? selectedCategoryId,  int? sortOption,  int? minPrice,  int? maxPrice,  int? productStatus)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.products);case _Error() when error != null:
+return loaded(_that.allProducts,_that.filteredProducts,_that.searchQuery,_that.selectedCategoryId,_that.sortOption,_that.minPrice,_that.maxPrice,_that.productStatus);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -257,16 +257,29 @@ String toString() {
 
 
 class _Loaded implements ProductsState {
-  const _Loaded(final  List<ProductEntity> products): _products = products;
+  const _Loaded({required final  List<ProductEntity> allProducts, required final  List<ProductEntity> filteredProducts, this.searchQuery = '', this.selectedCategoryId, this.sortOption, this.minPrice, this.maxPrice, this.productStatus}): _allProducts = allProducts,_filteredProducts = filteredProducts;
   
 
- final  List<ProductEntity> _products;
- List<ProductEntity> get products {
-  if (_products is EqualUnmodifiableListView) return _products;
+ final  List<ProductEntity> _allProducts;
+ List<ProductEntity> get allProducts {
+  if (_allProducts is EqualUnmodifiableListView) return _allProducts;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_products);
+  return EqualUnmodifiableListView(_allProducts);
 }
 
+ final  List<ProductEntity> _filteredProducts;
+ List<ProductEntity> get filteredProducts {
+  if (_filteredProducts is EqualUnmodifiableListView) return _filteredProducts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_filteredProducts);
+}
+
+@JsonKey() final  String searchQuery;
+ final  int? selectedCategoryId;
+ final  int? sortOption;
+ final  int? minPrice;
+ final  int? maxPrice;
+ final  int? productStatus;
 
 /// Create a copy of ProductsState
 /// with the given fields replaced by the non-null parameter values.
@@ -278,16 +291,16 @@ _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._products, _products));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._allProducts, _allProducts)&&const DeepCollectionEquality().equals(other._filteredProducts, _filteredProducts)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.selectedCategoryId, selectedCategoryId) || other.selectedCategoryId == selectedCategoryId)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.productStatus, productStatus) || other.productStatus == productStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_allProducts),const DeepCollectionEquality().hash(_filteredProducts),searchQuery,selectedCategoryId,sortOption,minPrice,maxPrice,productStatus);
 
 @override
 String toString() {
-  return 'ProductsState.loaded(products: $products)';
+  return 'ProductsState.loaded(allProducts: $allProducts, filteredProducts: $filteredProducts, searchQuery: $searchQuery, selectedCategoryId: $selectedCategoryId, sortOption: $sortOption, minPrice: $minPrice, maxPrice: $maxPrice, productStatus: $productStatus)';
 }
 
 
@@ -298,7 +311,7 @@ abstract mixin class _$LoadedCopyWith<$Res> implements $ProductsStateCopyWith<$R
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
- List<ProductEntity> products
+ List<ProductEntity> allProducts, List<ProductEntity> filteredProducts, String searchQuery, int? selectedCategoryId, int? sortOption, int? minPrice, int? maxPrice, int? productStatus
 });
 
 
@@ -315,10 +328,17 @@ class __$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of ProductsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? products = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? allProducts = null,Object? filteredProducts = null,Object? searchQuery = null,Object? selectedCategoryId = freezed,Object? sortOption = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? productStatus = freezed,}) {
   return _then(_Loaded(
-null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
-as List<ProductEntity>,
+allProducts: null == allProducts ? _self._allProducts : allProducts // ignore: cast_nullable_to_non_nullable
+as List<ProductEntity>,filteredProducts: null == filteredProducts ? _self._filteredProducts : filteredProducts // ignore: cast_nullable_to_non_nullable
+as List<ProductEntity>,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
+as String,selectedCategoryId: freezed == selectedCategoryId ? _self.selectedCategoryId : selectedCategoryId // ignore: cast_nullable_to_non_nullable
+as int?,sortOption: freezed == sortOption ? _self.sortOption : sortOption // ignore: cast_nullable_to_non_nullable
+as int?,minPrice: freezed == minPrice ? _self.minPrice : minPrice // ignore: cast_nullable_to_non_nullable
+as int?,maxPrice: freezed == maxPrice ? _self.maxPrice : maxPrice // ignore: cast_nullable_to_non_nullable
+as int?,productStatus: freezed == productStatus ? _self.productStatus : productStatus // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

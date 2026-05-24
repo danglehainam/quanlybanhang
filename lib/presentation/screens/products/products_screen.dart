@@ -13,6 +13,7 @@ import '../../bloc/settings/settings_bloc.dart';
 import '../../widgets/app_loading_widget.dart';
 import '../../widgets/app_error_widget.dart';
 import '../../widgets/buttons/app_floating_action_button.dart';
+import '../../widgets/app_form_modal.dart';
 import 'views/products_desktop_view.dart';
 import 'views/products_mobile_view.dart';
 import 'widgets/product_form_dialog.dart';
@@ -54,7 +55,7 @@ class _ProductsScreenContent extends StatelessWidget {
               message: message,
               onRetry: () => context.read<ProductsBloc>().add(const ProductsEvent.watchProducts()),
             ),
-            loaded: (products) {
+            loaded: (allProducts, filteredProducts, searchQuery, selectedCategoryId, sortOption, minPrice, maxPrice, productStatus) {
               // Now we also need to wait for categories to load
               return BlocBuilder<CategoriesBloc, CategoriesState>(
                 builder: (context, categoriesState) {
@@ -62,14 +63,26 @@ class _ProductsScreenContent extends StatelessWidget {
                     loaded: (categories) {
                       if (isMobileView) {
                         return ProductsMobileView(
-                          products: products,
+                          products: filteredProducts,
                           categories: categories,
+                          searchQuery: searchQuery,
+                          selectedCategoryId: selectedCategoryId,
+                          sortOption: sortOption,
+                          minPrice: minPrice,
+                          maxPrice: maxPrice,
+                          productStatus: productStatus,
                         );
                       }
                       
                       return ProductsDesktopView(
-                        products: products,
+                        products: filteredProducts,
                         categories: categories,
+                        searchQuery: searchQuery,
+                        selectedCategoryId: selectedCategoryId,
+                        sortOption: sortOption,
+                        minPrice: minPrice,
+                        maxPrice: maxPrice,
+                        productStatus: productStatus,
                       );
                     },
                     error: (message) => AppErrorWidget(
@@ -88,8 +101,9 @@ class _ProductsScreenContent extends StatelessWidget {
           ? AppFloatingActionButton(
               icon: Icons.add,
               onPressed: () {
-                showAdaptiveDialog(
+                showAppFormModal(
                   context: context,
+                  isMobileView: isMobileView,
                   builder: (_) => MultiBlocProvider(
                     providers: [
                       BlocProvider<ProductsBloc>.value(value: context.read<ProductsBloc>()),

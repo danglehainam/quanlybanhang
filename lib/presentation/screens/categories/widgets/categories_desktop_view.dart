@@ -4,14 +4,15 @@ import '../../../../domain/entities/category_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../widgets/empty_data_widget.dart';
-import '../../../widgets/app_text_field.dart';
 import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../widgets/app_confirm_dialog.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../../../bloc/categories/categories_event.dart';
 import 'category_form_dialog.dart';
+import '../../../widgets/app_form_modal.dart';
 import 'category_desktop_item.dart';
 import '../../../widgets/layout/two_column_desktop_layout.dart';
+import 'category_filter_sidebar.dart';
 
 class CategoriesDesktopView extends StatelessWidget {
   final List<CategoryEntity> categories;
@@ -31,36 +32,23 @@ class CategoriesDesktopView extends StatelessWidget {
       leftContent: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppTextField(
-            controller: searchController,
-            labelText: l10n.searchCategory,
-            prefixIcon: Icons.search,
+          Expanded(
+            child: CategoryFilterSidebar(
+              searchController: searchController,
+              sortOption: null,
+              onFilterChanged: ({sortOption}) {
+                // TODO: Implement sorting in CategoriesBloc
+              },
+            ),
           ),
           const SizedBox(height: 16),
-          Text(
-            l10n.sortBy,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          DropdownButtonFormField<String>(
-            value: 'newest',
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12),
-            ),
-            items: [
-              DropdownMenuItem(value: 'newest', child: Text(l10n.newest)),
-              DropdownMenuItem(value: 'oldest', child: Text(l10n.oldest)),
-            ],
-            onChanged: (value) {},
-          ),
-          const SizedBox(height: 24),
           AppPrimaryButton(
             label: l10n.addCategory,
             icon: Icons.add,
             onPressed: () {
-              showAdaptiveDialog(
+              showAppFormModal(
                 context: context,
+                isMobileView: false,
                 builder: (_) => BlocProvider.value(
                   value: context.read<CategoriesBloc>(),
                   child: const CategoryFormDialog(),
@@ -83,8 +71,9 @@ class CategoriesDesktopView extends StatelessWidget {
                 return CategoryDesktopItem(
                   category: category,
                   onEdit: () {
-                    showAdaptiveDialog(
+                    showAppFormModal(
                       context: context,
+                      isMobileView: false,
                       builder: (_) => BlocProvider.value(
                         value: context.read<CategoriesBloc>(),
                         child: CategoryFormDialog(categoryToEdit: category),

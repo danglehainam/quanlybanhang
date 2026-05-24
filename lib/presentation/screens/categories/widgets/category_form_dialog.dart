@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../domain/entities/category_entity.dart';
 import '../../../widgets/app_dialog.dart';
+import '../../../widgets/app_form_modal.dart';
+import '../../../bloc/settings/settings_bloc.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/buttons/app_primary_button.dart';
 import '../../../bloc/categories/categories_bloc.dart';
@@ -111,45 +113,58 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isMobileView = context.select((SettingsBloc bloc) => bloc.state.isMobileView);
+
+    final title = _isEditMode ? l10n.editCategory : l10n.addCategory;
+    final content = Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppTextField(
+            controller: _nameController,
+            labelText: l10n.categoryName,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return l10n.validationCategoryNameRequired;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          AppTextField(
+            controller: _descriptionController,
+            labelText: l10n.categoryDescription,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: _onSave,
+          ),
+        ],
+      ),
+    );
+    final actions = [
+      AppTextButton(
+        onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
+        label: l10n.cancel,
+      ),
+      AppPrimaryButton(
+        label: l10n.save,
+        onPressed: _onSave,
+        isLoading: _isLoading,
+      ),
+    ];
+
+    if (isMobileView) {
+      return AppBottomSheet(
+        title: title,
+        content: content,
+        actions: actions,
+      );
+    }
 
     return AppDialog(
-      title: _isEditMode ? l10n.editCategory : l10n.addCategory,
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppTextField(
-              controller: _nameController,
-              labelText: l10n.categoryName,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return l10n.validationCategoryNameRequired;
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            AppTextField(
-              controller: _descriptionController,
-              labelText: l10n.categoryDescription,
-              textInputAction: TextInputAction.done,
-              onFieldSubmitted: _onSave,
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        AppTextButton(
-          onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          label: l10n.cancel,
-        ),
-        AppPrimaryButton(
-          label: l10n.save,
-          onPressed: _onSave,
-          isLoading: _isLoading,
-        ),
-      ],
+      title: title,
+      content: content,
+      actions: actions,
     );
   }
 }

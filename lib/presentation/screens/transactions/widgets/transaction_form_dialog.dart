@@ -154,12 +154,9 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
               ],
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            AppTextField(
               controller: _amountController,
-              decoration: const InputDecoration(
-                labelText: 'Số tiền (VND)',
-                border: OutlineInputBorder(),
-              ),
+              labelText: 'Số tiền (VND)',
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,

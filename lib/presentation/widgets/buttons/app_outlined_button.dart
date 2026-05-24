@@ -22,6 +22,10 @@ class AppOutlinedButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       side: const BorderSide(color: AppColors.primary),
       foregroundColor: AppColors.primary,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
     );
 
     if (icon != null) {
