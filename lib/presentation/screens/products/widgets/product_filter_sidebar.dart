@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../domain/entities/category_entity.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/filter_accordion_block.dart';
@@ -42,264 +43,265 @@ class ProductFilterSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AppFilterSidebar(
       showCloseButton: showCloseButton,
       children: [
-                // Search Block
-                if (showSearchField)
-                  FilterAccordionBlock(
-                    title: 'Tìm kiếm',
-                    child: AppTextField(
-                      labelText: 'Tên sản phẩm...',
-                      prefixIcon: Icons.search,
-                      controller: TextEditingController(text: searchQuery)..selection = TextSelection.fromPosition(TextPosition(offset: searchQuery.length)),
-                      onChanged: (val) {
-                        onFilterChanged(
-                          query: val,
-                          categoryId: selectedCategoryId,
-                          minPrice: minPrice,
-                          maxPrice: maxPrice,
-                          productStatus: productStatus,
-                          sortOption: sortOption,
-                        );
-                      },
-                    ),
-                  ),
+        // Search Block
+        if (showSearchField)
+          FilterAccordionBlock(
+            title: l10n.searchLabel,
+            child: AppTextField(
+              labelText: l10n.searchProduct,
+              prefixIcon: Icons.search,
+              controller: TextEditingController(text: searchQuery)..selection = TextSelection.fromPosition(TextPosition(offset: searchQuery.length)),
+              onChanged: (val) {
+                onFilterChanged(
+                  query: val,
+                  categoryId: selectedCategoryId,
+                  minPrice: minPrice,
+                  maxPrice: maxPrice,
+                  productStatus: productStatus,
+                  sortOption: sortOption,
+                );
+              },
+            ),
+          ),
 
-                // Category Block
-                FilterAccordionBlock(
-                  title: 'Danh mục',
-                  child: Column(
-                    children: [
-                      // "All categories" option
-                      AppFilterRadioTile<int?>(
-                        title: 'Tất cả',
-                        value: null,
-                        groupValue: selectedCategoryId,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: val,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: sortOption,
-                          );
-                        },
-                      ),
-                      ...categories.map((cat) => AppFilterRadioTile<int?>(
-                        title: cat.name,
-                        value: cat.id,
-                        groupValue: selectedCategoryId,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: val,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: sortOption,
-                          );
-                        },
-                      )),
-                    ],
-                  ),
-                ),
+        // Category Block
+        FilterAccordionBlock(
+          title: l10n.menuCategories,
+          child: Column(
+            children: [
+              // "All categories" option
+              AppFilterRadioTile<int?>(
+                title: l10n.all,
+                value: null,
+                groupValue: selectedCategoryId,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: val,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: sortOption,
+                  );
+                },
+              ),
+              ...categories.map((cat) => AppFilterRadioTile<int?>(
+                title: cat.name,
+                value: cat.id,
+                groupValue: selectedCategoryId,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: val,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: sortOption,
+                  );
+                },
+              )),
+            ],
+          ),
+        ),
 
-                // Price Range Block
-                FilterAccordionBlock(
-                  title: 'Khoảng giá',
-                  child: Column(
-                    children: [
-                      AppTextField(
-                        labelText: 'Từ giá',
-                        keyboardType: TextInputType.number,
-                        controller: TextEditingController(text: minPrice?.toString() ?? '')..selection = TextSelection.fromPosition(TextPosition(offset: (minPrice?.toString() ?? '').length)),
-                        onChanged: (val) {
-                          final min = int.tryParse(val);
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: min,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: sortOption,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      AppTextField(
-                        labelText: 'Đến giá',
-                        keyboardType: TextInputType.number,
-                        controller: TextEditingController(text: maxPrice?.toString() ?? '')..selection = TextSelection.fromPosition(TextPosition(offset: (maxPrice?.toString() ?? '').length)),
-                        onChanged: (val) {
-                          final max = int.tryParse(val);
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: max,
-                            productStatus: productStatus,
-                            sortOption: sortOption,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+        // Price Range Block
+        FilterAccordionBlock(
+          title: l10n.priceRange,
+          child: Column(
+            children: [
+              AppTextField(
+                labelText: l10n.fromPrice,
+                keyboardType: TextInputType.number,
+                controller: TextEditingController(text: minPrice?.toString() ?? '')..selection = TextSelection.fromPosition(TextPosition(offset: (minPrice?.toString() ?? '').length)),
+                onChanged: (val) {
+                  final min = int.tryParse(val);
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: min,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: sortOption,
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+              AppTextField(
+                labelText: l10n.toPrice,
+                keyboardType: TextInputType.number,
+                controller: TextEditingController(text: maxPrice?.toString() ?? '')..selection = TextSelection.fromPosition(TextPosition(offset: (maxPrice?.toString() ?? '').length)),
+                onChanged: (val) {
+                  final max = int.tryParse(val);
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: max,
+                    productStatus: productStatus,
+                    sortOption: sortOption,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
 
-                // Status Block
-                FilterAccordionBlock(
-                  title: 'Trạng thái',
-                  child: Column(
-                    children: [
-                      AppFilterRadioTile<int?>(
-                        title: 'Tất cả',
-                        value: null,
-                        groupValue: productStatus,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: val,
-                            sortOption: sortOption,
-                          );
-                        },
-                      ),
-                      AppFilterRadioTile<int?>(
-                        title: 'Còn hàng',
-                        value: 1,
-                        groupValue: productStatus,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: val,
-                            sortOption: sortOption,
-                          );
-                        },
-                      ),
-                      AppFilterRadioTile<int?>(
-                        title: 'Hết hàng',
-                        value: 0,
-                        groupValue: productStatus,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: val,
-                            sortOption: sortOption,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+        // Status Block
+        FilterAccordionBlock(
+          title: l10n.status,
+          child: Column(
+            children: [
+              AppFilterRadioTile<int?>(
+                title: l10n.all,
+                value: null,
+                groupValue: productStatus,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: val,
+                    sortOption: sortOption,
+                  );
+                },
+              ),
+              AppFilterRadioTile<int?>(
+                title: l10n.inStock,
+                value: 1,
+                groupValue: productStatus,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: val,
+                    sortOption: sortOption,
+                  );
+                },
+              ),
+              AppFilterRadioTile<int?>(
+                title: l10n.outOfStock,
+                value: 0,
+                groupValue: productStatus,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: val,
+                    sortOption: sortOption,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
 
-                // Sort Block
-                FilterAccordionBlock(
-                  title: 'Sắp xếp theo',
-                  child: Column(
-                    children: [
-                      AppFilterRadioTile<int?>(
-                        title: 'Mặc định',
-                        value: null,
-                        groupValue: sortOption,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: val,
-                          );
-                        },
-                      ),
-                      AppFilterRadioTile<int?>(
-                        title: 'Tên: A - Z',
-                        value: 0,
-                        groupValue: sortOption,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: val,
-                          );
-                        },
-                      ),
-                      AppFilterRadioTile<int?>(
-                        title: 'Tên: Z - A',
-                        value: 1,
-                        groupValue: sortOption,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: val,
-                          );
-                        },
-                      ),
-                      AppFilterRadioTile<int?>(
-                        title: 'Giá tăng dần',
-                        value: 2,
-                        groupValue: sortOption,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: val,
-                          );
-                        },
-                      ),
-                      AppFilterRadioTile<int?>(
-                        title: 'Giá giảm dần',
-                        value: 3,
-                        groupValue: sortOption,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: val,
-                          );
-                        },
-                      ),
-                      AppFilterRadioTile<int?>(
-                        title: 'Mới nhất',
-                        value: 4,
-                        groupValue: sortOption,
-                        onChanged: (val) {
-                          onFilterChanged(
-                            query: searchQuery,
-                            categoryId: selectedCategoryId,
-                            minPrice: minPrice,
-                            maxPrice: maxPrice,
-                            productStatus: productStatus,
-                            sortOption: val,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+        // Sort Block
+        FilterAccordionBlock(
+          title: l10n.sortBy,
+          child: Column(
+            children: [
+              AppFilterRadioTile<int?>(
+                title: l10n.defaultSort,
+                value: null,
+                groupValue: sortOption,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: val,
+                  );
+                },
+              ),
+              AppFilterRadioTile<int?>(
+                title: l10n.sortNameAZ,
+                value: 0,
+                groupValue: sortOption,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: val,
+                  );
+                },
+              ),
+              AppFilterRadioTile<int?>(
+                title: l10n.sortNameZA,
+                value: 1,
+                groupValue: sortOption,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: val,
+                  );
+                },
+              ),
+              AppFilterRadioTile<int?>(
+                title: l10n.sortPriceAsc,
+                value: 2,
+                groupValue: sortOption,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: val,
+                  );
+                },
+              ),
+              AppFilterRadioTile<int?>(
+                title: l10n.sortPriceDesc,
+                value: 3,
+                groupValue: sortOption,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: val,
+                  );
+                },
+              ),
+              AppFilterRadioTile<int?>(
+                title: l10n.newest,
+                value: 4,
+                groupValue: sortOption,
+                onChanged: (val) {
+                  onFilterChanged(
+                    query: searchQuery,
+                    categoryId: selectedCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    productStatus: productStatus,
+                    sortOption: val,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

@@ -103,13 +103,13 @@ class ProductsDesktopView extends StatelessWidget {
                   child: ConstrainedBox(
                     constraints: BoxConstraints(minWidth: constraints.maxWidth),
                     child: DataTable(
-                      headingTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                      headingTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
                       columns: [
-                        const DataColumn(label: Text('Ảnh')),
+                        DataColumn(label: Text(l10n.productImage)),
                         DataColumn(label: Text(l10n.productName)),
                         DataColumn(label: Text(l10n.price)),
                         DataColumn(label: Text(l10n.status)),
-                        const DataColumn(label: Text('Thao tác')),
+                        DataColumn(label: Text(l10n.actionsLabel)),
                       ],
                       rows: products.map((product) {
                         final category = product.categoryId != null ? categoryMap[product.categoryId] : null;
@@ -127,7 +127,7 @@ class ProductsDesktopView extends StatelessWidget {
                                               height: 40,
                                               fit: BoxFit.cover,
                                               errorBuilder: (context, error, stackTrace) =>
-                                                  const Icon(Icons.image_not_supported, size: 40, color: Colors.grey),
+                                                  const Icon(Icons.image_not_supported, size: 40, color: AppColors.textSecondary),
                                             )
                                           : Image.file(
                                               File(product.imageUrl!),
@@ -135,17 +135,17 @@ class ProductsDesktopView extends StatelessWidget {
                                               height: 40,
                                               fit: BoxFit.cover,
                                               errorBuilder: (context, error, stackTrace) =>
-                                                  const Icon(Icons.image_not_supported, size: 40, color: Colors.grey),
+                                                  const Icon(Icons.image_not_supported, size: 40, color: AppColors.textSecondary),
                                             ),
                                     )
                                   : Container(
                                       width: 40,
                                       height: 40,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[200],
+                                        color: AppColors.background,
                                         borderRadius: BorderRadius.circular(4),
                                       ),
-                                      child: const Icon(Icons.image, color: Colors.grey),
+                                      child: const Icon(Icons.image, color: AppColors.textSecondary),
                                     ),
                             ),
                             DataCell(
@@ -154,7 +154,7 @@ class ProductsDesktopView extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                  Text(category?.name ?? l10n.unassignedCategory, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                                  Text(category?.name ?? l10n.unassignedCategory, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                             ),
@@ -163,13 +163,13 @@ class ProductsDesktopView extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: product.status == 1 ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+                                  color: product.status == 1 ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
-                                  product.status == 1 ? 'Còn hàng' : 'Hết hàng',
+                                  product.status == 1 ? l10n.inStock : l10n.outOfStock,
                                   style: TextStyle(
-                                    color: product.status == 1 ? Colors.green : Colors.red,
+                                    color: product.status == 1 ? AppColors.success : AppColors.error,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),

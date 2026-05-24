@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+import 'package:quan_ly_ban_hang/core/constants/app_colors.dart';
 
 import '../../../../core/utils/file_utils.dart';
 import '../../../../core/utils/currency_utils.dart';
@@ -137,7 +138,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
               if (mounted) {
                 setState(() => _isLoading = false);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(error), backgroundColor: Colors.red),
+                  SnackBar(content: Text(error), backgroundColor: AppColors.error),
                 );
               }
             },
@@ -159,7 +160,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
               if (mounted) {
                 setState(() => _isLoading = false);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(error), backgroundColor: Colors.red),
+                  SnackBar(content: Text(error), backgroundColor: AppColors.error),
                 );
               }
             },
@@ -171,15 +172,16 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
 
   Widget _buildImagePicker(bool isMobileView) {
     final size = isMobileView ? 120.0 : 150.0;
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: _pickImage,
       child: Container(
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: AppColors.background,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey[400]!),
+          border: Border.all(color: AppColors.divider),
         ),
         child: _imageUrl != null
             ? ClipRRect(
@@ -191,9 +193,9 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.add_a_photo, color: Colors.grey),
+                  const Icon(Icons.add_a_photo, color: AppColors.textSecondary),
                   const SizedBox(height: 4),
-                  Text('Ảnh', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                  Text(l10n.productImage, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                 ],
               ),
       ),
@@ -272,7 +274,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
         const SizedBox(height: 16),
         AppTextField(
           controller: _stockController,
-          labelText: 'Số lượng',
+          labelText: l10n.quantityLabel,
           keyboardType: TextInputType.number,
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -281,7 +283,7 @@ class _ProductFormDialogState extends State<ProductFormDialog> {
             if (value != null && value.trim().isNotEmpty) {
               final parsedValue = int.tryParse(value);
               if (parsedValue == null || parsedValue < 0) {
-                return 'Số lượng tồn kho không hợp lệ';
+                return l10n.validationStockInvalid;
               }
             }
             return null;

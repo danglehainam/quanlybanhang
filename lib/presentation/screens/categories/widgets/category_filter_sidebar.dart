@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
 import '../../../widgets/app_filter_sidebar.dart';
 import '../../../widgets/app_filter_radio_tile.dart';
@@ -27,15 +28,16 @@ class CategoryFilterSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AppFilterSidebar(
       showCloseButton: showCloseButton,
       children: [
         // Search Block
         if (showSearchField)
           FilterAccordionBlock(
-            title: 'Tìm kiếm',
+            title: l10n.searchLabel,
             child: AppTextField(
-              labelText: 'Tên danh mục...',
+              labelText: l10n.searchCategory,
               prefixIcon: Icons.search,
               controller: searchController,
               onChanged: (val) {
@@ -46,11 +48,11 @@ class CategoryFilterSidebar extends StatelessWidget {
 
         // Sort Block
         FilterAccordionBlock(
-          title: 'Sắp xếp theo',
+          title: l10n.sortBy,
           child: Column(
             children: [
               AppFilterRadioTile<int?>(
-                title: 'Mới nhất',
+                title: l10n.newest,
                 value: null,
                 groupValue: sortOption,
                 onChanged: (val) {
@@ -60,7 +62,7 @@ class CategoryFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int?>(
-                title: 'Cũ nhất',
+                title: l10n.oldest,
                 value: 1,
                 groupValue: sortOption,
                 onChanged: (val) {
@@ -70,7 +72,7 @@ class CategoryFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int?>(
-                title: 'Tên: A - Z',
+                title: l10n.sortNameAZ,
                 value: 2,
                 groupValue: sortOption,
                 onChanged: (val) {
@@ -80,7 +82,7 @@ class CategoryFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int?>(
-                title: 'Tên: Z - A',
+                title: l10n.sortNameZA,
                 value: 3,
                 groupValue: sortOption,
                 onChanged: (val) {

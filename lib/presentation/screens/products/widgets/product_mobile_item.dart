@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../../domain/entities/category_entity.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
@@ -39,8 +40,8 @@ class ProductMobileItem extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.delete, color: Colors.red),
-              title: Text(l10n.delete, style: const TextStyle(color: Colors.red)),
+              leading: const Icon(Icons.delete, color: AppColors.error),
+              title: Text(l10n.delete, style: const TextStyle(color: AppColors.error)),
               onTap: () {
                 Navigator.pop(context);
                 onDelete();
@@ -66,13 +67,13 @@ class ProductMobileItem extends StatelessWidget {
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: product.imageUrl!.startsWith('http')
-                    ? Image.network(
+                     ? Image.network(
                         product.imageUrl!,
                         width: 48,
                         height: 48,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.image_not_supported, size: 48, color: Colors.grey),
+                            const Icon(Icons.image_not_supported, size: 48, color: AppColors.textSecondary),
                       )
                     : Image.file(
                         File(product.imageUrl!),
@@ -80,17 +81,17 @@ class ProductMobileItem extends StatelessWidget {
                         height: 48,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.image_not_supported, size: 48, color: Colors.grey),
+                            const Icon(Icons.image_not_supported, size: 48, color: AppColors.textSecondary),
                       ),
               )
             : Container(
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: AppColors.background,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(Icons.image, color: Colors.grey),
+                child: const Icon(Icons.image, color: AppColors.textSecondary),
               ),
         title: Row(
           children: [
@@ -103,13 +104,13 @@ class ProductMobileItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: product.status == 1 ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+                color: product.status == 1 ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                product.status == 1 ? 'Còn hàng' : 'Hết hàng',
+                product.status == 1 ? l10n.inStock : l10n.outOfStock,
                 style: TextStyle(
-                  color: product.status == 1 ? Colors.green : Colors.red,
+                  color: product.status == 1 ? AppColors.success : AppColors.error,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -118,7 +119,7 @@ class ProductMobileItem extends StatelessWidget {
           ],
         ),
         subtitle: Text(
-          '${CurrencyUtils.formatCurrency(product.price)} - ${category?.name ?? l10n.unassignedCategory}${product.stock != null ? ' - Tồn: ${product.stock}' : ' - Chế biến'}',
+          '${CurrencyUtils.formatCurrency(product.price)} - ${category?.name ?? l10n.unassignedCategory} - ${product.stock != null ? l10n.stockLabel(product.stock!) : l10n.madeToOrder}',
         ),
         trailing: AppIconButton(
           icon: Icons.more_vert,

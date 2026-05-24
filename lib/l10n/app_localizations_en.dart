@@ -363,4 +363,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String itemsCount(int count) {
     return '$count items';
   }
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get highestValue => 'Highest Value';
+
+  @override
+  String get lowestValue => 'Lowest Value';
+
+  @override
+  String get searchLabel => 'Search';
+
+  @override
+  String get productImage => 'Product Image';
+
+  @override
+  String stockLabel(int count) {
+    return 'Stock: $count';
+  }
+
+  @override
+  String get madeToOrder => 'Made to order';
+
+  @override
+  String get inStock => 'In Stock';
+
+  @override
+  String get outOfStock => 'Out of Stock';
+
+  @override
+  String get actionsLabel => 'Actions';
+
+  @override
+  String get priceRange => 'Price Range';
+
+  @override
+  String get fromPrice => 'From Price';
+
+  @override
+  String get toPrice => 'To Price';
+
+  @override
+  String get defaultSort => 'Default';
+
+  @override
+  String get sortNameAZ => 'Name: A - Z';
+
+  @override
+  String get sortNameZA => 'Name: Z - A';
+
+  @override
+  String get sortPriceAsc => 'Price Ascending';
+
+  @override
+  String get sortPriceDesc => 'Price Descending';
+
+  @override
+  String get quantityLabel => 'Quantity';
+
+  @override
+  String get validationStockInvalid => 'Invalid stock quantity';
 }

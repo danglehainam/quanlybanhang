@@ -49,7 +49,7 @@ class PosCartSummary extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Tổng tiền', style: TextStyle(color: AppColors.textSecondary)),
+                Text(l10n.totalAmount, style: const TextStyle(color: AppColors.textSecondary)),
                 Text(AppFormatters.formatCurrency(activeOrder!.totalAmount), style: const TextStyle(fontWeight: FontWeight.w500)),
               ],
             ),
@@ -57,8 +57,8 @@ class PosCartSummary extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Giảm giá', style: TextStyle(color: AppColors.textSecondary)),
-                Text('-${AppFormatters.formatCurrency(activeOrder!.discount)}', style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.green)),
+                Text(l10n.discount, style: const TextStyle(color: AppColors.textSecondary)),
+                Text('-${AppFormatters.formatCurrency(activeOrder!.discount)}', style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.success)),
               ],
             ),
             const SizedBox(height: 4),
@@ -67,7 +67,7 @@ class PosCartSummary extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Phải trả', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(l10n.finalAmount, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 Text(
                   AppFormatters.formatCurrency(activeOrder!.finalAmount),
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),

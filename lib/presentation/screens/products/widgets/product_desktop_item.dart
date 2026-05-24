@@ -31,7 +31,7 @@ class ProductDesktopItem extends StatelessWidget {
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Text(
-        '${currencyFormatter.format(product.price)} - ${category?.name ?? l10n.unassignedCategory}${product.stock != null ? ' - Tồn: ${product.stock}' : ' - Chế biến'}',
+        '${currencyFormatter.format(product.price)} - ${category?.name ?? l10n.unassignedCategory} - ${product.stock != null ? l10n.stockLabel(product.stock!) : l10n.madeToOrder}',
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -39,13 +39,13 @@ class ProductDesktopItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: product.status == 1 ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+              color: product.status == 1 ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              product.status == 1 ? 'Còn hàng' : 'Hết hàng',
+              product.status == 1 ? l10n.inStock : l10n.outOfStock,
               style: TextStyle(
-                color: product.status == 1 ? Colors.green : Colors.red,
+                color: product.status == 1 ? AppColors.success : AppColors.error,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),

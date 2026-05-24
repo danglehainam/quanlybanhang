@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/filter_accordion_block.dart';
 import '../../../widgets/app_filter_sidebar.dart';
@@ -30,15 +31,16 @@ class OrderFilterSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AppFilterSidebar(
       showCloseButton: showCloseButton,
       children: [
         // Search Block
         if (showSearchField)
           FilterAccordionBlock(
-            title: 'Tìm kiếm',
+            title: l10n.searchLabel,
             child: AppTextField(
-              labelText: 'Nhập SĐT, Tên bàn, ID...',
+              labelText: l10n.searchFieldLabel,
               prefixIcon: Icons.search,
               controller: TextEditingController(text: searchQuery)
                 ..selection = TextSelection.fromPosition(
@@ -56,11 +58,11 @@ class OrderFilterSidebar extends StatelessWidget {
 
         // Status Block
         FilterAccordionBlock(
-          title: 'Trạng thái',
+          title: l10n.status,
           child: Column(
             children: [
               AppFilterRadioTile<int?>(
-                title: 'Tất cả',
+                title: l10n.all,
                 value: -1, // -1 means all in our logic
                 groupValue: statusFilter ?? -1,
                 onChanged: (val) {
@@ -72,7 +74,7 @@ class OrderFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int?>(
-                title: 'Chờ thanh toán',
+                title: l10n.orderStatusPending,
                 value: 0,
                 groupValue: statusFilter ?? -1,
                 onChanged: (val) {
@@ -84,7 +86,7 @@ class OrderFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int?>(
-                title: 'Đã hoàn thành',
+                title: l10n.orderStatusCompleted,
                 value: 1,
                 groupValue: statusFilter ?? -1,
                 onChanged: (val) {
@@ -101,11 +103,11 @@ class OrderFilterSidebar extends StatelessWidget {
 
         // Sort Block
         FilterAccordionBlock(
-          title: 'Sắp xếp theo',
+          title: l10n.sortBy,
           child: Column(
             children: [
               AppFilterRadioTile<int>(
-                title: 'Mới nhất',
+                title: l10n.newest,
                 value: 0,
                 groupValue: sortOption ?? 0,
                 onChanged: (val) {
@@ -117,7 +119,7 @@ class OrderFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int>(
-                title: 'Cũ nhất',
+                title: l10n.oldest,
                 value: 1,
                 groupValue: sortOption ?? 0,
                 onChanged: (val) {
@@ -129,7 +131,7 @@ class OrderFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int>(
-                title: 'Giá trị cao nhất',
+                title: l10n.highestValue,
                 value: 2,
                 groupValue: sortOption ?? 0,
                 onChanged: (val) {
@@ -141,7 +143,7 @@ class OrderFilterSidebar extends StatelessWidget {
                 },
               ),
               AppFilterRadioTile<int>(
-                title: 'Giá trị thấp nhất',
+                title: l10n.lowestValue,
                 value: 3,
                 groupValue: sortOption ?? 0,
                 onChanged: (val) {

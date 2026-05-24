@@ -145,5 +145,26 @@
   "all": "All",
   "highestValue": "Highest Value",
   "lowestValue": "Lowest Value",
-  "searchLabel": "Search"
+  "searchLabel": "Search",
+  "productImage": "Product Image",
+  "stockLabel": "Stock: {count}",
+  "@stockLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "madeToOrder": "Made to order",
+  "inStock": "In Stock",
+  "outOfStock": "Out of Stock",
+  "actionsLabel": "Actions",
+  "priceRange": "Price Range",
+  "fromPrice": "From Price",
+  "toPrice": "To Price",
+  "defaultSort": "Default",
+  "sortNameAZ": "Name: A - Z",
+  "sortNameZA": "Name: Z - A",
+  "sortPriceAsc": "Price Ascending",
+  "sortPriceDesc": "Price Descending",
+  "quantityLabel": "Quantity",
+  "validationStockInvalid": "Invalid stock quantity"
 }

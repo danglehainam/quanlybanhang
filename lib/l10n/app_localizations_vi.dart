@@ -361,4 +361,66 @@ class AppLocalizationsVi extends AppLocalizations {
   String itemsCount(int count) {
     return '$count món';
   }
+
+  @override
+  String get all => 'Tất cả';
+
+  @override
+  String get highestValue => 'Giá trị cao nhất';
+
+  @override
+  String get lowestValue => 'Giá trị thấp nhất';
+
+  @override
+  String get searchLabel => 'Tìm kiếm';
+
+  @override
+  String get productImage => 'Ảnh sản phẩm';
+
+  @override
+  String stockLabel(int count) {
+    return 'Tồn kho: $count';
+  }
+
+  @override
+  String get madeToOrder => 'Chế biến';
+
+  @override
+  String get inStock => 'Còn hàng';
+
+  @override
+  String get outOfStock => 'Hết hàng';
+
+  @override
+  String get actionsLabel => 'Thao tác';
+
+  @override
+  String get priceRange => 'Khoảng giá';
+
+  @override
+  String get fromPrice => 'Từ giá';
+
+  @override
+  String get toPrice => 'Đến giá';
+
+  @override
+  String get defaultSort => 'Mặc định';
+
+  @override
+  String get sortNameAZ => 'Tên: A - Z';
+
+  @override
+  String get sortNameZA => 'Tên: Z - A';
+
+  @override
+  String get sortPriceAsc => 'Giá tăng dần';
+
+  @override
+  String get sortPriceDesc => 'Giá giảm dần';
+
+  @override
+  String get quantityLabel => 'Số lượng';
+
+  @override
+  String get validationStockInvalid => 'Số lượng tồn kho không hợp lệ';
 }

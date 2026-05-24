@@ -781,6 +781,126 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'{count} món'**
   String itemsCount(int count);
+
+  /// No description provided for @all.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tất cả'**
+  String get all;
+
+  /// No description provided for @highestValue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giá trị cao nhất'**
+  String get highestValue;
+
+  /// No description provided for @lowestValue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giá trị thấp nhất'**
+  String get lowestValue;
+
+  /// No description provided for @searchLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm'**
+  String get searchLabel;
+
+  /// No description provided for @productImage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh sản phẩm'**
+  String get productImage;
+
+  /// No description provided for @stockLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tồn kho: {count}'**
+  String stockLabel(int count);
+
+  /// No description provided for @madeToOrder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chế biến'**
+  String get madeToOrder;
+
+  /// No description provided for @inStock.
+  ///
+  /// In vi, this message translates to:
+  /// **'Còn hàng'**
+  String get inStock;
+
+  /// No description provided for @outOfStock.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hết hàng'**
+  String get outOfStock;
+
+  /// No description provided for @actionsLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thao tác'**
+  String get actionsLabel;
+
+  /// No description provided for @priceRange.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khoảng giá'**
+  String get priceRange;
+
+  /// No description provided for @fromPrice.
+  ///
+  /// In vi, this message translates to:
+  /// **'Từ giá'**
+  String get fromPrice;
+
+  /// No description provided for @toPrice.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đến giá'**
+  String get toPrice;
+
+  /// No description provided for @defaultSort.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mặc định'**
+  String get defaultSort;
+
+  /// No description provided for @sortNameAZ.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên: A - Z'**
+  String get sortNameAZ;
+
+  /// No description provided for @sortNameZA.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên: Z - A'**
+  String get sortNameZA;
+
+  /// No description provided for @sortPriceAsc.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giá tăng dần'**
+  String get sortPriceAsc;
+
+  /// No description provided for @sortPriceDesc.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giá giảm dần'**
+  String get sortPriceDesc;
+
+  /// No description provided for @quantityLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số lượng'**
+  String get quantityLabel;
+
+  /// No description provided for @validationStockInvalid.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số lượng tồn kho không hợp lệ'**
+  String get validationStockInvalid;
 }
 
 class _AppLocalizationsDelegate

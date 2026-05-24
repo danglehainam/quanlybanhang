@@ -195,7 +195,7 @@ class OrderDetailDialog extends StatelessWidget {
             style: TextStyle(
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
               fontSize: fontSize,
-              color: isBold ? Colors.black87 : AppColors.textSecondary,
+              color: isBold ? AppColors.textPrimary : AppColors.textSecondary,
             ),
           ),
           Text(
@@ -203,7 +203,7 @@ class OrderDetailDialog extends StatelessWidget {
             style: TextStyle(
               fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
               fontSize: fontSize,
-              color: color ?? Colors.black87,
+              color: color ?? AppColors.textPrimary,
             ),
           ),
         ],

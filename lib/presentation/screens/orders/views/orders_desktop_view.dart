@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/order_entity.dart';
 import '../../../widgets/app_formatters.dart';
@@ -29,6 +30,7 @@ class OrdersDesktopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return TwoColumnDesktopLayout(
       leftContent: OrderFilterSidebar(
         searchQuery: searchQuery,

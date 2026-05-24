@@ -141,5 +141,30 @@
     "placeholders": {
       "count": { "type": "int" }
     }
-  }
+  },
+  "all": "Tất cả",
+  "highestValue": "Giá trị cao nhất",
+  "lowestValue": "Giá trị thấp nhất",
+  "searchLabel": "Tìm kiếm",
+  "productImage": "Ảnh sản phẩm",
+  "stockLabel": "Tồn kho: {count}",
+  "@stockLabel": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "madeToOrder": "Chế biến",
+  "inStock": "Còn hàng",
+  "outOfStock": "Hết hàng",
+  "actionsLabel": "Thao tác",
+  "priceRange": "Khoảng giá",
+  "fromPrice": "Từ giá",
+  "toPrice": "Đến giá",
+  "defaultSort": "Mặc định",
+  "sortNameAZ": "Tên: A - Z",
+  "sortNameZA": "Tên: Z - A",
+  "sortPriceAsc": "Giá tăng dần",
+  "sortPriceDesc": "Giá giảm dần",
+  "quantityLabel": "Số lượng",
+  "validationStockInvalid": "Số lượng tồn kho không hợp lệ"
 }
