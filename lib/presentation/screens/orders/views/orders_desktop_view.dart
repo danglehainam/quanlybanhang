@@ -19,6 +19,12 @@ class OrdersDesktopView extends StatelessWidget {
   final int? statusFilter;
   final int? sortOption;
 
+  final int timeFilterType;
+  final DateTime selectedDate;
+  final int selectedMonth;
+  final int selectedQuarter;
+  final int selectedYear;
+
   const OrdersDesktopView({
     super.key,
     required this.storeId,
@@ -26,6 +32,11 @@ class OrdersDesktopView extends StatelessWidget {
     required this.searchQuery,
     this.statusFilter,
     this.sortOption,
+    required this.timeFilterType,
+    required this.selectedDate,
+    required this.selectedMonth,
+    required this.selectedQuarter,
+    required this.selectedYear,
   });
 
   @override
@@ -36,11 +47,30 @@ class OrdersDesktopView extends StatelessWidget {
         searchQuery: searchQuery,
         statusFilter: statusFilter,
         sortOption: sortOption,
-        onFilterChanged: ({query, statusFilter, sortOption}) {
+        timeFilterType: timeFilterType,
+        selectedDate: selectedDate,
+        selectedMonth: selectedMonth,
+        selectedQuarter: selectedQuarter,
+        selectedYear: selectedYear,
+        onFilterChanged: ({
+          query,
+          statusFilter,
+          sortOption,
+          timeFilterType,
+          selectedDate,
+          selectedMonth,
+          selectedQuarter,
+          selectedYear,
+        }) {
           context.read<OrdersBloc>().add(OrdersEvent.filterOrders(
             query: query,
             statusFilter: statusFilter,
             sortOption: sortOption,
+            timeFilterType: timeFilterType,
+            selectedDate: selectedDate,
+            selectedMonth: selectedMonth,
+            selectedQuarter: selectedQuarter,
+            selectedYear: selectedYear,
           ));
         },
       ),
@@ -73,7 +103,10 @@ class OrdersDesktopView extends StatelessWidget {
                             onSelectChanged: (_) {
                               showDialog(
                                 context: context,
-                                builder: (_) => OrderDetailDialog(order: order),
+                                builder: (_) => BlocProvider.value(
+                                  value: context.read<OrdersBloc>(),
+                                  child: OrderDetailDialog(order: order),
+                                ),
                               );
                             },
                             cells: [
@@ -99,7 +132,10 @@ class OrdersDesktopView extends StatelessWidget {
                                   onPressed: () {
                                     showDialog(
                                       context: context,
-                                      builder: (_) => OrderDetailDialog(order: order),
+                                      builder: (_) => BlocProvider.value(
+                                        value: context.read<OrdersBloc>(),
+                                        child: OrderDetailDialog(order: order),
+                                      ),
                                     );
                                   },
                                 ),

@@ -13,19 +13,29 @@ import '../../bloc/sell/sell_state.dart';
 import 'views/sell_desktop_view.dart';
 import 'views/sell_mobile_view.dart';
 
-class SellScreen extends StatelessWidget {
+class SellScreen extends StatefulWidget {
   const SellScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<SellScreen> createState() => _SellScreenState();
+}
+
+class _SellScreenState extends State<SellScreen> {
+  @override
+  void initState() {
+    super.initState();
     final authState = context.read<AuthBloc>().state;
     final storeId = authState.maybeMap(
       authenticated: (state) => state.user.storeId,
       orElse: () => 0,
     );
+    getIt<SellBloc>().add(SellEvent.loadInitialData(storeId: storeId));
+  }
 
-    return BlocProvider(
-      create: (_) => getIt<SellBloc>()..add(SellEvent.loadInitialData(storeId: storeId)),
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: getIt<SellBloc>(),
       child: BlocListener<SellBloc, SellState>(
         listenWhen: (previous, current) => previous.isActionSuccess != current.isActionSuccess || previous.error != current.error,
         listener: (context, state) {

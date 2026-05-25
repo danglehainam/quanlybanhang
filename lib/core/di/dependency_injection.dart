@@ -232,7 +232,7 @@ Future<void> setupDependencies() async {
       deleteProductUseCase: getIt<DeleteProductUseCase>(),
     ),
   );
-  getIt.registerFactory<SellBloc>(
+  getIt.registerLazySingleton<SellBloc>(
     () => SellBloc(
       productRepository: getIt<ProductRepository>(),
       categoryRepository: getIt<CategoryRepository>(),
@@ -242,7 +242,10 @@ Future<void> setupDependencies() async {
     ),
   );
   getIt.registerFactory<OrdersBloc>(
-    () => OrdersBloc(getIt<GetOrdersUseCase>()),
+    () => OrdersBloc(
+      getIt<GetOrdersUseCase>(),
+      getIt<UpdateOrderUseCase>(),
+    ),
   );
   getIt.registerFactory<TransactionsBloc>(
     () => TransactionsBloc(

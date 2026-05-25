@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
 import '../../../../domain/entities/transaction_entity.dart';
 import '../../../../core/utils/currency_utils.dart';
@@ -12,6 +13,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../bloc/transactions_bloc.dart';
 import '../bloc/transactions_event.dart';
 import '../widgets/transaction_form_dialog.dart';
+import '../widgets/transaction_filter_sidebar.dart';
 
 class TransactionsDesktopView extends StatefulWidget {
   final List<TransactionEntity> transactions;
@@ -23,52 +25,64 @@ class TransactionsDesktopView extends StatefulWidget {
 }
 
 class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
+  String _searchQuery = '';
   int _selectedFilter = -1; // -1: All, 0: Income, 1: Expense
+  int _sortOption = 0; // 0: Newest, 1: Oldest, 2: Highest Value, 3: Lowest Value
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
-    // Lọc giao dịch
-    final filteredTransactions = widget.transactions.where((t) {
-      if (_selectedFilter == -1) return true;
-      return t.type == _selectedFilter;
+    // 1. Filter transactions by type and search query (case-insensitive on note)
+    var filteredTransactions = widget.transactions.where((t) {
+      final matchesType = _selectedFilter == -1 ? true : t.type == _selectedFilter;
+      final matchesSearch = t.note.toLowerCase().contains(_searchQuery.toLowerCase());
+      return matchesType && matchesSearch;
     }).toList();
+
+    // 2. Sort transactions
+    switch (_sortOption) {
+      case 0: // Newest
+        filteredTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        break;
+      case 1: // Oldest
+        filteredTransactions.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+        break;
+      case 2: // Highest Value
+        filteredTransactions.sort((a, b) => b.amount.compareTo(a.amount));
+        break;
+      case 3: // Lowest Value
+        filteredTransactions.sort((a, b) => a.amount.compareTo(b.amount));
+        break;
+    }
 
     return TwoColumnDesktopLayout(
       leftContent: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            'Bộ lọc giao dịch',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Expanded(
+            child: TransactionFilterSidebar(
+              searchQuery: _searchQuery,
+              selectedType: _selectedFilter,
+              sortOption: _sortOption,
+              onFilterChanged: ({query, type, sortOption}) {
+                setState(() {
+                  if (query != null) _searchQuery = query;
+                  if (type != null) _selectedFilter = type;
+                  if (sortOption != null) _sortOption = sortOption;
+                });
+              },
+            ),
           ),
           const SizedBox(height: 16),
-          DropdownButtonFormField<int>(
-            value: _selectedFilter,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            ),
-            items: const [
-              DropdownMenuItem(value: -1, child: Text('Tất cả giao dịch')),
-              DropdownMenuItem(value: 0, child: Text('Chỉ khoản thu')),
-              DropdownMenuItem(value: 1, child: Text('Chỉ khoản chi')),
-            ],
-            onChanged: (val) {
-              if (val != null) {
-                setState(() => _selectedFilter = val);
-              }
-            },
-          ),
-          const SizedBox(height: 24),
           Row(
             children: [
               Expanded(
                 child: SizedBox(
                   height: 48,
                   child: AppFilledButton(
-                    label: 'Thêm thu',
+                    label: l10n.addIncome,
                     backgroundColor: AppColors.success,
                     foregroundColor: Colors.white,
                     onPressed: () {
@@ -88,7 +102,7 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
                 child: SizedBox(
                   height: 48,
                   child: AppFilledButton(
-                    label: 'Thêm chi',
+                    label: l10n.addExpense,
                     backgroundColor: AppColors.error,
                     foregroundColor: Colors.white,
                     onPressed: () {
@@ -108,7 +122,7 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
         ],
       ),
       rightContent: filteredTransactions.isEmpty
-          ? const EmptyDataWidget(message: 'Không tìm thấy giao dịch nào phù hợp')
+          ? EmptyDataWidget(message: l10n.emptyTransactionMessage)
           : LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
@@ -116,13 +130,13 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
                   child: ConstrainedBox(
                     constraints: BoxConstraints(minWidth: constraints.maxWidth),
                     child: DataTable(
-                      headingTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                      columns: const [
-                        DataColumn(label: Text('Loại')),
-                        DataColumn(label: Text('Số Tiền')),
-                        DataColumn(label: Text('Ghi Chú')),
-                        DataColumn(label: Text('Ngày Tạo')),
-                        DataColumn(label: Text('Thao tác')),
+                      headingTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      columns: [
+                        DataColumn(label: Text(l10n.transactionTypeCol)),
+                        DataColumn(label: Text(l10n.transactionAmountCol)),
+                        DataColumn(label: Text(l10n.transactionNoteCol)),
+                        DataColumn(label: Text(l10n.transactionDateCol)),
+                        DataColumn(label: Text(l10n.actionsLabel)),
                       ],
                       rows: filteredTransactions.map((transaction) {
                         final isIncome = transaction.type == 0;
@@ -132,13 +146,15 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: isIncome ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+                                  color: isIncome
+                                      ? AppColors.success.withValues(alpha: 0.1)
+                                      : AppColors.error.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
-                                  isIncome ? 'Thu' : 'Chi',
+                                  isIncome ? l10n.income : l10n.expense,
                                   style: TextStyle(
-                                    color: isIncome ? Colors.green : Colors.red,
+                                    color: isIncome ? AppColors.success : AppColors.error,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -148,7 +164,7 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
                               Text(
                                 '${isIncome ? '+' : '-'}${CurrencyUtils.formatCurrency(transaction.amount)}',
                                 style: TextStyle(
-                                  color: isIncome ? Colors.green : Colors.red,
+                                  color: isIncome ? AppColors.success : AppColors.error,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -162,7 +178,7 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
                                   AppIconButton(
                                     icon: Icons.edit,
                                     color: AppColors.primary,
-                                    tooltip: 'Sửa',
+                                    tooltip: l10n.edit,
                                     onPressed: () {
                                       showDialog(
                                         context: context,
@@ -176,7 +192,7 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
                                   AppIconButton(
                                     icon: Icons.delete,
                                     color: AppColors.error,
-                                    tooltip: 'Xóa',
+                                    tooltip: l10n.delete,
                                     onPressed: () => _confirmDelete(context, transaction),
                                   ),
                                 ],
@@ -194,15 +210,16 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
   }
 
   void _confirmDelete(BuildContext context, TransactionEntity transaction) {
+    final l10n = AppLocalizations.of(context)!;
     showAdaptiveDialog(
       context: context,
       builder: (ctx) => AlertDialog.adaptive(
-        title: const Text('Xác nhận xóa'),
-        content: Text('Bạn có chắc chắn muốn xóa giao dịch ${transaction.id} này không?'),
+        title: Text(l10n.confirmDeleteTransactionTitle),
+        content: Text(l10n.confirmDeleteTransactionMessage(transaction.id)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Hủy'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -212,18 +229,18 @@ class _TransactionsDesktopViewState extends State<TransactionsDesktopView> {
                       transaction.id,
                       onSuccess: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Xóa giao dịch thành công')),
+                          SnackBar(content: Text(l10n.transactionDeletedSuccess)),
                         );
                       },
                       onError: (err) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(err), backgroundColor: Colors.red),
+                          SnackBar(content: Text(err), backgroundColor: AppColors.error),
                         );
                       },
                     ),
                   );
             },
-            child: const Text('Xóa', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.delete, style: const TextStyle(color: AppColors.error)),
           ),
         ],
       ),

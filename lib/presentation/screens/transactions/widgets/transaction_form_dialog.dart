@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+
 import '../../../../core/utils/currency_utils.dart';
 import '../../../../domain/entities/transaction_entity.dart';
 import '../../../../domain/entities/user_entity.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../widgets/app_dialog.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/buttons/app_primary_button.dart';
@@ -41,8 +44,8 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
     super.initState();
     _amountController = TextEditingController(
       text: widget.transactionToEdit != null
-        ? CurrencyUtils.formatNumber(widget.transactionToEdit!.amount)
-        : '',
+          ? CurrencyUtils.formatNumber(widget.transactionToEdit!.amount)
+          : '',
     );
     _noteController = TextEditingController(text: widget.transactionToEdit?.note);
     _selectedType = widget.transactionToEdit?.type ?? widget.initialType ?? 0;
@@ -56,6 +59,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
   }
 
   void _onSave() {
+    final l10n = AppLocalizations.of(context)!;
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
@@ -92,7 +96,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
             if (mounted) {
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Cập nhật giao dịch thành công')),
+                SnackBar(content: Text(l10n.transactionUpdatedSuccess)),
               );
             }
           },
@@ -100,7 +104,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
             if (mounted) {
               setState(() => _isLoading = false);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(error), backgroundColor: Colors.red),
+                SnackBar(content: Text(error), backgroundColor: AppColors.error),
               );
             }
           },
@@ -112,7 +116,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
             if (mounted) {
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Tạo giao dịch thành công')),
+                SnackBar(content: Text(l10n.transactionCreatedSuccess)),
               );
             }
           },
@@ -120,7 +124,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
             if (mounted) {
               setState(() => _isLoading = false);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(error), backgroundColor: Colors.red),
+                SnackBar(content: Text(error), backgroundColor: AppColors.error),
               );
             }
           },
@@ -131,12 +135,13 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final showTypeSelection = widget.initialType == null && !_isEditMode;
 
     return AppDialog(
-      title: _isEditMode 
-          ? (_selectedType == 0 ? 'Sửa khoản thu' : 'Sửa khoản chi')
-          : (_selectedType == 0 ? 'Thêm khoản thu' : 'Thêm khoản chi'),
+      title: _isEditMode
+          ? (_selectedType == 0 ? l10n.editIncome : l10n.editExpense)
+          : (_selectedType == 0 ? l10n.addIncomeTitle : l10n.addExpenseTitle),
       content: Form(
         key: _formKey,
         child: Column(
@@ -147,7 +152,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
                 children: [
                   Expanded(
                     child: RadioListTile<int>(
-                      title: const Text('Thu'),
+                      title: Text(l10n.income),
                       value: 0,
                       groupValue: _selectedType,
                       onChanged: (val) => setState(() => _selectedType = val!),
@@ -155,7 +160,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
                   ),
                   Expanded(
                     child: RadioListTile<int>(
-                      title: const Text('Chi'),
+                      title: Text(l10n.expense),
                       value: 1,
                       groupValue: _selectedType,
                       onChanged: (val) => setState(() => _selectedType = val!),
@@ -167,7 +172,7 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
             ],
             AppTextField(
               controller: _amountController,
-              labelText: 'Số tiền (VND)',
+              labelText: l10n.amountLabel,
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
@@ -175,11 +180,11 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
               ],
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui lòng nhập số tiền';
+                  return l10n.validationAmountRequired;
                 }
                 final parsedValue = CurrencyUtils.parseCurrency(value);
                 if (parsedValue <= 0) {
-                  return 'Số tiền phải lớn hơn 0';
+                  return l10n.validationAmountPositive;
                 }
                 return null;
               },
@@ -187,10 +192,10 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
             const SizedBox(height: 16),
             AppTextField(
               controller: _noteController,
-              labelText: 'Ghi chú',
+              labelText: l10n.note,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui lòng nhập ghi chú';
+                  return l10n.validationNoteRequired;
                 }
                 return null;
               },
@@ -201,11 +206,11 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
       actions: [
         AppTextButton(
           onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          label: 'Hủy',
+          label: l10n.cancel,
         ),
         const SizedBox(width: 8),
         AppPrimaryButton(
-          label: 'Lưu',
+          label: l10n.save,
           isLoading: _isLoading,
           onPressed: _onSave,
         ),

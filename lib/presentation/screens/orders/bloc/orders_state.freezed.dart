@@ -128,13 +128,13 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( String message)?  error,TResult Function( List<OrderEntity> allOrders,  List<OrderEntity> filteredOrders,  String searchQuery,  int? statusFilter,  int? sortOption)?  loaded,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( String message)?  error,TResult Function( List<OrderEntity> allOrders,  List<OrderEntity> filteredOrders,  String searchQuery,  int? statusFilter,  int? sortOption,  int timeFilterType,  DateTime selectedDate,  int selectedMonth,  int selectedQuarter,  int selectedYear)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case OrdersInitialState() when initial != null:
 return initial();case OrdersLoadingState() when loading != null:
 return loading();case OrdersErrorState() when error != null:
 return error(_that.message);case OrdersLoadedState() when loaded != null:
-return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statusFilter,_that.sortOption);case _:
+return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statusFilter,_that.sortOption,_that.timeFilterType,_that.selectedDate,_that.selectedMonth,_that.selectedQuarter,_that.selectedYear);case _:
   return orElse();
 
 }
@@ -152,13 +152,13 @@ return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statu
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( String message)  error,required TResult Function( List<OrderEntity> allOrders,  List<OrderEntity> filteredOrders,  String searchQuery,  int? statusFilter,  int? sortOption)  loaded,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( String message)  error,required TResult Function( List<OrderEntity> allOrders,  List<OrderEntity> filteredOrders,  String searchQuery,  int? statusFilter,  int? sortOption,  int timeFilterType,  DateTime selectedDate,  int selectedMonth,  int selectedQuarter,  int selectedYear)  loaded,}) {final _that = this;
 switch (_that) {
 case OrdersInitialState():
 return initial();case OrdersLoadingState():
 return loading();case OrdersErrorState():
 return error(_that.message);case OrdersLoadedState():
-return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statusFilter,_that.sortOption);case _:
+return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statusFilter,_that.sortOption,_that.timeFilterType,_that.selectedDate,_that.selectedMonth,_that.selectedQuarter,_that.selectedYear);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +175,13 @@ return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statu
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( String message)?  error,TResult? Function( List<OrderEntity> allOrders,  List<OrderEntity> filteredOrders,  String searchQuery,  int? statusFilter,  int? sortOption)?  loaded,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( String message)?  error,TResult? Function( List<OrderEntity> allOrders,  List<OrderEntity> filteredOrders,  String searchQuery,  int? statusFilter,  int? sortOption,  int timeFilterType,  DateTime selectedDate,  int selectedMonth,  int selectedQuarter,  int selectedYear)?  loaded,}) {final _that = this;
 switch (_that) {
 case OrdersInitialState() when initial != null:
 return initial();case OrdersLoadingState() when loading != null:
 return loading();case OrdersErrorState() when error != null:
 return error(_that.message);case OrdersLoadedState() when loaded != null:
-return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statusFilter,_that.sortOption);case _:
+return loaded(_that.allOrders,_that.filteredOrders,_that.searchQuery,_that.statusFilter,_that.sortOption,_that.timeFilterType,_that.selectedDate,_that.selectedMonth,_that.selectedQuarter,_that.selectedYear);case _:
   return null;
 
 }
@@ -323,7 +323,7 @@ as String,
 
 
 class OrdersLoadedState implements OrdersState {
-  const OrdersLoadedState({required final  List<OrderEntity> allOrders, required final  List<OrderEntity> filteredOrders, required this.searchQuery, this.statusFilter, this.sortOption}): _allOrders = allOrders,_filteredOrders = filteredOrders;
+  const OrdersLoadedState({required final  List<OrderEntity> allOrders, required final  List<OrderEntity> filteredOrders, required this.searchQuery, this.statusFilter, this.sortOption, required this.timeFilterType, required this.selectedDate, required this.selectedMonth, required this.selectedQuarter, required this.selectedYear}): _allOrders = allOrders,_filteredOrders = filteredOrders;
   
 
  final  List<OrderEntity> _allOrders;
@@ -343,6 +343,11 @@ class OrdersLoadedState implements OrdersState {
  final  String searchQuery;
  final  int? statusFilter;
  final  int? sortOption;
+ final  int timeFilterType;
+ final  DateTime selectedDate;
+ final  int selectedMonth;
+ final  int selectedQuarter;
+ final  int selectedYear;
 
 /// Create a copy of OrdersState
 /// with the given fields replaced by the non-null parameter values.
@@ -354,16 +359,16 @@ $OrdersLoadedStateCopyWith<OrdersLoadedState> get copyWith => _$OrdersLoadedStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrdersLoadedState&&const DeepCollectionEquality().equals(other._allOrders, _allOrders)&&const DeepCollectionEquality().equals(other._filteredOrders, _filteredOrders)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.statusFilter, statusFilter) || other.statusFilter == statusFilter)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrdersLoadedState&&const DeepCollectionEquality().equals(other._allOrders, _allOrders)&&const DeepCollectionEquality().equals(other._filteredOrders, _filteredOrders)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.statusFilter, statusFilter) || other.statusFilter == statusFilter)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption)&&(identical(other.timeFilterType, timeFilterType) || other.timeFilterType == timeFilterType)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.selectedMonth, selectedMonth) || other.selectedMonth == selectedMonth)&&(identical(other.selectedQuarter, selectedQuarter) || other.selectedQuarter == selectedQuarter)&&(identical(other.selectedYear, selectedYear) || other.selectedYear == selectedYear));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_allOrders),const DeepCollectionEquality().hash(_filteredOrders),searchQuery,statusFilter,sortOption);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_allOrders),const DeepCollectionEquality().hash(_filteredOrders),searchQuery,statusFilter,sortOption,timeFilterType,selectedDate,selectedMonth,selectedQuarter,selectedYear);
 
 @override
 String toString() {
-  return 'OrdersState.loaded(allOrders: $allOrders, filteredOrders: $filteredOrders, searchQuery: $searchQuery, statusFilter: $statusFilter, sortOption: $sortOption)';
+  return 'OrdersState.loaded(allOrders: $allOrders, filteredOrders: $filteredOrders, searchQuery: $searchQuery, statusFilter: $statusFilter, sortOption: $sortOption, timeFilterType: $timeFilterType, selectedDate: $selectedDate, selectedMonth: $selectedMonth, selectedQuarter: $selectedQuarter, selectedYear: $selectedYear)';
 }
 
 
@@ -374,7 +379,7 @@ abstract mixin class $OrdersLoadedStateCopyWith<$Res> implements $OrdersStateCop
   factory $OrdersLoadedStateCopyWith(OrdersLoadedState value, $Res Function(OrdersLoadedState) _then) = _$OrdersLoadedStateCopyWithImpl;
 @useResult
 $Res call({
- List<OrderEntity> allOrders, List<OrderEntity> filteredOrders, String searchQuery, int? statusFilter, int? sortOption
+ List<OrderEntity> allOrders, List<OrderEntity> filteredOrders, String searchQuery, int? statusFilter, int? sortOption, int timeFilterType, DateTime selectedDate, int selectedMonth, int selectedQuarter, int selectedYear
 });
 
 
@@ -391,14 +396,19 @@ class _$OrdersLoadedStateCopyWithImpl<$Res>
 
 /// Create a copy of OrdersState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? allOrders = null,Object? filteredOrders = null,Object? searchQuery = null,Object? statusFilter = freezed,Object? sortOption = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? allOrders = null,Object? filteredOrders = null,Object? searchQuery = null,Object? statusFilter = freezed,Object? sortOption = freezed,Object? timeFilterType = null,Object? selectedDate = null,Object? selectedMonth = null,Object? selectedQuarter = null,Object? selectedYear = null,}) {
   return _then(OrdersLoadedState(
 allOrders: null == allOrders ? _self._allOrders : allOrders // ignore: cast_nullable_to_non_nullable
 as List<OrderEntity>,filteredOrders: null == filteredOrders ? _self._filteredOrders : filteredOrders // ignore: cast_nullable_to_non_nullable
 as List<OrderEntity>,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String,statusFilter: freezed == statusFilter ? _self.statusFilter : statusFilter // ignore: cast_nullable_to_non_nullable
 as int?,sortOption: freezed == sortOption ? _self.sortOption : sortOption // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,timeFilterType: null == timeFilterType ? _self.timeFilterType : timeFilterType // ignore: cast_nullable_to_non_nullable
+as int,selectedDate: null == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
+as DateTime,selectedMonth: null == selectedMonth ? _self.selectedMonth : selectedMonth // ignore: cast_nullable_to_non_nullable
+as int,selectedQuarter: null == selectedQuarter ? _self.selectedQuarter : selectedQuarter // ignore: cast_nullable_to_non_nullable
+as int,selectedYear: null == selectedYear ? _self.selectedYear : selectedYear // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

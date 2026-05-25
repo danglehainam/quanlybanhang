@@ -18,6 +18,12 @@ class OrdersMobileView extends StatelessWidget {
   final int? statusFilter;
   final int? sortOption;
 
+  final int timeFilterType;
+  final DateTime selectedDate;
+  final int selectedMonth;
+  final int selectedQuarter;
+  final int selectedYear;
+
   const OrdersMobileView({
     super.key,
     required this.storeId,
@@ -25,6 +31,11 @@ class OrdersMobileView extends StatelessWidget {
     required this.searchQuery,
     this.statusFilter,
     this.sortOption,
+    required this.timeFilterType,
+    required this.selectedDate,
+    required this.selectedMonth,
+    required this.selectedQuarter,
+    required this.selectedYear,
   });
 
   @override
@@ -99,7 +110,10 @@ class OrdersMobileView extends StatelessWidget {
         onTap: () {
           showDialog(
             context: context,
-            builder: (_) => OrderDetailDialog(order: order),
+            builder: (_) => BlocProvider.value(
+              value: context.read<OrdersBloc>(),
+              child: OrderDetailDialog(order: order),
+            ),
           );
         },
         borderRadius: BorderRadius.circular(8),
@@ -225,7 +239,7 @@ class OrdersMobileView extends StatelessWidget {
       ),
       builder: (_) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.7,
+          initialChildSize: 0.8,
           minChildSize: 0.5,
           maxChildSize: 0.95,
           expand: false,
@@ -242,11 +256,30 @@ class OrdersMobileView extends StatelessWidget {
                     searchQuery: searchQuery,
                     statusFilter: statusFilter,
                     sortOption: sortOption,
-                    onFilterChanged: ({query, statusFilter, sortOption}) {
+                    timeFilterType: timeFilterType,
+                    selectedDate: selectedDate,
+                    selectedMonth: selectedMonth,
+                    selectedQuarter: selectedQuarter,
+                    selectedYear: selectedYear,
+                    onFilterChanged: ({
+                      query,
+                      statusFilter,
+                      sortOption,
+                      timeFilterType,
+                      selectedDate,
+                      selectedMonth,
+                      selectedQuarter,
+                      selectedYear,
+                    }) {
                       ordersBloc.add(OrdersEvent.filterOrders(
                         query: query,
                         statusFilter: statusFilter,
                         sortOption: sortOption,
+                        timeFilterType: timeFilterType,
+                        selectedDate: selectedDate,
+                        selectedMonth: selectedMonth,
+                        selectedQuarter: selectedQuarter,
+                        selectedYear: selectedYear,
                       ));
                     },
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 
 import '../../bloc/auth/auth_bloc.dart';
 import '../../bloc/auth/auth_state.dart';
@@ -7,6 +8,7 @@ import '../../bloc/settings/settings_bloc.dart';
 import '../../widgets/app_loading_widget.dart';
 import '../../widgets/app_error_widget.dart';
 import '../../../core/di/dependency_injection.dart';
+import '../../../core/constants/app_colors.dart';
 import 'bloc/transactions_bloc.dart';
 import 'bloc/transactions_event.dart';
 import 'bloc/transactions_state.dart';
@@ -41,6 +43,7 @@ class TransactionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isMobileView = context.select((SettingsBloc bloc) => bloc.state.isMobileView);
 
     return Scaffold(
@@ -85,8 +88,8 @@ class TransactionsView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.add_circle_outline, color: Colors.green),
-                    title: const Text('Thêm khoản thu'),
+                    leading: const Icon(Icons.add_circle_outline, color: AppColors.success),
+                    title: Text(l10n.addIncomeTitle),
                     onTap: () {
                       Navigator.pop(bottomSheetContext);
                       showDialog(
@@ -99,8 +102,8 @@ class TransactionsView extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    leading: const Icon(Icons.remove_circle_outline, color: Colors.red),
-                    title: const Text('Thêm khoản chi'),
+                    leading: const Icon(Icons.remove_circle_outline, color: AppColors.error),
+                    title: Text(l10n.addExpenseTitle),
                     onTap: () {
                       Navigator.pop(bottomSheetContext);
                       showDialog(

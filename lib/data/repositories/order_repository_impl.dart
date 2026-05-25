@@ -53,8 +53,8 @@ class OrderRepositoryImpl implements OrderRepository {
           await localDatabase.into(localDatabase.orderItems).insert(item);
         }
 
-        // Decrement stock for inventory-tracked products if completed (status == 1)
-        if (order.status == 1) {
+        // Decrement stock for inventory-tracked products if completed (status == 1) or pending (status == 0)
+        if (order.status == 0 || order.status == 1) {
           for (var item in order.items) {
             final productQuery = localDatabase.select(localDatabase.products)
               ..where((tbl) => tbl.id.equals(item.productId));
@@ -84,7 +84,35 @@ class OrderRepositoryImpl implements OrderRepository {
   Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity order) async {
     try {
       await localDatabase.transaction(() async {
-        // Update the order
+        // Fetch existing order to check old status
+        final existingOrderQuery = localDatabase.select(localDatabase.orders)
+              ..where((tbl) => tbl.id.equals(order.id));
+        final existingOrder = await existingOrderQuery.getSingleOrNull();
+        final int? oldStatus = existingOrder?.status;
+
+        // Fetch old items from the database before deleting them
+        final oldItemsQuery = localDatabase.select(localDatabase.orderItems)
+          ..where((tbl) => tbl.orderId.equals(order.id));
+        final oldItems = await oldItemsQuery.get();
+
+        // 1. Refund stock for old items if previously status was 0 (Pending) or 1 (Completed)
+        if (oldStatus == 0 || oldStatus == 1) {
+          for (final oldItem in oldItems) {
+            final productQuery = localDatabase.select(localDatabase.products)
+              ..where((tbl) => tbl.id.equals(oldItem.productId));
+            final productDrift = await productQuery.getSingleOrNull();
+            if (productDrift != null && productDrift.stock != null) {
+              final newStock = productDrift.stock! + oldItem.quantity;
+              await (localDatabase.update(localDatabase.products)
+                    ..where((tbl) => tbl.id.equals(oldItem.productId)))
+                  .write(ProductsCompanion(
+                stock: drift.Value(newStock),
+              ));
+            }
+          }
+        }
+
+        // Update the order row in DB
         await (localDatabase.update(localDatabase.orders)
               ..where((tbl) => tbl.id.equals(order.id)))
             .write(
@@ -124,8 +152,8 @@ class OrderRepositoryImpl implements OrderRepository {
           await localDatabase.into(localDatabase.orderItems).insert(item);
         }
 
-        // Decrement stock for inventory-tracked products if completed (status == 1)
-        if (order.status == 1) {
+        // 2. Deduct stock for new items if new status is 0 (Pending) or 1 (Completed)
+        if (order.status == 0 || order.status == 1) {
           for (var item in order.items) {
             final productQuery = localDatabase.select(localDatabase.products)
               ..where((tbl) => tbl.id.equals(item.productId));
@@ -135,8 +163,8 @@ class OrderRepositoryImpl implements OrderRepository {
               await (localDatabase.update(localDatabase.products)
                     ..where((tbl) => tbl.id.equals(item.productId)))
                   .write(ProductsCompanion(
-                    stock: drift.Value(newStock),
-                  ));
+                stock: drift.Value(newStock),
+              ));
             }
           }
         }

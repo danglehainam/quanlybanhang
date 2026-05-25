@@ -425,4 +425,179 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationStockInvalid => 'Invalid stock quantity';
+
+  @override
+  String get addIncome => 'Add Income';
+
+  @override
+  String get addExpense => 'Add Expense';
+
+  @override
+  String get editIncome => 'Edit Income';
+
+  @override
+  String get editExpense => 'Edit Expense';
+
+  @override
+  String get addIncomeTitle => 'Add Income';
+
+  @override
+  String get addExpenseTitle => 'Add Expense';
+
+  @override
+  String get income => 'Income';
+
+  @override
+  String get expense => 'Expense';
+
+  @override
+  String get transactionFilter => 'Transaction Filter';
+
+  @override
+  String get searchTransaction => 'Search transactions...';
+
+  @override
+  String get transactionType => 'Transaction Type';
+
+  @override
+  String get emptyTransactionMessage => 'No matching transactions found';
+
+  @override
+  String get emptyTransactionList => 'No transactions yet';
+
+  @override
+  String get amountLabel => 'Amount (VND)';
+
+  @override
+  String get validationAmountRequired => 'Please enter amount';
+
+  @override
+  String get validationAmountPositive => 'Amount must be greater than 0';
+
+  @override
+  String get validationNoteRequired => 'Please enter note';
+
+  @override
+  String get transactionCreatedSuccess => 'Transaction created successfully!';
+
+  @override
+  String get transactionUpdatedSuccess => 'Transaction updated successfully!';
+
+  @override
+  String get transactionDeletedSuccess => 'Transaction deleted successfully!';
+
+  @override
+  String get confirmDeleteTransactionTitle => 'Confirm Delete';
+
+  @override
+  String confirmDeleteTransactionMessage(int id) {
+    return 'Are you sure you want to delete transaction $id?';
+  }
+
+  @override
+  String get transactionTypeCol => 'Type';
+
+  @override
+  String get transactionAmountCol => 'Amount';
+
+  @override
+  String get transactionNoteCol => 'Note';
+
+  @override
+  String get transactionDateCol => 'Created Date';
+
+  @override
+  String get incomeOnly => 'Income Only';
+
+  @override
+  String get expenseOnly => 'Expense Only';
+
+  @override
+  String get productDetailTitle => 'Product Details';
+
+  @override
+  String get productCode => 'Product Code';
+
+  @override
+  String get noDescription => 'No description';
+
+  @override
+  String get dateCreated => 'Created Date';
+
+  @override
+  String get dateUpdated => 'Last Updated';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get timeFilter => 'Time Filter';
+
+  @override
+  String get specificDate => 'Specific Date';
+
+  @override
+  String get byMonth => 'By Month';
+
+  @override
+  String get byQuarter => 'By Quarter';
+
+  @override
+  String get byYear => 'By Year';
+
+  @override
+  String get allTime => 'All Time';
+
+  @override
+  String get selectDate => 'Select Date';
+
+  @override
+  String get selectMonth => 'Select Month';
+
+  @override
+  String get selectYear => 'Select Year';
+
+  @override
+  String get selectQuarter => 'Select Quarter';
+
+  @override
+  String get quarter1 => 'Quarter 1';
+
+  @override
+  String get quarter2 => 'Quarter 2';
+
+  @override
+  String get quarter3 => 'Quarter 3';
+
+  @override
+  String get quarter4 => 'Quarter 4';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get cancelOrder => 'Cancel Order';
+
+  @override
+  String get pay => 'Pay';
+
+  @override
+  String get confirmPayTitle => 'Confirm Payment';
+
+  @override
+  String get confirmPayMessage =>
+      'Are you sure you want to pay for this order?';
+
+  @override
+  String get confirmCancelOrderTitle => 'Confirm Cancellation';
+
+  @override
+  String get confirmCancelOrderMessage =>
+      'Are you sure you want to cancel this order? Product stock will be refunded accordingly.';
+
+  @override
+  String get orderStatusCompletedSuccess => 'Order paid successfully!';
+
+  @override
+  String get orderStatusCancelledSuccess => 'Order cancelled successfully!';
 }

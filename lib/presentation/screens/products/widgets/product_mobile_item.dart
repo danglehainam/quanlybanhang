@@ -1,11 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
+
 import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/product_entity.dart';
 import '../../../../domain/entities/category_entity.dart';
-import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_utils.dart';
 import '../../../widgets/buttons/app_icon_button.dart';
+import '../../../bloc/products/products_bloc.dart';
+import '../../../bloc/categories/categories_bloc.dart';
+import 'product_detail_dialog.dart';
 
 class ProductMobileItem extends StatelessWidget {
   final ProductEntity product;
@@ -53,6 +58,24 @@ class ProductMobileItem extends StatelessWidget {
     );
   }
 
+  void _showDetailDialog(BuildContext context, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: context.read<ProductsBloc>()),
+          BlocProvider.value(value: context.read<CategoriesBloc>()),
+        ],
+        child: ProductDetailDialog(
+          product: product,
+          category: category,
+          onEdit: onEdit,
+          onDelete: onDelete,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -67,7 +90,7 @@ class ProductMobileItem extends StatelessWidget {
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: product.imageUrl!.startsWith('http')
-                     ? Image.network(
+                    ? Image.network(
                         product.imageUrl!,
                         width: 48,
                         height: 48,
@@ -126,7 +149,7 @@ class ProductMobileItem extends StatelessWidget {
           tooltip: l10n.appName, // options
           onPressed: () => _showOptionsSheet(context, l10n),
         ),
-        onTap: () => _showOptionsSheet(context, l10n),
+        onTap: () => _showDetailDialog(context, l10n),
       ),
     );
   }

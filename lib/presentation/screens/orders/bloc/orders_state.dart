@@ -15,5 +15,10 @@ class OrdersState with _$OrdersState {
     required String searchQuery,
     int? statusFilter,
     int? sortOption,
+    required int timeFilterType,
+    required DateTime selectedDate,
+    required int selectedMonth,
+    required int selectedQuarter,
+    required int selectedYear,
   }) = OrdersLoadedState;
 }

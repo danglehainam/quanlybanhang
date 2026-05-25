@@ -423,4 +423,180 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get validationStockInvalid => 'Số lượng tồn kho không hợp lệ';
+
+  @override
+  String get addIncome => 'Thêm thu';
+
+  @override
+  String get addExpense => 'Thêm chi';
+
+  @override
+  String get editIncome => 'Sửa khoản thu';
+
+  @override
+  String get editExpense => 'Sửa khoản chi';
+
+  @override
+  String get addIncomeTitle => 'Thêm khoản thu';
+
+  @override
+  String get addExpenseTitle => 'Thêm khoản chi';
+
+  @override
+  String get income => 'Thu';
+
+  @override
+  String get expense => 'Chi';
+
+  @override
+  String get transactionFilter => 'Bộ lọc giao dịch';
+
+  @override
+  String get searchTransaction => 'Tìm giao dịch...';
+
+  @override
+  String get transactionType => 'Loại giao dịch';
+
+  @override
+  String get emptyTransactionMessage => 'Không tìm thấy giao dịch nào phù hợp';
+
+  @override
+  String get emptyTransactionList => 'Chưa có giao dịch nào';
+
+  @override
+  String get amountLabel => 'Số tiền (VND)';
+
+  @override
+  String get validationAmountRequired => 'Vui lòng nhập số tiền';
+
+  @override
+  String get validationAmountPositive => 'Số tiền phải lớn hơn 0';
+
+  @override
+  String get validationNoteRequired => 'Vui lòng nhập ghi chú';
+
+  @override
+  String get transactionCreatedSuccess => 'Tạo giao dịch thành công!';
+
+  @override
+  String get transactionUpdatedSuccess => 'Cập nhật giao dịch thành công!';
+
+  @override
+  String get transactionDeletedSuccess => 'Xóa giao dịch thành công!';
+
+  @override
+  String get confirmDeleteTransactionTitle => 'Xác nhận xóa';
+
+  @override
+  String confirmDeleteTransactionMessage(int id) {
+    return 'Bạn có chắc chắn muốn xóa giao dịch $id này không?';
+  }
+
+  @override
+  String get transactionTypeCol => 'Loại';
+
+  @override
+  String get transactionAmountCol => 'Số Tiền';
+
+  @override
+  String get transactionNoteCol => 'Ghi Chú';
+
+  @override
+  String get transactionDateCol => 'Ngày Tạo';
+
+  @override
+  String get incomeOnly => 'Chỉ khoản thu';
+
+  @override
+  String get expenseOnly => 'Chỉ khoản chi';
+
+  @override
+  String get productDetailTitle => 'Chi tiết sản phẩm';
+
+  @override
+  String get productCode => 'Mã sản phẩm';
+
+  @override
+  String get noDescription => 'Không có mô tả';
+
+  @override
+  String get dateCreated => 'Ngày tạo';
+
+  @override
+  String get dateUpdated => 'Cập nhật cuối';
+
+  @override
+  String get close => 'Đóng';
+
+  @override
+  String get timeFilter => 'Thời gian';
+
+  @override
+  String get specificDate => 'Ngày cụ thể';
+
+  @override
+  String get byMonth => 'Theo tháng';
+
+  @override
+  String get byQuarter => 'Theo quý';
+
+  @override
+  String get byYear => 'Theo năm';
+
+  @override
+  String get allTime => 'Tất cả thời gian';
+
+  @override
+  String get selectDate => 'Chọn ngày';
+
+  @override
+  String get selectMonth => 'Chọn tháng';
+
+  @override
+  String get selectYear => 'Chọn năm';
+
+  @override
+  String get selectQuarter => 'Chọn quý';
+
+  @override
+  String get quarter1 => 'Quý 1';
+
+  @override
+  String get quarter2 => 'Quý 2';
+
+  @override
+  String get quarter3 => 'Quý 3';
+
+  @override
+  String get quarter4 => 'Quý 4';
+
+  @override
+  String get back => 'Trở lại';
+
+  @override
+  String get cancelOrder => 'Hủy đơn hàng';
+
+  @override
+  String get pay => 'Thanh toán';
+
+  @override
+  String get confirmPayTitle => 'Xác nhận thanh toán';
+
+  @override
+  String get confirmPayMessage =>
+      'Bạn có chắc chắn muốn thanh toán đơn hàng này không?';
+
+  @override
+  String get confirmCancelOrderTitle => 'Xác nhận hủy đơn';
+
+  @override
+  String get confirmCancelOrderMessage =>
+      'Bạn có chắc chắn muốn hủy đơn hàng này không? Số lượng sản phẩm tồn kho sẽ được hoàn trả tương ứng.';
+
+  @override
+  String get orderStatusCompletedSuccess =>
+      'Đơn hàng đã được thanh toán thành công!';
+
+  @override
+  String get orderStatusCancelledSuccess => 'Đơn hàng đã được hủy thành công!';
 }

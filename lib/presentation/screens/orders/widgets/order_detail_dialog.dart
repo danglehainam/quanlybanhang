@@ -1,13 +1,146 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quan_ly_ban_hang/l10n/app_localizations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../domain/entities/order_entity.dart';
+import '../../../widgets/app_confirm_dialog.dart';
 import '../../../widgets/app_formatters.dart';
+import '../../../widgets/buttons/app_filled_button.dart';
+import '../../../widgets/buttons/app_text_button.dart';
+import '../bloc/orders_bloc.dart';
+import '../bloc/orders_event.dart';
 
-class OrderDetailDialog extends StatelessWidget {
+class OrderDetailDialog extends StatefulWidget {
   final OrderEntity order;
 
   const OrderDetailDialog({super.key, required this.order});
+
+  @override
+  State<OrderDetailDialog> createState() => _OrderDetailDialogState();
+}
+
+class _OrderDetailDialogState extends State<OrderDetailDialog> {
+  bool _isLoading = false;
+
+  void _confirmCancel(AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (_) => AppConfirmDialog(
+        title: l10n.confirmCancelOrderTitle,
+        content: l10n.confirmCancelOrderMessage,
+        confirmLabel: l10n.cancelOrder,
+        cancelLabel: l10n.back,
+        isDestructive: true,
+        onConfirm: () => _updateStatus(2),
+      ),
+    );
+  }
+
+  void _confirmPay(AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (_) => AppConfirmDialog(
+        title: l10n.confirmPayTitle,
+        content: l10n.confirmPayMessage,
+        confirmLabel: l10n.pay,
+        cancelLabel: l10n.back,
+        isDestructive: false,
+        onConfirm: () => _updateStatus(1),
+      ),
+    );
+  }
+
+  void _updateStatus(int newStatus) {
+    final l10n = AppLocalizations.of(context)!;
+    final bloc = context.read<OrdersBloc>();
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    bloc.add(
+      OrdersEvent.updateOrderStatus(
+        widget.order,
+        newStatus,
+        onSuccess: () {
+          if (mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  newStatus == 1
+                      ? l10n.orderStatusCompletedSuccess
+                      : l10n.orderStatusCancelledSuccess,
+                ),
+                backgroundColor: AppColors.success,
+              ),
+            );
+            Navigator.of(context).pop(); // Close the OrderDetailDialog
+          }
+        },
+        onError: (error) {
+          if (mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(error),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  List<Widget> _buildActions(BuildContext context, AppLocalizations l10n) {
+    final status = widget.order.status;
+    final List<Widget> buttons = [];
+
+    // Back button is always present
+    buttons.add(
+      AppTextButton(
+        label: l10n.back,
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+
+    if (status == 0) {
+      // Pending: Back, Cancel, Pay
+      buttons.add(const SizedBox(width: 8));
+      buttons.add(
+        AppFilledButton(
+          label: l10n.cancelOrder,
+          backgroundColor: AppColors.error,
+          onPressed: () => _confirmCancel(l10n),
+        ),
+      );
+      buttons.add(const SizedBox(width: 8));
+      buttons.add(
+        AppFilledButton(
+          label: l10n.pay,
+          backgroundColor: AppColors.success,
+          onPressed: () => _confirmPay(l10n),
+        ),
+      );
+    } else if (status == 1) {
+      // Completed: Back, Cancel
+      buttons.add(const SizedBox(width: 8));
+      buttons.add(
+        AppFilledButton(
+          label: l10n.cancelOrder,
+          backgroundColor: AppColors.error,
+          onPressed: () => _confirmCancel(l10n),
+        ),
+      );
+    }
+
+    return buttons;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +159,7 @@ class OrderDetailDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  l10n.orderDetailTitle(order.id),
+                  l10n.orderDetailTitle(widget.order.id),
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 IconButton(
@@ -39,14 +172,14 @@ class OrderDetailDialog extends StatelessWidget {
             const SizedBox(height: 8),
 
             // Metadata info
-            _buildInfoRow(l10n.orderDate, AppFormatters.formatDateTime(order.createdAt)),
-            _buildInfoRow(l10n.customerLabel, order.customer?.name ?? l10n.retailCustomer),
-            if (order.customer?.phone != null)
-              _buildInfoRow(l10n.phoneLabel, order.customer!.phone),
-            _buildInfoRow(l10n.tableLabel, order.table?.name ?? '-'),
-            _buildStatusRow(l10n.statusLabel, order.status, l10n),
-            if (order.note != null && order.note!.isNotEmpty)
-              _buildInfoRow(l10n.noteLabel, order.note!),
+            _buildInfoRow(l10n.orderDate, AppFormatters.formatDateTime(widget.order.createdAt)),
+            _buildInfoRow(l10n.customerLabel, widget.order.customer?.name ?? l10n.retailCustomer),
+            if (widget.order.customer?.phone != null)
+              _buildInfoRow(l10n.phoneLabel, widget.order.customer!.phone),
+            _buildInfoRow(l10n.tableLabel, widget.order.table?.name ?? '-'),
+            _buildStatusRow(l10n.statusLabel, widget.order.status, l10n),
+            if (widget.order.note != null && widget.order.note!.isNotEmpty)
+              _buildInfoRow(l10n.noteLabel, widget.order.note!),
 
             const SizedBox(height: 16),
             Text(
@@ -65,10 +198,10 @@ class OrderDetailDialog extends StatelessWidget {
                 ),
                 child: ListView.separated(
                   shrinkWrap: true,
-                  itemCount: order.items.length,
+                  itemCount: widget.order.items.length,
                   separatorBuilder: (context, index) => const Divider(height: 1),
                   itemBuilder: (context, index) {
-                    final item = order.items[index];
+                    final item = widget.order.items[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       child: Row(
@@ -77,7 +210,7 @@ class OrderDetailDialog extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                               Text(
+                                Text(
                                   item.productName,
                                   style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
                                 ),
@@ -103,21 +236,43 @@ class OrderDetailDialog extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Summary Info
-            _buildSummaryRow('${l10n.totalAmount}:', AppFormatters.formatCurrency(order.totalAmount)),
-            if (order.discount > 0)
+            _buildSummaryRow('${l10n.totalAmount}:', AppFormatters.formatCurrency(widget.order.totalAmount)),
+            if (widget.order.discount > 0)
               _buildSummaryRow(
                 '${l10n.discount}:',
-                '-${AppFormatters.formatCurrency(order.discount)}',
+                '-${AppFormatters.formatCurrency(widget.order.discount)}',
                 color: AppColors.success,
               ),
             const Divider(),
             _buildSummaryRow(
               '${l10n.finalAmount}:',
-              AppFormatters.formatCurrency(order.finalAmount),
+              AppFormatters.formatCurrency(widget.order.finalAmount),
               isBold: true,
               fontSize: 16,
               color: AppColors.primary,
             ),
+            
+            const SizedBox(height: 16),
+            const Divider(),
+            const SizedBox(height: 8),
+
+            // Action Buttons
+            if (_isLoading)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+                  ),
+                ),
+              )
+            else
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: _buildActions(context, l10n),
+              ),
           ],
         ),
       ),

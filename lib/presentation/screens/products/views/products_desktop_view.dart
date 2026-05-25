@@ -14,6 +14,7 @@ import '../../../bloc/products/products_event.dart';
 import '../../../bloc/categories/categories_bloc.dart';
 import '../../../widgets/app_form_modal.dart';
 import '../widgets/product_form_dialog.dart';
+import '../widgets/product_detail_dialog.dart';
 import '../../../widgets/layout/two_column_desktop_layout.dart';
 import '../../../widgets/buttons/app_icon_button.dart';
 import '../widgets/product_filter_sidebar.dart';
@@ -41,6 +42,64 @@ class ProductsDesktopView extends StatelessWidget {
     this.maxPrice,
     this.productStatus,
   });
+
+  void _showProductDetail(BuildContext context, ProductEntity product, CategoryEntity? category, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: context.read<ProductsBloc>()),
+          BlocProvider.value(value: context.read<CategoriesBloc>()),
+        ],
+        child: ProductDetailDialog(
+          product: product,
+          category: category,
+          onEdit: () {
+            showAppFormModal(
+              context: context,
+              isMobileView: false,
+              builder: (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(value: context.read<ProductsBloc>()),
+                  BlocProvider.value(value: context.read<CategoriesBloc>()),
+                ],
+                child: ProductFormDialog(productToEdit: product),
+              ),
+            );
+          },
+          onDelete: () {
+            showAdaptiveDialog(
+              context: context,
+              builder: (_) => AppConfirmDialog(
+                title: l10n.deleteProductConfirmTitle,
+                content: l10n.deleteProductConfirmMessage,
+                confirmLabel: l10n.delete,
+                cancelLabel: l10n.cancel,
+                isDestructive: true,
+                onConfirm: () {
+                  context.read<ProductsBloc>().add(
+                    ProductsEvent.deleteProduct(
+                      product.id,
+                      onSuccess: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.productDeletedSuccess)),
+                        );
+                      },
+                      onError: (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(error), backgroundColor: AppColors.error),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +163,7 @@ class ProductsDesktopView extends StatelessWidget {
                     constraints: BoxConstraints(minWidth: constraints.maxWidth),
                     child: DataTable(
                       headingTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      showCheckboxColumn: false,
                       columns: [
                         DataColumn(label: Text(l10n.productImage)),
                         DataColumn(label: Text(l10n.productName)),
@@ -147,6 +207,7 @@ class ProductsDesktopView extends StatelessWidget {
                                       ),
                                       child: const Icon(Icons.image, color: AppColors.textSecondary),
                                     ),
+                              onTap: () => _showProductDetail(context, product, category, l10n),
                             ),
                             DataCell(
                               Column(
@@ -157,8 +218,12 @@ class ProductsDesktopView extends StatelessWidget {
                                   Text(category?.name ?? l10n.unassignedCategory, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
+                              onTap: () => _showProductDetail(context, product, category, l10n),
                             ),
-                            DataCell(Text(CurrencyUtils.formatCurrency(product.price))),
+                            DataCell(
+                              Text(CurrencyUtils.formatCurrency(product.price)),
+                              onTap: () => _showProductDetail(context, product, category, l10n),
+                            ),
                             DataCell(
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -175,6 +240,7 @@ class ProductsDesktopView extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              onTap: () => _showProductDetail(context, product, category, l10n),
                             ),
                             DataCell(
                               Row(

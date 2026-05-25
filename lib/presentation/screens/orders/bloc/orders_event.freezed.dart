@@ -55,12 +55,13 @@ extension OrdersEventPatterns on OrdersEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadOrdersEvent value)?  loadOrders,TResult Function( FilterOrdersEvent value)?  filterOrders,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadOrdersEvent value)?  loadOrders,TResult Function( FilterOrdersEvent value)?  filterOrders,TResult Function( UpdateOrderStatusEvent value)?  updateOrderStatus,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LoadOrdersEvent() when loadOrders != null:
 return loadOrders(_that);case FilterOrdersEvent() when filterOrders != null:
-return filterOrders(_that);case _:
+return filterOrders(_that);case UpdateOrderStatusEvent() when updateOrderStatus != null:
+return updateOrderStatus(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return filterOrders(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadOrdersEvent value)  loadOrders,required TResult Function( FilterOrdersEvent value)  filterOrders,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadOrdersEvent value)  loadOrders,required TResult Function( FilterOrdersEvent value)  filterOrders,required TResult Function( UpdateOrderStatusEvent value)  updateOrderStatus,}){
 final _that = this;
 switch (_that) {
 case LoadOrdersEvent():
 return loadOrders(_that);case FilterOrdersEvent():
-return filterOrders(_that);case _:
+return filterOrders(_that);case UpdateOrderStatusEvent():
+return updateOrderStatus(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return filterOrders(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadOrdersEvent value)?  loadOrders,TResult? Function( FilterOrdersEvent value)?  filterOrders,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadOrdersEvent value)?  loadOrders,TResult? Function( FilterOrdersEvent value)?  filterOrders,TResult? Function( UpdateOrderStatusEvent value)?  updateOrderStatus,}){
 final _that = this;
 switch (_that) {
 case LoadOrdersEvent() when loadOrders != null:
 return loadOrders(_that);case FilterOrdersEvent() when filterOrders != null:
-return filterOrders(_that);case _:
+return filterOrders(_that);case UpdateOrderStatusEvent() when updateOrderStatus != null:
+return updateOrderStatus(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return filterOrders(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int storeId)?  loadOrders,TResult Function( String? query,  int? statusFilter,  int? sortOption)?  filterOrders,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int storeId)?  loadOrders,TResult Function( String? query,  int? statusFilter,  int? sortOption,  int? timeFilterType,  DateTime? selectedDate,  int? selectedMonth,  int? selectedQuarter,  int? selectedYear)?  filterOrders,TResult Function( OrderEntity order,  int newStatus,  void Function() onSuccess,  void Function(String) onError)?  updateOrderStatus,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadOrdersEvent() when loadOrders != null:
 return loadOrders(_that.storeId);case FilterOrdersEvent() when filterOrders != null:
-return filterOrders(_that.query,_that.statusFilter,_that.sortOption);case _:
+return filterOrders(_that.query,_that.statusFilter,_that.sortOption,_that.timeFilterType,_that.selectedDate,_that.selectedMonth,_that.selectedQuarter,_that.selectedYear);case UpdateOrderStatusEvent() when updateOrderStatus != null:
+return updateOrderStatus(_that.order,_that.newStatus,_that.onSuccess,_that.onError);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return filterOrders(_that.query,_that.statusFilter,_that.sortOption);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int storeId)  loadOrders,required TResult Function( String? query,  int? statusFilter,  int? sortOption)  filterOrders,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int storeId)  loadOrders,required TResult Function( String? query,  int? statusFilter,  int? sortOption,  int? timeFilterType,  DateTime? selectedDate,  int? selectedMonth,  int? selectedQuarter,  int? selectedYear)  filterOrders,required TResult Function( OrderEntity order,  int newStatus,  void Function() onSuccess,  void Function(String) onError)  updateOrderStatus,}) {final _that = this;
 switch (_that) {
 case LoadOrdersEvent():
 return loadOrders(_that.storeId);case FilterOrdersEvent():
-return filterOrders(_that.query,_that.statusFilter,_that.sortOption);case _:
+return filterOrders(_that.query,_that.statusFilter,_that.sortOption,_that.timeFilterType,_that.selectedDate,_that.selectedMonth,_that.selectedQuarter,_that.selectedYear);case UpdateOrderStatusEvent():
+return updateOrderStatus(_that.order,_that.newStatus,_that.onSuccess,_that.onError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return filterOrders(_that.query,_that.statusFilter,_that.sortOption);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int storeId)?  loadOrders,TResult? Function( String? query,  int? statusFilter,  int? sortOption)?  filterOrders,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int storeId)?  loadOrders,TResult? Function( String? query,  int? statusFilter,  int? sortOption,  int? timeFilterType,  DateTime? selectedDate,  int? selectedMonth,  int? selectedQuarter,  int? selectedYear)?  filterOrders,TResult? Function( OrderEntity order,  int newStatus,  void Function() onSuccess,  void Function(String) onError)?  updateOrderStatus,}) {final _that = this;
 switch (_that) {
 case LoadOrdersEvent() when loadOrders != null:
 return loadOrders(_that.storeId);case FilterOrdersEvent() when filterOrders != null:
-return filterOrders(_that.query,_that.statusFilter,_that.sortOption);case _:
+return filterOrders(_that.query,_that.statusFilter,_that.sortOption,_that.timeFilterType,_that.selectedDate,_that.selectedMonth,_that.selectedQuarter,_that.selectedYear);case UpdateOrderStatusEvent() when updateOrderStatus != null:
+return updateOrderStatus(_that.order,_that.newStatus,_that.onSuccess,_that.onError);case _:
   return null;
 
 }
@@ -247,13 +253,19 @@ as int,
 
 
 class FilterOrdersEvent implements OrdersEvent {
-  const FilterOrdersEvent({this.query, this.statusFilter, this.sortOption});
+  const FilterOrdersEvent({this.query, this.statusFilter, this.sortOption, this.timeFilterType, this.selectedDate, this.selectedMonth, this.selectedQuarter, this.selectedYear});
   
 
  final  String? query;
  final  int? statusFilter;
 // null for all, 0 for pending, 1 for completed
  final  int? sortOption;
+// 0 for newest, 1 for oldest, 2 for highest price, 3 for lowest price
+ final  int? timeFilterType;
+ final  DateTime? selectedDate;
+ final  int? selectedMonth;
+ final  int? selectedQuarter;
+ final  int? selectedYear;
 
 /// Create a copy of OrdersEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -265,16 +277,16 @@ $FilterOrdersEventCopyWith<FilterOrdersEvent> get copyWith => _$FilterOrdersEven
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterOrdersEvent&&(identical(other.query, query) || other.query == query)&&(identical(other.statusFilter, statusFilter) || other.statusFilter == statusFilter)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterOrdersEvent&&(identical(other.query, query) || other.query == query)&&(identical(other.statusFilter, statusFilter) || other.statusFilter == statusFilter)&&(identical(other.sortOption, sortOption) || other.sortOption == sortOption)&&(identical(other.timeFilterType, timeFilterType) || other.timeFilterType == timeFilterType)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.selectedMonth, selectedMonth) || other.selectedMonth == selectedMonth)&&(identical(other.selectedQuarter, selectedQuarter) || other.selectedQuarter == selectedQuarter)&&(identical(other.selectedYear, selectedYear) || other.selectedYear == selectedYear));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,query,statusFilter,sortOption);
+int get hashCode => Object.hash(runtimeType,query,statusFilter,sortOption,timeFilterType,selectedDate,selectedMonth,selectedQuarter,selectedYear);
 
 @override
 String toString() {
-  return 'OrdersEvent.filterOrders(query: $query, statusFilter: $statusFilter, sortOption: $sortOption)';
+  return 'OrdersEvent.filterOrders(query: $query, statusFilter: $statusFilter, sortOption: $sortOption, timeFilterType: $timeFilterType, selectedDate: $selectedDate, selectedMonth: $selectedMonth, selectedQuarter: $selectedQuarter, selectedYear: $selectedYear)';
 }
 
 
@@ -285,7 +297,7 @@ abstract mixin class $FilterOrdersEventCopyWith<$Res> implements $OrdersEventCop
   factory $FilterOrdersEventCopyWith(FilterOrdersEvent value, $Res Function(FilterOrdersEvent) _then) = _$FilterOrdersEventCopyWithImpl;
 @useResult
 $Res call({
- String? query, int? statusFilter, int? sortOption
+ String? query, int? statusFilter, int? sortOption, int? timeFilterType, DateTime? selectedDate, int? selectedMonth, int? selectedQuarter, int? selectedYear
 });
 
 
@@ -302,12 +314,89 @@ class _$FilterOrdersEventCopyWithImpl<$Res>
 
 /// Create a copy of OrdersEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? query = freezed,Object? statusFilter = freezed,Object? sortOption = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? query = freezed,Object? statusFilter = freezed,Object? sortOption = freezed,Object? timeFilterType = freezed,Object? selectedDate = freezed,Object? selectedMonth = freezed,Object? selectedQuarter = freezed,Object? selectedYear = freezed,}) {
   return _then(FilterOrdersEvent(
 query: freezed == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String?,statusFilter: freezed == statusFilter ? _self.statusFilter : statusFilter // ignore: cast_nullable_to_non_nullable
 as int?,sortOption: freezed == sortOption ? _self.sortOption : sortOption // ignore: cast_nullable_to_non_nullable
+as int?,timeFilterType: freezed == timeFilterType ? _self.timeFilterType : timeFilterType // ignore: cast_nullable_to_non_nullable
+as int?,selectedDate: freezed == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,selectedMonth: freezed == selectedMonth ? _self.selectedMonth : selectedMonth // ignore: cast_nullable_to_non_nullable
+as int?,selectedQuarter: freezed == selectedQuarter ? _self.selectedQuarter : selectedQuarter // ignore: cast_nullable_to_non_nullable
+as int?,selectedYear: freezed == selectedYear ? _self.selectedYear : selectedYear // ignore: cast_nullable_to_non_nullable
 as int?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UpdateOrderStatusEvent implements OrdersEvent {
+  const UpdateOrderStatusEvent(this.order, this.newStatus, {required this.onSuccess, required this.onError});
+  
+
+ final  OrderEntity order;
+ final  int newStatus;
+ final  void Function() onSuccess;
+ final  void Function(String) onError;
+
+/// Create a copy of OrdersEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateOrderStatusEventCopyWith<UpdateOrderStatusEvent> get copyWith => _$UpdateOrderStatusEventCopyWithImpl<UpdateOrderStatusEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateOrderStatusEvent&&(identical(other.order, order) || other.order == order)&&(identical(other.newStatus, newStatus) || other.newStatus == newStatus)&&(identical(other.onSuccess, onSuccess) || other.onSuccess == onSuccess)&&(identical(other.onError, onError) || other.onError == onError));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,order,newStatus,onSuccess,onError);
+
+@override
+String toString() {
+  return 'OrdersEvent.updateOrderStatus(order: $order, newStatus: $newStatus, onSuccess: $onSuccess, onError: $onError)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateOrderStatusEventCopyWith<$Res> implements $OrdersEventCopyWith<$Res> {
+  factory $UpdateOrderStatusEventCopyWith(UpdateOrderStatusEvent value, $Res Function(UpdateOrderStatusEvent) _then) = _$UpdateOrderStatusEventCopyWithImpl;
+@useResult
+$Res call({
+ OrderEntity order, int newStatus, void Function() onSuccess, void Function(String) onError
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateOrderStatusEventCopyWithImpl<$Res>
+    implements $UpdateOrderStatusEventCopyWith<$Res> {
+  _$UpdateOrderStatusEventCopyWithImpl(this._self, this._then);
+
+  final UpdateOrderStatusEvent _self;
+  final $Res Function(UpdateOrderStatusEvent) _then;
+
+/// Create a copy of OrdersEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? order = null,Object? newStatus = null,Object? onSuccess = null,Object? onError = null,}) {
+  return _then(UpdateOrderStatusEvent(
+null == order ? _self.order : order // ignore: cast_nullable_to_non_nullable
+as OrderEntity,null == newStatus ? _self.newStatus : newStatus // ignore: cast_nullable_to_non_nullable
+as int,onSuccess: null == onSuccess ? _self.onSuccess : onSuccess // ignore: cast_nullable_to_non_nullable
+as void Function(),onError: null == onError ? _self.onError : onError // ignore: cast_nullable_to_non_nullable
+as void Function(String),
   ));
 }
 

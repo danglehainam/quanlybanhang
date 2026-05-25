@@ -901,6 +901,348 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Số lượng tồn kho không hợp lệ'**
   String get validationStockInvalid;
+
+  /// No description provided for @addIncome.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm thu'**
+  String get addIncome;
+
+  /// No description provided for @addExpense.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm chi'**
+  String get addExpense;
+
+  /// No description provided for @editIncome.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sửa khoản thu'**
+  String get editIncome;
+
+  /// No description provided for @editExpense.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sửa khoản chi'**
+  String get editExpense;
+
+  /// No description provided for @addIncomeTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm khoản thu'**
+  String get addIncomeTitle;
+
+  /// No description provided for @addExpenseTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm khoản chi'**
+  String get addExpenseTitle;
+
+  /// No description provided for @income.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thu'**
+  String get income;
+
+  /// No description provided for @expense.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi'**
+  String get expense;
+
+  /// No description provided for @transactionFilter.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bộ lọc giao dịch'**
+  String get transactionFilter;
+
+  /// No description provided for @searchTransaction.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm giao dịch...'**
+  String get searchTransaction;
+
+  /// No description provided for @transactionType.
+  ///
+  /// In vi, this message translates to:
+  /// **'Loại giao dịch'**
+  String get transactionType;
+
+  /// No description provided for @emptyTransactionMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy giao dịch nào phù hợp'**
+  String get emptyTransactionMessage;
+
+  /// No description provided for @emptyTransactionList.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có giao dịch nào'**
+  String get emptyTransactionList;
+
+  /// No description provided for @amountLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số tiền (VND)'**
+  String get amountLabel;
+
+  /// No description provided for @validationAmountRequired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập số tiền'**
+  String get validationAmountRequired;
+
+  /// No description provided for @validationAmountPositive.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số tiền phải lớn hơn 0'**
+  String get validationAmountPositive;
+
+  /// No description provided for @validationNoteRequired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập ghi chú'**
+  String get validationNoteRequired;
+
+  /// No description provided for @transactionCreatedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo giao dịch thành công!'**
+  String get transactionCreatedSuccess;
+
+  /// No description provided for @transactionUpdatedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật giao dịch thành công!'**
+  String get transactionUpdatedSuccess;
+
+  /// No description provided for @transactionDeletedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa giao dịch thành công!'**
+  String get transactionDeletedSuccess;
+
+  /// No description provided for @confirmDeleteTransactionTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận xóa'**
+  String get confirmDeleteTransactionTitle;
+
+  /// No description provided for @confirmDeleteTransactionMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn xóa giao dịch {id} này không?'**
+  String confirmDeleteTransactionMessage(int id);
+
+  /// No description provided for @transactionTypeCol.
+  ///
+  /// In vi, this message translates to:
+  /// **'Loại'**
+  String get transactionTypeCol;
+
+  /// No description provided for @transactionAmountCol.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số Tiền'**
+  String get transactionAmountCol;
+
+  /// No description provided for @transactionNoteCol.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi Chú'**
+  String get transactionNoteCol;
+
+  /// No description provided for @transactionDateCol.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày Tạo'**
+  String get transactionDateCol;
+
+  /// No description provided for @incomeOnly.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ khoản thu'**
+  String get incomeOnly;
+
+  /// No description provided for @expenseOnly.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ khoản chi'**
+  String get expenseOnly;
+
+  /// No description provided for @productDetailTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi tiết sản phẩm'**
+  String get productDetailTitle;
+
+  /// No description provided for @productCode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã sản phẩm'**
+  String get productCode;
+
+  /// No description provided for @noDescription.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có mô tả'**
+  String get noDescription;
+
+  /// No description provided for @dateCreated.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày tạo'**
+  String get dateCreated;
+
+  /// No description provided for @dateUpdated.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật cuối'**
+  String get dateUpdated;
+
+  /// No description provided for @close.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đóng'**
+  String get close;
+
+  /// No description provided for @timeFilter.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thời gian'**
+  String get timeFilter;
+
+  /// No description provided for @specificDate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày cụ thể'**
+  String get specificDate;
+
+  /// No description provided for @byMonth.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo tháng'**
+  String get byMonth;
+
+  /// No description provided for @byQuarter.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo quý'**
+  String get byQuarter;
+
+  /// No description provided for @byYear.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo năm'**
+  String get byYear;
+
+  /// No description provided for @allTime.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tất cả thời gian'**
+  String get allTime;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ngày'**
+  String get selectDate;
+
+  /// No description provided for @selectMonth.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn tháng'**
+  String get selectMonth;
+
+  /// No description provided for @selectYear.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn năm'**
+  String get selectYear;
+
+  /// No description provided for @selectQuarter.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn quý'**
+  String get selectQuarter;
+
+  /// No description provided for @quarter1.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quý 1'**
+  String get quarter1;
+
+  /// No description provided for @quarter2.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quý 2'**
+  String get quarter2;
+
+  /// No description provided for @quarter3.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quý 3'**
+  String get quarter3;
+
+  /// No description provided for @quarter4.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quý 4'**
+  String get quarter4;
+
+  /// No description provided for @back.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trở lại'**
+  String get back;
+
+  /// No description provided for @cancelOrder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hủy đơn hàng'**
+  String get cancelOrder;
+
+  /// No description provided for @pay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thanh toán'**
+  String get pay;
+
+  /// No description provided for @confirmPayTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận thanh toán'**
+  String get confirmPayTitle;
+
+  /// No description provided for @confirmPayMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn thanh toán đơn hàng này không?'**
+  String get confirmPayMessage;
+
+  /// No description provided for @confirmCancelOrderTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận hủy đơn'**
+  String get confirmCancelOrderTitle;
+
+  /// No description provided for @confirmCancelOrderMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn hủy đơn hàng này không? Số lượng sản phẩm tồn kho sẽ được hoàn trả tương ứng.'**
+  String get confirmCancelOrderMessage;
+
+  /// No description provided for @orderStatusCompletedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đơn hàng đã được thanh toán thành công!'**
+  String get orderStatusCompletedSuccess;
+
+  /// No description provided for @orderStatusCancelledSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đơn hàng đã được hủy thành công!'**
+  String get orderStatusCancelledSuccess;
 }
 
 class _AppLocalizationsDelegate

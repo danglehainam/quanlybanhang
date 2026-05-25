@@ -50,7 +50,8 @@ class OrdersView extends StatelessWidget {
               message: message,
               onRetry: () => context.read<OrdersBloc>().add(OrdersEvent.loadOrders(storeId: storeId)),
             ),
-            loaded: (allOrders, filteredOrders, searchQuery, statusFilter, sortOption) {
+            loaded: (allOrders, filteredOrders, searchQuery, statusFilter, sortOption,
+                timeFilterType, selectedDate, selectedMonth, selectedQuarter, selectedYear) {
               if (isMobileView) {
                 return OrdersMobileView(
                   storeId: storeId,
@@ -58,6 +59,11 @@ class OrdersView extends StatelessWidget {
                   searchQuery: searchQuery,
                   statusFilter: statusFilter,
                   sortOption: sortOption,
+                  timeFilterType: timeFilterType,
+                  selectedDate: selectedDate,
+                  selectedMonth: selectedMonth,
+                  selectedQuarter: selectedQuarter,
+                  selectedYear: selectedYear,
                 );
               }
               
@@ -67,6 +73,11 @@ class OrdersView extends StatelessWidget {
                 searchQuery: searchQuery,
                 statusFilter: statusFilter,
                 sortOption: sortOption,
+                timeFilterType: timeFilterType,
+                selectedDate: selectedDate,
+                selectedMonth: selectedMonth,
+                selectedQuarter: selectedQuarter,
+                selectedYear: selectedYear,
               );
             },
           );
