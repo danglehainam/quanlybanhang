@@ -1,0 +1,3 @@
+/*.wasm
+  Content-Type: application/wasm
+  Access-Control-Allow-Origin: *
